@@ -1,0 +1,4 @@
+repository "MyRPG2D@Sabush@cloud"
+  path "/"
+    br "/main"
+    co "/main"
