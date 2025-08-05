@@ -1,0 +1,123 @@
+using UnityEngine;
+
+[System.Serializable]
+public class FighterData
+{
+    // References
+    public EnemySO enemySO;             // Enemy üçün EnemySO
+    public bool isPlayer;               // Is this fighter the player?
+    public CharacterStats characterStats; // Player üçün stats
+
+    // Dynamic runtime values
+    public int currentHP;
+    public int currentMP;
+    public bool isAlive = true;
+
+    // --- Universal properties (always use these instead of direct fields!) ---
+
+    public string displayName
+    {
+        get
+        {
+            if (isPlayer && characterStats != null)
+                return "Player";
+            else if (enemySO != null)
+                return enemySO.displayName;
+            else
+                return "Unknown";
+        }
+    }
+
+    public int maxHP
+    {
+        get
+        {
+            if (isPlayer && characterStats != null)
+                return characterStats.Endurance.Value * 5 + 100;
+            else if (enemySO != null)
+                return enemySO.maxHP;
+            else
+                return 100;
+        }
+    }
+
+    public int maxMP
+    {
+        get
+        {
+            if (isPlayer && characterStats != null)
+                return 50 + characterStats.Intelligence.Value * 5;
+            else if (enemySO != null)
+                return enemySO.maxMP;
+            else
+                return 50;
+        }
+    }
+
+    public int damage
+    {
+        get
+        {
+            if (isPlayer && characterStats != null)
+                return 10 + characterStats.Strength.Value;
+            else if (enemySO != null)
+                return 10;
+            else
+                return 10;
+        }
+    }
+
+    // --- Constructors ---
+
+    // Enemy constructor
+    public FighterData(EnemySO enemy)
+    {
+        enemySO = enemy;
+        isPlayer = false;
+        characterStats = null;
+        currentHP = enemySO != null ? enemySO.maxHP : 100;
+        currentMP = enemySO != null ? enemySO.maxMP : 50;
+        isAlive = true;
+    }
+
+    // Player constructor
+    public FighterData(string playerName, CharacterStats stats)
+    {
+        enemySO = null;
+        isPlayer = true;
+        characterStats = stats;
+        currentHP = maxHP;
+        currentMP = maxMP;
+        isAlive = true;
+    }
+
+    // --- Universal methods ---
+
+    public void TakeDamage(int amount)
+    {
+        currentHP -= amount;
+        if (currentHP < 0)
+            currentHP = 0;
+        if (currentHP == 0)
+            isAlive = false;
+    }
+
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        if (currentHP > maxHP)
+            currentHP = maxHP;
+    }
+
+    public bool HasEnoughMana(int amount)
+    {
+        return currentMP >= amount;
+    }
+
+    public void UseMana(int amount)
+    {
+        currentMP -= amount;
+        if (currentMP < 0)
+            currentMP = 0;
+    }
+}

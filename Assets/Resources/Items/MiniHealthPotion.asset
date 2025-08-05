@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023136e27e55d1b4e81475f6a5488a80, type: 3}
+  m_Name: MiniHealthPotion
+  m_EditorClassIdentifier: 
+  itemId: minipotion
+  displayName: Mini Health Potion
+  description: Mini Health Potion
+  icon: {fileID: -2058998270, guid: 87145ce120036bf4bb8f6a12f941cf62, type: 3}
+  type: 1
+  maxStack: 20
