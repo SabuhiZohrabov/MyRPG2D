@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class MapCameraController : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class MapCameraController : MonoBehaviour
 
     [Header("Camera Settings")]
     [SerializeField] private Camera mapCamera;
-    [SerializeField] private float followSpeed = 2f;
+    //[SerializeField] private float followSpeed = 2f;
     [SerializeField] private float smoothTime = 0.3f;
 
     [Header("View Settings")]
@@ -21,7 +20,6 @@ public class MapCameraController : MonoBehaviour
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero;
     private bool isFollowingPlayer = true;
-    private bool isAnimating = false;
 
     void Awake()
     {
@@ -69,171 +67,132 @@ public class MapCameraController : MonoBehaviour
         // Manual pan controls - Input System compatible
 #if ENABLE_INPUT_SYSTEM
         var keyboard = UnityEngine.InputSystem.Keyboard.current;
-        if (keyboard == null) return;
-
-        if (keyboard.wKey.isPressed)
+        if (keyboard != null)
         {
-            panDirection += Vector3.up;
-            panInput = true;
-        }
-        if (keyboard.sKey.isPressed)
-        {
-            panDirection += Vector3.down;
-            panInput = true;
-        }
-        if (keyboard.aKey.isPressed)
-        {
-            panDirection += Vector3.left;
-            panInput = true;
-        }
-        if (keyboard.dKey.isPressed)
-        {
-            panDirection += Vector3.right;
-            panInput = true;
-        }
-
-        // Apply manual pan
-        if (panInput)
-        {
-            isFollowingPlayer = false;
-            Vector3 panAmount = panDirection.normalized * panSpeed * Time.deltaTime;
-            targetPosition = ClampToBounds(transform.position + panAmount);
-        }
-
-        // Reset to player
-        if (keyboard.spaceKey.wasPressedThisFrame)
-        {
-            CenterOnCurrentPlayer();
+            if (keyboard.wKey.isPressed) { panDirection += Vector3.up; panInput = true; }
+            if (keyboard.sKey.isPressed) { panDirection += Vector3.down; panInput = true; }
+            if (keyboard.aKey.isPressed) { panDirection += Vector3.left; panInput = true; }
+            if (keyboard.dKey.isPressed) { panDirection += Vector3.right; panInput = true; }
         }
 #else
         // Legacy Input System
-        if (Input.GetKey(panUpKey))
-        {
-            panDirection += Vector3.up;
-            panInput = true;
-        }
-        if (Input.GetKey(panDownKey))
-        {
-            panDirection += Vector3.down;
-            panInput = true;
-        }
-        if (Input.GetKey(panLeftKey))
-        {
-            panDirection += Vector3.left;
-            panInput = true;
-        }
-        if (Input.GetKey(panRightKey))
-        {
-            panDirection += Vector3.right;
-            panInput = true;
-        }
+        if (Input.GetKey(KeyCode.W)) { panDirection += Vector3.up; panInput = true; }
+        if (Input.GetKey(KeyCode.S)) { panDirection += Vector3.down; panInput = true; }
+        if (Input.GetKey(KeyCode.A)) { panDirection += Vector3.left; panInput = true; }
+        if (Input.GetKey(KeyCode.D)) { panDirection += Vector3.right; panInput = true; }
+#endif
 
-        // Apply manual pan
         if (panInput)
         {
             isFollowingPlayer = false;
-            Vector3 panAmount = panDirection.normalized * panSpeed * Time.deltaTime;
-            targetPosition = ClampToBounds(transform.position + panAmount);
+            Vector3 moveAmount = panDirection.normalized * panSpeed * Time.deltaTime;
+            targetPosition = transform.position + moveAmount;
+            ClampToMapBounds();
         }
 
-        // Reset to player
-        if (Input.GetKeyDown(resetViewKey))
+        // Reset to follow player on space
+#if ENABLE_INPUT_SYSTEM
+        if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
+#else
+        if (Input.GetKeyDown(KeyCode.Space))
+#endif
         {
             CenterOnCurrentPlayer();
         }
-#endif
     }
 
     void UpdateCameraPosition()
     {
-        if (isAnimating) return;
+        if (mapCamera == null) return;
 
-        Vector3 currentPos = transform.position;
-        Vector3 newPosition = Vector3.SmoothDamp(currentPos, targetPosition, ref velocity, smoothTime);
+        Vector3 currentPos = mapCamera.transform.position;
+        targetPosition.z = currentPos.z; // Maintain Z position
 
-        transform.position = ClampToBounds(newPosition);
+        // Smooth movement towards target
+        if (Vector3.Distance(currentPos, targetPosition) > 0.01f)
+        {
+            mapCamera.transform.position = Vector3.SmoothDamp(currentPos, targetPosition, ref velocity, smoothTime);
+        }
     }
 
-    public void FollowPlayer(Vector3 playerWorldPosition, bool animate = true)
+    public void OnPlayerMoved(Vector3 playerWorldPosition)
     {
-        Vector3 cameraPosition = new Vector3(playerWorldPosition.x, playerWorldPosition.y, transform.position.z);
-        targetPosition = ClampToBounds(cameraPosition);
+        if (!isFollowingPlayer) return;
 
-        isFollowingPlayer = true;
-
-        if (animate && !isAnimating)
-        {
-            StartCoroutine(AnimateToPosition(targetPosition));
-        }
+        targetPosition = playerWorldPosition;
+        targetPosition.z = mapCamera.transform.position.z; // Keep camera Z
+        ClampToMapBounds();
     }
 
     public void CenterOnCurrentPlayer()
     {
-        if (PlayerMapVisualizer.Instance != null)
+        if (PlayerMapVisualizer.Instance != null && MapManager.Instance != null)
         {
-            var playerPos = PlayerMapVisualizer.Instance.GetCurrentGridPosition();
-            if (MapManager.Instance != null)
-            {
-                Vector3 worldPos = MapManager.Instance.GridToWorld(playerPos);
-                FollowPlayer(worldPos, true);
-            }
+            Vector2Int playerGrid = PlayerMapVisualizer.Instance.GetCurrentGridPosition();
+            Vector3 playerWorld = MapManager.Instance.GridToWorld(playerGrid);
+
+            targetPosition = playerWorld;
+            targetPosition.z = mapCamera.transform.position.z;
+            ClampToMapBounds();
+
+            isFollowingPlayer = true;
         }
     }
 
-    IEnumerator AnimateToPosition(Vector3 target)
+    void ClampToMapBounds()
     {
-        isAnimating = true;
+        // Clamp camera position within map bounds
+        float halfWidth = mapBounds.x * 0.5f;
+        float halfHeight = mapBounds.y * 0.5f;
 
-        Vector3 startPos = transform.position;
-        float duration = 0.8f;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = Mathf.SmoothStep(0, 1, elapsed / duration);
-
-            Vector3 currentPos = Vector3.Lerp(startPos, target, t);
-            transform.position = ClampToBounds(currentPos);
-
-            yield return null;
-        }
-
-        transform.position = ClampToBounds(target);
-        isAnimating = false;
-    }
-
-    Vector3 ClampToBounds(Vector3 position)
-    {
-        // Calculate camera bounds based on orthographic size
-        float halfHeight = mapCamera.orthographicSize;
-        float halfWidth = halfHeight * mapCamera.aspect;
-
-        // Clamp to map bounds
-        float clampedX = Mathf.Clamp(position.x, halfWidth, mapBounds.x - halfWidth);
-        float clampedY = Mathf.Clamp(position.y, halfHeight, mapBounds.y - halfHeight);
-
-        return new Vector3(clampedX, clampedY, position.z);
+        targetPosition.x = Mathf.Clamp(targetPosition.x, -halfWidth, halfWidth);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, -halfHeight, halfHeight);
     }
 
     public void SetMapBounds(Vector2 newBounds)
     {
         mapBounds = newBounds;
+        ClampToMapBounds();
     }
 
-    public void SetViewportSize(float size)
+    public void SetFollowMode(bool followPlayer)
     {
-        viewportSize = size;
+        isFollowingPlayer = followPlayer;
+        if (followPlayer)
+        {
+            CenterOnCurrentPlayer();
+        }
+    }
+
+    public void SetCameraSize(float newSize)
+    {
+        viewportSize = newSize;
         if (mapCamera != null)
         {
             mapCamera.orthographicSize = viewportSize;
         }
     }
 
-    public void SetFollowSpeed(float speed)
+    // Jump camera immediately to position (no smooth movement)
+    public void JumpToPosition(Vector3 worldPosition)
     {
-        followSpeed = speed;
-        smoothTime = 1f / speed;
+        worldPosition.z = mapCamera.transform.position.z;
+        targetPosition = worldPosition;
+        ClampToMapBounds();
+
+        if (mapCamera != null)
+        {
+            mapCamera.transform.position = targetPosition;
+        }
+
+        velocity = Vector3.zero; // Reset velocity for smooth movement
+    }
+
+    // Debug method
+    [ContextMenu("Center on Player")]
+    public void DebugCenterOnPlayer()
+    {
+        CenterOnCurrentPlayer();
     }
 
     public bool IsFollowingPlayer()
@@ -241,29 +200,8 @@ public class MapCameraController : MonoBehaviour
         return isFollowingPlayer;
     }
 
-    // Call this when player moves
-    public void OnPlayerMoved(Vector3 playerWorldPosition)
+    public Vector3 GetTargetPosition()
     {
-        if (isFollowingPlayer)
-        {
-            FollowPlayer(playerWorldPosition, true);
-        }
-    }
-
-    void OnDrawGizmos()
-    {
-        // Draw camera bounds
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(new Vector3(mapBounds.x / 2, mapBounds.y / 2, 0),
-            new Vector3(mapBounds.x, mapBounds.y, 0));
-
-        // Draw viewport
-        if (mapCamera != null)
-        {
-            Gizmos.color = Color.green;
-            float halfHeight = mapCamera.orthographicSize;
-            float halfWidth = halfHeight * mapCamera.aspect;
-            Gizmos.DrawWireCube(transform.position, new Vector3(halfWidth * 2, halfHeight * 2, 0));
-        }
+        return targetPosition;
     }
 }

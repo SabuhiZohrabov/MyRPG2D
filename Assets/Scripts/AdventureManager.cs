@@ -40,14 +40,20 @@ public class AdventureManager : MonoBehaviour
         // Initial load without triggering map movement
         AdventureTextData data = textDatabase.Find(t => t.id == startAdventureId);
         currentAdventureTextData = data;
+        string targetMapId = data.mapId;
+        Vector2Int targetPosition = data.mapPosition;
         if (data != null)
         {
             adventureTMP.text = data.text;
 
             // Only move player on initial load if adventure has map data
-            if (!string.IsNullOrEmpty(data.mapId) && AdventureMapSyncer.Instance != null)
+            //if (!string.IsNullOrEmpty(data.mapId) && AdventureMapSyncer.Instance != null)
+            //{
+            //    AdventureMapSyncer.Instance.MovePlayerToAdventure(data);
+            //}
+            if (PlayerMapVisualizer.Instance != null)
             {
-                AdventureMapSyncer.Instance.MovePlayerToAdventure(data);
+                PlayerMapVisualizer.Instance.ShowPlayerAt(targetMapId, targetPosition);
             }
         }
     }

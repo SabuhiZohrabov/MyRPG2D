@@ -30,7 +30,7 @@ public class MapManager : MonoBehaviour
 
     private MapData currentMap;
     private Dictionary<Vector2Int, GameObject> tileGameObjects = new Dictionary<Vector2Int, GameObject>();
-    private Dictionary<string, MapData> mapDict = new Dictionary<string, MapData>();
+    //private Dictionary<string, MapData> mapDict = new Dictionary<string, MapData>();
 
     void Awake()
     {
@@ -47,8 +47,8 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
-        // Wait for MapDataManager to initialize
-        StartCoroutine(InitializeAfterDataManager());
+        LoadMapsFromDataManager();
+        LoadMap(currentMapId);
     }
 
     System.Collections.IEnumerator InitializeAfterDataManager()
@@ -70,31 +70,14 @@ public class MapManager : MonoBehaviour
         if (MapDataManager.Instance == null) return;
 
         maps = MapDataManager.Instance.GetAllMaps();
-        InitializeMaps();
+        //InitializeMaps();
 
         Debug.Log($"[MapManager] Loaded {maps.Count} maps from JSON");
     }
 
-    void InitializeMaps()
-    {
-        mapDict.Clear();
-        foreach (var map in maps)
-        {
-            if (!string.IsNullOrEmpty(map.mapId))
-            {
-                mapDict[map.mapId] = map;
-            }
-        }
-    }
-
-    public MapData GetMapById(string mapId)
-    {
-        return mapDict.TryGetValue(mapId, out var map) ? map : null;
-    }
-
     public void LoadMap(string mapId)
     {
-        var map = GetMapById(mapId);
+        var map = MapDataManager.Instance.GetMapById(mapId);
         if (map == null)
         {
             Debug.LogError($"Map not found: {mapId}");
@@ -133,13 +116,7 @@ public class MapManager : MonoBehaviour
             spriteRenderer.sprite = GetSpriteForTileType(tile.tileType, tile.tileSprite);
             spriteRenderer.sortingOrder = 0;
         }
-
-        var collider = tileObj.GetComponent<Collider2D>();
-        if (collider != null)
-        {
-            collider.enabled = !tile.isWalkable;
-        }
-
+        
         tileGameObjects[tile.gridPosition] = tileObj;
     }
 
