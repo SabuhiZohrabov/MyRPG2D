@@ -19,7 +19,6 @@ public class MapCameraController : MonoBehaviour
 
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero;
-    private bool isFollowingPlayer = true;
 
     void Awake()
     {
@@ -84,7 +83,6 @@ public class MapCameraController : MonoBehaviour
 
         if (panInput)
         {
-            isFollowingPlayer = false;
             Vector3 moveAmount = panDirection.normalized * panSpeed * Time.deltaTime;
             targetPosition = transform.position + moveAmount;
             ClampToMapBounds();
@@ -117,8 +115,6 @@ public class MapCameraController : MonoBehaviour
 
     public void OnPlayerMoved(Vector3 playerWorldPosition)
     {
-        if (!isFollowingPlayer) return;
-
         targetPosition = playerWorldPosition;
         targetPosition.z = mapCamera.transform.position.z; // Keep camera Z
         ClampToMapBounds();
@@ -134,8 +130,6 @@ public class MapCameraController : MonoBehaviour
             targetPosition = playerWorld;
             targetPosition.z = mapCamera.transform.position.z;
             ClampToMapBounds();
-
-            isFollowingPlayer = true;
         }
     }
 
@@ -153,15 +147,6 @@ public class MapCameraController : MonoBehaviour
     {
         mapBounds = newBounds;
         ClampToMapBounds();
-    }
-
-    public void SetFollowMode(bool followPlayer)
-    {
-        isFollowingPlayer = followPlayer;
-        if (followPlayer)
-        {
-            CenterOnCurrentPlayer();
-        }
     }
 
     public void SetCameraSize(float newSize)
@@ -186,18 +171,6 @@ public class MapCameraController : MonoBehaviour
         }
 
         velocity = Vector3.zero; // Reset velocity for smooth movement
-    }
-
-    // Debug method
-    [ContextMenu("Center on Player")]
-    public void DebugCenterOnPlayer()
-    {
-        CenterOnCurrentPlayer();
-    }
-
-    public bool IsFollowingPlayer()
-    {
-        return isFollowingPlayer;
     }
 
     public Vector3 GetTargetPosition()
