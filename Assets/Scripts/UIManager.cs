@@ -40,15 +40,6 @@ public class UIManager : MonoBehaviour
         CloseAllPanels();
         if (adventurePanel != null)
             adventurePanel.SetActive(true);
-        var player = TurnManager.Instance.fighterDataList.FirstOrDefault(f => f.isPlayer);
-        if (player != null)
-        {
-            DatabaseManager.LoadStatsToCharacter(player.characterStats);
-        }
-        else
-        {
-            Debug.LogWarning("Player not found in fighterDataList!");
-        }
     }
 
     public void OpenPanel(string panelName)

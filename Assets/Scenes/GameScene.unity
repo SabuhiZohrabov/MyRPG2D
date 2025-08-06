@@ -5610,17 +5610,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapCamera: {fileID: 494435650}
-  followSpeed: 2
   smoothTime: 0.3
   viewportSize: 8
   mapBounds: {x: 12, y: 8}
   allowManualPan: 1
-  panSpeed: 5
-  panUpKey: 119
-  panDownKey: 115
-  panLeftKey: 97
-  panRightKey: 100
-  resetViewKey: 32
+  panSpeed: 1
+  mapContainer: {fileID: 2024282959}
 --- !u!1 &1155762787
 GameObject:
   m_ObjectHideFlags: 0
@@ -6933,31 +6928,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b059d01f59ac304285bf4cbfdc4f068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportAnimationDuration: 0.5
-  teleportCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1537597737
 GameObject:
   m_ObjectHideFlags: 0
@@ -8347,33 +8317,6 @@ MonoBehaviour:
   playerIconPrefab: {fileID: 1387342099158820919, guid: b3bfd876d9985084281ce94a1d99983b, type: 3}
   playerIconParent: {fileID: 2024282960}
   iconScale: 0.8
-  bounceHeight: 0.2
-  bounceSpeed: 2
-  moveAnimationDuration: 0.3
-  moveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1924135116
 GameObject:
   m_ObjectHideFlags: 0

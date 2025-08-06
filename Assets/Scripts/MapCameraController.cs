@@ -6,16 +6,16 @@ public class MapCameraController : MonoBehaviour
 
     [Header("Camera Settings")]
     [SerializeField] private Camera mapCamera;
-    //[SerializeField] private float followSpeed = 2f;
     [SerializeField] private float smoothTime = 0.3f;
 
     [Header("View Settings")]
     [SerializeField] private float viewportSize = 8f; // Orthosize
     [SerializeField] private Vector2 mapBounds = new Vector2(12, 8); // Map limits
 
-    [Header("Pan Settings")]
+    [Header("Input Settings")]
     [SerializeField] private bool allowManualPan = false; // Disable input for now
-    [SerializeField] private float panSpeed = 5f;
+    [SerializeField] private float panSpeed = 1f;
+    [SerializeField] private GameObject mapContainer;
 
     private Vector3 targetPosition;
     private Vector3 velocity = Vector3.zero;
@@ -58,45 +58,13 @@ public class MapCameraController : MonoBehaviour
 
     void HandleInput()
     {
-        if (!allowManualPan) return;
-
-        bool panInput = false;
-        Vector3 panDirection = Vector3.zero;
-
-        // Manual pan controls - Input System compatible
-#if ENABLE_INPUT_SYSTEM
-        var keyboard = UnityEngine.InputSystem.Keyboard.current;
-        if (keyboard != null)
+        if (allowManualPan && Input.GetMouseButton(0) && mapContainer.activeSelf)
         {
-            if (keyboard.wKey.isPressed) { panDirection += Vector3.up; panInput = true; }
-            if (keyboard.sKey.isPressed) { panDirection += Vector3.down; panInput = true; }
-            if (keyboard.aKey.isPressed) { panDirection += Vector3.left; panInput = true; }
-            if (keyboard.dKey.isPressed) { panDirection += Vector3.right; panInput = true; }
-        }
-#else
-        // Legacy Input System
-        if (Input.GetKey(KeyCode.W)) { panDirection += Vector3.up; panInput = true; }
-        if (Input.GetKey(KeyCode.S)) { panDirection += Vector3.down; panInput = true; }
-        if (Input.GetKey(KeyCode.A)) { panDirection += Vector3.left; panInput = true; }
-        if (Input.GetKey(KeyCode.D)) { panDirection += Vector3.right; panInput = true; }
-#endif
-
-        if (panInput)
-        {
-            Vector3 moveAmount = panDirection.normalized * panSpeed * Time.deltaTime;
-            targetPosition = transform.position + moveAmount;
+            Vector3 mouseDelta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0) * panSpeed;
+            targetPosition -= mouseDelta;
             ClampToMapBounds();
         }
-
-        // Reset to follow player on space
-#if ENABLE_INPUT_SYSTEM
-        if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
-#else
-        if (Input.GetKeyDown(KeyCode.Space))
-#endif
-        {
-            CenterOnCurrentPlayer();
-        }
+        // Optionally handle zoom or other inputs here
     }
 
     void UpdateCameraPosition()
