@@ -8,7 +8,13 @@ public class MainMenuController : MonoBehaviour
     public void StartGame()
     {
         if (!Application.isPlaying) return;
-        
+        StoryManager.SelectedStoryId = "DemonBlood";
+        SceneManager.LoadScene("GameScene");
+    }
+    public void StartTestGame()
+    {
+        if (!Application.isPlaying) return;
+        StoryManager.SelectedStoryId = "";
         SceneManager.LoadScene("GameScene");
     }
 

@@ -30,7 +30,7 @@ public class DatabaseManager
 
     private string GetDbFileName()
     {
-        return StoryManager.SelectedStoryId + "_gamedata.db";
+        return StoryManager.SelectedStoryId + "Gamedata.db";
     }
 
     private DatabaseManager()
@@ -383,20 +383,21 @@ public class DatabaseManager
         {
             CloseConnection();
 
-            string dbPath = Path.Combine(Application.persistentDataPath, GetDbFileName());
-            if (System.IO.File.Exists(dbPath))
+            // Find all database files (files ending with "_gamedata.db")
+            string[] dbFiles = Directory.GetFiles(Application.persistentDataPath, "*.db");
+
+            // Delete each database file
+            foreach (string dbFilePath in dbFiles)
             {
-                System.IO.File.Delete(dbPath);
-                Debug.Log("[SQLite] Database file deleted. It will be recreated on next run.");
-            }
-            else
-            {
-                Debug.LogWarning("[SQLite] Database file does not exist.");
+                if (System.IO.File.Exists(dbFilePath))
+                {
+                    System.IO.File.Delete(dbFilePath);
+                }
             }
 
-            // initialize a new connection
+            // Reset initialization flag and create new connection
             _isInitialized = false;
-            InitializeDatabase();
+            //InitializeDatabase();
         }
         catch (Exception e)
         {

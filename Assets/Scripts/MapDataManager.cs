@@ -14,7 +14,7 @@ public class MapDataManager : MonoBehaviour
     public static MapDataManager Instance { get; private set; }
 
     [Header("File Settings")]
-    [SerializeField] private string mapsFileName = "game_maps.json";
+    private string mapsFileName = StoryManager.SelectedStoryId + "Gamemaps.json";
     [SerializeField] private bool useStreamingAssets = true; // Development
     [SerializeField] private bool usePersistentData = false; // Runtime saves
 
@@ -129,17 +129,17 @@ public class MapDataManager : MonoBehaviour
         CreateDefaultTiles(mainWorld);
         mapCollection.maps.Add(mainWorld);
 
-        // Create underground map
-        var underground = new MapData
-        {
-            mapId = "underground",
-            mapName = "Underground",
-            width = 10,
-            height = 6
-        };
+        //// Create underground map
+        //var underground = new MapData
+        //{
+        //    mapId = "underground",
+        //    mapName = "Underground",
+        //    width = 10,
+        //    height = 6
+        //};
 
-        CreateDefaultTiles(underground, TileType.Cave);
-        mapCollection.maps.Add(underground);
+        //CreateDefaultTiles(underground, TileType.Cave);
+        //mapCollection.maps.Add(underground);
     }
 
     void CreateDefaultTiles(MapData map, TileType defaultType = TileType.Grass)
@@ -240,24 +240,6 @@ public class MapDataManager : MonoBehaviour
         }
     }
 
-    // Manual backup
-    [ContextMenu("Create Backup")]
-    public void CreateBackup()
-    {
-        if (mapCollection == null) return;
-
-        string backupPath = filePath.Replace(".json", $"_backup_{System.DateTime.Now:yyyyMMdd_HHmmss}.json");
-        try
-        {
-            string jsonContent = JsonUtility.ToJson(mapCollection, true);
-            File.WriteAllText(backupPath, jsonContent);
-            Debug.Log($"[MapDataManager] Backup created: {backupPath}");
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"[MapDataManager] Backup failed: {e.Message}");
-        }
-    }
 
     void OnApplicationPause(bool pauseStatus)
     {
@@ -291,29 +273,6 @@ public class MapDataManager : MonoBehaviour
         else
         {
             Debug.LogWarning("MapDataManager instance not found");
-        }
-    }
-
-    [UnityEditor.MenuItem("Tools/Map System/Create Backup")]
-    static void CreateBackupMenuItem()
-    {
-        if (Instance != null)
-        {
-            Instance.CreateBackup();
-        }
-    }
-
-    [UnityEditor.MenuItem("Tools/Map System/Open Maps Folder")]
-    static void OpenMapsFolder()
-    {
-        string path = Path.Combine(Application.streamingAssetsPath);
-        if (Directory.Exists(path))
-        {
-            UnityEditor.EditorUtility.RevealInFinder(path);
-        }
-        else
-        {
-            Debug.LogWarning("StreamingAssets folder not found");
         }
     }
 #endif
