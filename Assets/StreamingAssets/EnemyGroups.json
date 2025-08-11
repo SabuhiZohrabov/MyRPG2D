@@ -1,0 +1,9 @@
+{
+    "enemyGroups": [
+        {
+            "groupId": "forest_rabbits",
+            "groupName": "Rabbits(4)",
+            "enemies": []
+        }
+    ]
+}

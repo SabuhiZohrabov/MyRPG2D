@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\FighterModel.cs" />
     <Compile Include="Assets\Scripts\AdventureManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+    <Compile Include="Assets\Scripts\EnemyGroupData.cs" />
     <Compile Include="Assets\Scripts\EnemySO.cs" />
     <Compile Include="Assets\Scripts\SkillManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
