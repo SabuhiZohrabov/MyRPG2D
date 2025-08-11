@@ -6,7 +6,6 @@ using UnityEngine;
 public class AddedEnemyData
 {
     public string enemyID;
-    public string enemyName;
     public int spawnWeight = 1; 
 }
 
@@ -16,7 +15,9 @@ public class EnemyGroup
     public string groupId;
     public string groupName;
     public List<AddedEnemyData> enemies = new List<AddedEnemyData>();
-
+    public bool randomSelection = false; // Enable random selection from group
+    public int minEnemyCount = 1; // Minimum number of enemies to spawn from group
+    public int maxEnemyCount = 3; // Maximum number of enemies to spawn from group
 }
 
 [System.Serializable]
@@ -43,31 +44,30 @@ public class EnemyGroupData : ScriptableObject
         return null;
     }
     
-    // Get random enemies from group
-    public List<AddedEnemyData> GetRandomEnemiesFromGroup(string groupId)
+    // Get enemies from group based on group settings
+    public List<AddedEnemyData> GetEnemiesFromGroup(string groupId)
     {
         EnemyGroup group = GetEnemyGroup(groupId);
-        if (group == null)
+        if (group == null || group.enemies.Count == 0)
             return new List<AddedEnemyData>();
             
         List<AddedEnemyData> selectedEnemies = new List<AddedEnemyData>();
-        List<AddedEnemyData> availableEnemies = group.enemies;
-
-        for (int i = 0; i < group.enemies.Count; i++)
+        
+        // Determine how many enemies to spawn
+        int enemiesToSpawn = Random.Range(group.minEnemyCount, group.maxEnemyCount + 1);
+        
+        if (group.randomSelection)
         {
-            if (availableEnemies.Count == 0)
-                break;
-
-            // Select enemy based on weight
-            AddedEnemyData selectedEnemy = SelectEnemyByWeight(availableEnemies);
-            
-            // Add random count of this enemy
-            int enemyCount = Random.Range(selectedEnemy.minCount, selectedEnemy.maxCount + 1);
-            for (int j = 0; j < enemyCount && selectedEnemies.Count < group.enemies.Count; j++)
+            // Random selection with weight
+            for (int i = 0; i < enemiesToSpawn; i++)
             {
+                AddedEnemyData selectedEnemy = SelectEnemyByWeight(group.enemies);
                 selectedEnemies.Add(selectedEnemy);
             }
-            
+        }
+        else
+        {
+            selectedEnemies = group.enemies;
         }
         
         return selectedEnemies;

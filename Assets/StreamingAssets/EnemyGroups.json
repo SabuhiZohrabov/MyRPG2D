@@ -3,7 +3,44 @@
         {
             "groupId": "forest_rabbits",
             "groupName": "Rabbits(4)",
-            "enemies": []
+            "enemies": [
+                {
+                    "enemyID": "rabbit",
+                    "spawnWeight": 2
+                },
+                {
+                    "enemyID": "rabbit",
+                    "spawnWeight": 2
+                },
+                {
+                    "enemyID": "rabbit",
+                    "spawnWeight": 2
+                },
+                {
+                    "enemyID": "rabbit",
+                    "spawnWeight": 2
+                }
+            ],
+            "randomSelection": false,
+            "minEnemyCount": 1,
+            "maxEnemyCount": 3
+        },
+        {
+            "groupId": "forest_animal",
+            "groupName": "Forest animal",
+            "enemies": [
+                {
+                    "enemyID": "rabbit",
+                    "spawnWeight": 2
+                },
+                {
+                    "enemyID": "wolf",
+                    "spawnWeight": 1
+                }
+            ],
+            "randomSelection": true,
+            "minEnemyCount": 4,
+            "maxEnemyCount": 4
         }
     ]
 }
