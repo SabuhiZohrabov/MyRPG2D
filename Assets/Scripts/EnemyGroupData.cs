@@ -158,17 +158,17 @@ public class EnemyGroupData : ScriptableObject
     }
     
     // Auto-save when data changes in editor
-    private void OnValidate()
-    {
-        #if UNITY_EDITOR
-        if (!Application.isPlaying)
-        {
-            UnityEditor.EditorApplication.delayCall += () =>
-            {
-                if (this != null)
-                    SaveToJson();
-            };
-        }
-        #endif
-    }
+    //private void OnValidate()
+    //{
+    //    #if UNITY_EDITOR
+    //    if (!Application.isPlaying)
+    //    {
+    //        UnityEditor.EditorApplication.delayCall += () =>
+    //        {
+    //            if (this != null)
+    //                SaveToJson();
+    //        };
+    //    }
+    //    #endif
+    //}
 }

@@ -12,9 +12,10 @@
     },
     {
       "id": "forest",
-      "text": "You see a Goblin\n<link=\"goblin\"><color=red>Fight</color></link>\n<link=\"mountain\"><color=blue>Run</color></link>",
+      "text": "You see a animals \n<link=\"forest_animal\"><color=red>Attack Forest animal</color></link>\n<link=\"forest_rabbits\"><color=red>Attack Rabbits</color></link>\n<link=\"mountain\"><color=blue>Run</color></link>",
       "links": [
-        { "linkID": "goblin", "type": "2" },
+        { "linkID": "forest_animal", "type": "2" },
+        { "linkID": "forest_rabbits", "type": "2" },
         { "linkID": "mountain", "type": "0" }
       ],
       "nextLinkOnVictory": "forest",

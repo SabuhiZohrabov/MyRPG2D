@@ -3515,6 +3515,7 @@ MonoBehaviour:
   playerStats: {fileID: 730654756}
   adventureTMP: {fileID: 658598271}
   enemySOList: {fileID: 11400000, guid: 6773cdbb51abc15488f07a80f95932bb, type: 2}
+  enemyGroup: {fileID: 11400000, guid: e34f3f37db5049c438de2327cc253560, type: 2}
   currentAdventureTextData:
     id: 
     text: 
@@ -5821,7 +5822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb16b266015d5149b1f6da6791aae60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapsFileName: game_maps.json
   useStreamingAssets: 1
   usePersistentData: 0
 --- !u!1 &1165180190

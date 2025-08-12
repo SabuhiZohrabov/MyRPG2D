@@ -13,6 +13,7 @@ public class AdventureManager : MonoBehaviour
     //public AdventureTextDatabase textDatabase;
     public TextMeshProUGUI adventureTMP;
     public EnemySOList enemySOList;
+    public EnemyGroupData enemyGroup;
 
     private List<AdventureTextData> textDatabase = new List<AdventureTextData>();
 
@@ -56,15 +57,21 @@ public class AdventureManager : MonoBehaviour
     {
         if (!Application.isPlaying) return;
 
-        EnemySO enemySO = enemySOList.GetEnemyById(linkID);
-        if (enemySO == null)
+        List<AddedEnemyData> enemyGroupList = enemyGroup.GetEnemiesFromGroup(linkID);
+        if (enemyGroupList == null || enemyGroupList.Count == 0)
         {
             Debug.LogWarning($"No enemy found with id: {linkID}");
             return;
         }
+        List<FighterData> fighterDataList = new List<FighterData>();
+        foreach (AddedEnemyData enemyData in enemyGroupList)
+        {
+            EnemySO enemySO = enemySOList.GetEnemyById(enemyData.enemyID);
+            FighterData model = new FighterData(enemySO);
+            fighterDataList.Add(model);
+        }
 
-        FighterData model = new FighterData(enemySO);
-        TurnManager.Instance.SpawnDynamicEnemies(new List<FighterData> { model });
+        TurnManager.Instance.SpawnDynamicEnemies(fighterDataList);
         TurnManager.Instance.currentAdventureText = currentAdventureTextData;
 
         adventurePanel.SetActive(false);
