@@ -107,6 +107,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Scripts\AdventureTextData.cs" />
     <Compile Include="Assets\Scripts\InventoryManager.cs" />
+    <Compile Include="Assets\Scripts\ItemGroupData.cs" />
     <Compile Include="Assets\Scripts\InventoryTester.cs" />
     <Compile Include="Assets\Scripts\InventoryPanelUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />

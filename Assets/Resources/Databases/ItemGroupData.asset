@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 775e19a15b1c5394080052524400ff82, type: 3}
+  m_Name: ItemGroupData
+  m_EditorClassIdentifier: 
+  itemGroups:
+  - groupId: tatke_big_club
+    groupName: Take big club
+    items:
+    - itemId: big_club
+      minCount: 1
+      maxCount: 1
+  - groupId: take_some_healing
+    groupName: Take healing potions
+    items:
+    - itemId: minihealthpotion
+      minCount: 0
+      maxCount: 2

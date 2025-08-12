@@ -6,7 +6,8 @@ public enum AdventureTextType
     Narration=0,
     Dialog=1,
     Battle=2,
-    Quest=3
+    Quest=3,
+    Item=4
 }
 
 [Serializable]
