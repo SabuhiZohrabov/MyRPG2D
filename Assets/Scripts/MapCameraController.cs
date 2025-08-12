@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MapCameraController : MonoBehaviour
 {
@@ -58,10 +59,10 @@ public class MapCameraController : MonoBehaviour
 
     void HandleInput()
     {
-        if (allowManualPan && Input.GetMouseButton(0) && mapContainer.activeSelf)
+        if (allowManualPan && Mouse.current != null && Mouse.current.leftButton.isPressed && mapContainer.activeSelf)
         {
-            Vector3 mouseDelta = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"), 0) * panSpeed;
-            targetPosition -= mouseDelta;
+            Vector2 mouseDelta = Mouse.current.delta.ReadValue() * panSpeed * Time.deltaTime;
+            targetPosition -= new Vector3(mouseDelta.x, mouseDelta.y, 0);
             ClampToMapBounds();
         }
         // Optionally handle zoom or other inputs here
