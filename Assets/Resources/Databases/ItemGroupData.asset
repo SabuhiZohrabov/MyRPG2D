@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ItemGroupData
   m_EditorClassIdentifier: 
   itemGroups:
-  - groupId: tatke_big_club
-    groupName: Take big club
+  - groupId: take_wooden_staff
+    groupName: Take wooden staff
     items:
-    - itemId: big_club
+    - itemId: woodenstaff
       minCount: 1
       maxCount: 1
   - groupId: take_some_healing
@@ -25,3 +25,12 @@ MonoBehaviour:
     - itemId: minihealthpotion
       minCount: 0
       maxCount: 2
+  - groupId: take_reward
+    groupName: Take reward
+    items:
+    - itemId: minihealthpotion
+      minCount: 0
+      maxCount: 2
+    - itemId: shortsword
+      minCount: 0
+      maxCount: 1

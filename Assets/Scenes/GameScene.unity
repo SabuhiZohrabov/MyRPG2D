@@ -3516,6 +3516,7 @@ MonoBehaviour:
   adventureTMP: {fileID: 658598271}
   enemySOList: {fileID: 11400000, guid: 6773cdbb51abc15488f07a80f95932bb, type: 2}
   enemyGroup: {fileID: 11400000, guid: e34f3f37db5049c438de2327cc253560, type: 2}
+  itemGroupData: {fileID: 11400000, guid: 50746fe54519a8b439b942ba41816655, type: 2}
   currentAdventureTextData:
     id: 
     text: 

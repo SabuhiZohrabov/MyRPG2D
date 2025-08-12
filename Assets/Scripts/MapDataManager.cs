@@ -262,18 +262,18 @@ public class MapDataManager : MonoBehaviour
         SaveMapsToFile();
     }
 
-#if UNITY_EDITOR
-    [UnityEditor.MenuItem("Tools/Map System/Force Save Maps")]
-    static void ForceSaveMaps()
-    {
-        if (Instance != null)
-        {
-            Instance.ForceSave();
-        }
-        else
-        {
-            Debug.LogWarning("MapDataManager instance not found");
-        }
-    }
-#endif
+//#if UNITY_EDITOR
+//    [UnityEditor.MenuItem("Tools/Map System/Force Save Maps")]
+//    static void ForceSaveMaps()
+//    {
+//        if (Instance != null)
+//        {
+//            Instance.ForceSave();
+//        }
+//        else
+//        {
+//            Debug.LogWarning("MapDataManager instance not found");
+//        }
+//    }
+//#endif
 }

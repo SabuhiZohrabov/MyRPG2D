@@ -24,8 +24,22 @@
     },
     {
       "id": "mountain",
-      "text": "You escaped <link=\"forest\"><color=red>Continue</color></link>",
+      "text": "You escaped \n<link=\"forest\"><color=red>Get back</color></link> \n<link=\"town\"><color=red>Continue</color></link>",
       "links": [
+        { "linkID": "forest", "type": "0" },
+        { "linkID": "town", "type": "0" }
+      ],
+      "nextLinkOnVictory": "forest",
+      "mapId": "main_world",
+      "mapPosition": { "x": 5, "y": 4 }
+    },
+    {
+      "id": "town",
+      "text": "You found Items \n<link=\"take_wooden_staff\"><color=red>Take staff</color></link> \n<link=\"take_some_healing\"><color=red>Take potions</color></link> \n<link=\"take_reward\"><color=red>Take Items</color></link> \n<link=\"forest\"><color=red>Continue</color></link>",
+      "links": [
+        { "linkID": "take_wooden_staff", "type": "4" },
+        { "linkID": "take_some_healing", "type": "4" },
+        { "linkID": "take_reward", "type": "4" },
         { "linkID": "forest", "type": "0" }
       ],
       "nextLinkOnVictory": "forest",

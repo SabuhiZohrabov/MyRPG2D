@@ -495,7 +495,7 @@
                         "x": 8,
                         "y": 3
                     },
-                    "tileType": 0,
+                    "tileType": 6,
                     "tileSprite": {
                         "instanceID": 0
                     },

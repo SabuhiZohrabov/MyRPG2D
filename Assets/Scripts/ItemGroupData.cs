@@ -58,7 +58,7 @@ public class ItemGroupData : ScriptableObject
 
             if (itemData.maxCount > itemData.minCount)
             {
-                count = Random.Range(itemData.minCount, itemData.maxCount);
+                count = Random.Range(itemData.minCount, itemData.maxCount+1);
             }
 
             // If count is greater than 0, add to result

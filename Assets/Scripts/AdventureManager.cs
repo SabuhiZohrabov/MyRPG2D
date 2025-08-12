@@ -14,6 +14,7 @@ public class AdventureManager : MonoBehaviour
     public TextMeshProUGUI adventureTMP;
     public EnemySOList enemySOList;
     public EnemyGroupData enemyGroup;
+    public ItemGroupData itemGroupData;
 
     private List<AdventureTextData> textDatabase = new List<AdventureTextData>();
 
@@ -143,6 +144,9 @@ public class AdventureManager : MonoBehaviour
                 break;
             case AdventureTextType.Quest:
                 QuestManager.Instance.AcceptQuest(linkID);
+                break;                
+            case AdventureTextType.Item:
+                AddItemGroupToInventory(linkID);
                 break;
         }
     }
@@ -169,5 +173,42 @@ public class AdventureManager : MonoBehaviour
     public List<AdventureTextData> GetAdventuresForMap(string mapId)
     {
         return textDatabase.Where(a => a.mapId == mapId).ToList();
+    }
+    
+    // Add items from item group to inventory
+    private void AddItemGroupToInventory(string groupId)
+    {
+        if (itemGroupData == null)
+        {
+            Debug.LogError("ItemGroupData reference is null!");
+            return;
+        }
+        
+        Dictionary<string, int> itemsToAdd = itemGroupData.GetItemsFromGroup(groupId);
+        
+        if (itemsToAdd.Count == 0)
+        {
+            Debug.LogWarning($"No items found for group ID: {groupId}");
+            return;
+        }
+        
+        // Add each item to inventory
+        foreach (var item in itemsToAdd)
+        {
+            string itemId = item.Key;
+            int itemCount = item.Value;
+            
+            // Add to inventory using inventory system
+            if (InventoryManager.Instance != null)
+            {
+                InventoryManager.Instance.AddItem(itemId, itemCount);
+            }
+            else
+            {
+                Debug.LogError("InventoryManager instance is null!");
+            }
+        }
+        
+        Debug.Log($"Added items from group '{groupId}' to inventory");
     }
 }
