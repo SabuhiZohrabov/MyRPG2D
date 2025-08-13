@@ -70,7 +70,7 @@ public class MapDataManager : MonoBehaviour
         string jsonContent = JsonUtility.ToJson(mapCollection, true);
         
         // Save to persistent data path (writable location)
-        string savePath = Path.Combine(Application.persistentDataPath, fileName + ".json");
+        string savePath = Path.Combine(Application.streamingAssetsPath, fileName + ".json");
         
         try
         {

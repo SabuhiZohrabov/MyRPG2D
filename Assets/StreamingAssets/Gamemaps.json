@@ -11,7 +11,7 @@
                         "x": 0,
                         "y": 0
                     },
-                    "tileType": 3,
+                    "tileType": 5,
                     "tileSprite": {
                         "instanceID": 0
                     },
@@ -22,7 +22,7 @@
                         "x": 1,
                         "y": 0
                     },
-                    "tileType": 3,
+                    "tileType": 5,
                     "tileSprite": {
                         "instanceID": 0
                     },
