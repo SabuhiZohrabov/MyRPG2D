@@ -60,9 +60,27 @@ public class MapDataManager : MonoBehaviour
 
     public void SaveMapsToFile()
     {
-        // Maps are loaded from Resources (read-only)
-        // Runtime map modifications are not supported
-        Debug.LogWarning("[MapDataManager] SaveMapsToFile: Maps are loaded from Resources and cannot be saved at runtime");
+        if (mapCollection == null)
+        {
+            Debug.LogError("[MapDataManager] No map data to save");
+            return;
+        }
+
+        string fileName = StoryManager.SelectedStoryId + "Gamemaps";
+        string jsonContent = JsonUtility.ToJson(mapCollection, true);
+        
+        // Save to persistent data path (writable location)
+        string savePath = Path.Combine(Application.persistentDataPath, fileName + ".json");
+        
+        try
+        {
+            File.WriteAllText(savePath, jsonContent);
+            Debug.Log($"[MapDataManager] Successfully saved {mapCollection.maps.Count} maps to {savePath}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"[MapDataManager] Failed to save maps to file: {e.Message}");
+        }
     }
 
 
@@ -84,7 +102,18 @@ public class MapDataManager : MonoBehaviour
 
     public void UpdateMap(MapData updatedMap)
     {
-        Debug.LogWarning("[MapDataManager] UpdateMap: Runtime map modifications are not supported when loading from Resources");
+        if (mapCollection?.maps == null) return;
+
+        int index = mapCollection.maps.FindIndex(m => m.mapId == updatedMap.mapId);
+        if (index >= 0)
+        {
+            mapCollection.maps[index] = updatedMap;
+            //SaveMapsToFile();
+        }
+        else
+        {
+            Debug.LogWarning($"[MapDataManager] Map '{updatedMap.mapId}' not found for update");
+        }
     }
 
     public void DeleteMap(string mapId)
@@ -95,7 +124,10 @@ public class MapDataManager : MonoBehaviour
     // Force save (for editor)
     public void ForceSave()
     {
-        Debug.LogWarning("[MapDataManager] ForceSave: Maps are loaded from Resources and cannot be saved at runtime");
+        if (mapCollection != null)
+        {
+            SaveMapsToFile();
+        }
     }
 
 //#if UNITY_EDITOR

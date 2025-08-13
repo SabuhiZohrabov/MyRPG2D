@@ -411,7 +411,7 @@
                     "tileSprite": {
                         "instanceID": 0
                     },
-                    "isWalkable": true
+                    "isWalkable": false
                 },
                 {
                     "gridPosition": {
