@@ -41,10 +41,11 @@ public class AdventureManager : MonoBehaviour
         // Initial load without triggering map movement
         AdventureTextData data = textDatabase.Find(t => t.id == startAdventureId);
         currentAdventureTextData = data;
-        string targetMapId = data.mapId;
-        Vector2Int targetPosition = data.mapPosition;
+        
         if (data != null)
         {
+            string targetMapId = data.mapId;
+            Vector2Int targetPosition = data.mapPosition;
             adventureTMP.text = data.text;
 
             if (PlayerMapVisualizer.Instance != null)

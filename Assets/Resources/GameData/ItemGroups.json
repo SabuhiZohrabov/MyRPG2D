@@ -1,0 +1,42 @@
+{
+    "itemGroups": [
+        {
+            "groupId": "take_wooden_staff",
+            "groupName": "Take wooden staff",
+            "items": [
+                {
+                    "itemId": "woodenstaff",
+                    "minCount": 1,
+                    "maxCount": 1
+                }
+            ]
+        },
+        {
+            "groupId": "take_some_healing",
+            "groupName": "Take healing potions",
+            "items": [
+                {
+                    "itemId": "minihealthpotion",
+                    "minCount": 0,
+                    "maxCount": 2
+                }
+            ]
+        },
+        {
+            "groupId": "take_reward",
+            "groupName": "Take reward",
+            "items": [
+                {
+                    "itemId": "minihealthpotion",
+                    "minCount": 0,
+                    "maxCount": 2
+                },
+                {
+                    "itemId": "shortsword",
+                    "minCount": 0,
+                    "maxCount": 1
+                }
+            ]
+        }
+    ]
+}

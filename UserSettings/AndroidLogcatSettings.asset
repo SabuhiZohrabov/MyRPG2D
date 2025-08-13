@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "da1ef613",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 17874,
+        "processId": 4083,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,37 +11,31 @@
         {
             "deviceId": "da1ef613",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 28522,
-            "exited": false
-        },
-        {
-            "deviceId": "da1ef613",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 14728,
-            "exited": false
-        },
-        {
-            "deviceId": "da1ef613",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 6281,
-            "exited": false
-        },
-        {
-            "deviceId": "da1ef613",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 26937,
-            "exited": false
-        },
-        {
-            "deviceId": "da1ef613",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 15229,
-            "exited": false
-        },
-        {
-            "deviceId": "da1ef613",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 17874,
+            "exited": true
+        },
+        {
+            "deviceId": "da1ef613",
+            "name": "com.miui.home",
+            "processId": 8031,
+            "exited": true
+        },
+        {
+            "deviceId": "da1ef613",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 28127,
+            "exited": true
+        },
+        {
+            "deviceId": "da1ef613",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 694,
+            "exited": true
+        },
+        {
+            "deviceId": "da1ef613",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 4083,
             "exited": false
         }
     ],
