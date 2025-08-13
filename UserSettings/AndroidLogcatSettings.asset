@@ -3,7 +3,7 @@
     "m_SelectedProcess": {
         "deviceId": "da1ef613",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 4083,
+        "processId": 12156,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,12 @@
             "deviceId": "da1ef613",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 4083,
+            "exited": false
+        },
+        {
+            "deviceId": "da1ef613",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 12156,
             "exited": false
         }
     ],
