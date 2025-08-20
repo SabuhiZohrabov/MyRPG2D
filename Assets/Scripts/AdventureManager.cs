@@ -104,50 +104,50 @@ public class AdventureManager : MonoBehaviour
     {
         if (!Application.isPlaying) return;
 
-        //AdventureTextData data = textDatabase.Find(t => t.text.Contains($"<link=\"{linkID}\""));
-        //currentAdventureTextData = data; // Store the current text data for later use
-        //if (data == null)
-        //{
-        //    Debug.LogWarning($"No adventure text found that contains linkID: {linkID}");
-        //    return;
-        //}
-
         AdventureTextType resolvedType = AdventureTextType.Narration;
+        string objectID = string.Empty;
+        string nextLinkID = string.Empty;
 
         if (currentAdventureTextData.links != null)
         {
             AdventureLink foundLink = currentAdventureTextData.links.Find(l => l.linkID == linkID);
             if (foundLink != null)
+            {
+                // If the link is found, use its type
                 resolvedType = foundLink.type;
+                objectID = foundLink.objectID;
+                nextLinkID = foundLink.nextLinkID;
+            }
+            else
+            {
+                Debug.LogWarning($"No link found with ID: {linkID} in current adventure text.");
+            }
         }
 
         // Map integration - notify map system before processing link
-        OnLinkClicked?.Invoke(linkID);
+        OnLinkClicked?.Invoke(nextLinkID);
+
+        //Move player first, then show text
+        if (AdventureMapSyncer.Instance != null)
+        {
+            var targetAdventure = GetAdventureById(nextLinkID);
+            if (targetAdventure != null)
+            {
+                AdventureMapSyncer.Instance.MovePlayerToAdventure(targetAdventure);
+            }
+        }
+        ShowTextById(nextLinkID);
 
         switch (resolvedType)
         {
-            case AdventureTextType.Narration:
-            case AdventureTextType.Dialog:
-                // Move player first, then show text
-                if (AdventureMapSyncer.Instance != null)
-                {
-                    var targetAdventure = GetAdventureById(linkID);
-                    if (targetAdventure != null)
-                    {
-                        AdventureMapSyncer.Instance.MovePlayerToAdventure(targetAdventure);
-                    }
-                }
-                ShowTextById(linkID);
-                break;
-
             case AdventureTextType.Battle:
-                OnEnemyLinkClicked(linkID);
+                OnEnemyLinkClicked(objectID);
                 break;
             case AdventureTextType.Quest:
-                QuestManager.Instance.AcceptQuest(linkID);
+                QuestManager.Instance.AcceptQuest(objectID);
                 break;                
             case AdventureTextType.Item:
-                AddItemGroupToInventory(linkID);
+                AddItemGroupToInventory(objectID);
                 break;
         }
     }

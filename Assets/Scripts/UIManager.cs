@@ -112,6 +112,6 @@ public class UIManager : MonoBehaviour
         CloseAllPanels();
         if (adventurePanel != null)
             adventurePanel.SetActive(true);
-        AdventureManager.Instance.ShowTextById(AdventureManager.Instance.currentAdventureTextData.nextLinkOnVictory);
+        //AdventureManager.Instance.ShowTextById(AdventureManager.Instance.currentAdventureTextData.nextLinkOnVictory);
     }
 }

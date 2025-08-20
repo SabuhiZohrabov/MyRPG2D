@@ -14,7 +14,9 @@ public enum AdventureTextType
 public class AdventureLink
 {
     public string linkID;                   // e.g. "goblin", "npc", "cave"
+    public string nextLinkID;                   // e.g. "goblin", "npc", "cave"
     public AdventureTextType type;          // e.g. Battle, Dialog, Narration
+    public string objectID;                 // e.g. "item", "enemy", "quest" etc
 }
 [Serializable]
 public class AdventureTextData
@@ -23,8 +25,8 @@ public class AdventureTextData
     [TextArea(3, 10)]
     public string text;    // the adventure message to show in UI
     public List<AdventureLink> links = new List<AdventureLink>();
-    [TextArea(3, 10)]
-    public string nextLinkOnVictory;
+    //[TextArea(3, 10)]
+    //public string nextLinkOnVictory;
     //map
     public string mapId;
     public Vector2Int mapPosition;

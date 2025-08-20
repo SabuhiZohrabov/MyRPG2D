@@ -4,21 +4,19 @@
       "id": "start_adventure",
       "text": "Game Begins\nYou see a forest\n<link=\"forest\"><color=red>Enter</color></link>",
       "links": [
-        { "linkID": "forest", "type": "0" }
+        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
       ],
-      "nextLinkOnVictory": "",
       "mapId": "main_world",
       "mapPosition": { "x": 1, "y": 1 }
     },
     {
       "id": "forest",
-      "text": "You see a animals \n<link=\"forest_animal\"><color=red>Attack Forest animal</color></link>\n<link=\"forest_rabbits\"><color=red>Attack Rabbits</color></link>\n<link=\"mountain\"><color=blue>Run</color></link>",
+      "text": "You see a animals \n<link=\"forest1\"><color=red>Attack Forest animal</color></link>\n<link=\"forest2\"><color=red>Attack Rabbits</color></link>\n<link=\"mountain\"><color=blue>Run</color></link>",
       "links": [
-        { "linkID": "forest_animal", "type": "2" },
-        { "linkID": "forest_rabbits", "type": "2" },
-        { "linkID": "mountain", "type": "0" }
+        { "linkID":"forest1", "nextLinkID": "start_adventure", "type": "2", "objectID":"forest_animal" },
+        { "linkID":"forest2", "nextLinkID": "forest", "type": "2", "objectID":"forest_rabbits" },
+        { "linkID":"mountain", "nextLinkID": "mountain", "type": "0", "objectID":"" }
       ],
-      "nextLinkOnVictory": "forest",
       "mapId": "main_world",
       "mapPosition": { "x": 2, "y": 1 }
     },
@@ -26,23 +24,21 @@
       "id": "mountain",
       "text": "You escaped \n<link=\"forest\"><color=red>Get back</color></link> \n<link=\"town\"><color=red>Continue</color></link>",
       "links": [
-        { "linkID": "forest", "type": "0" },
-        { "linkID": "town", "type": "0" }
+        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
+        { "linkID":"town", "nextLinkID": "town", "type": "0", "objectID":"" }
       ],
-      "nextLinkOnVictory": "forest",
       "mapId": "main_world",
       "mapPosition": { "x": 5, "y": 4 }
     },
     {
       "id": "town",
-      "text": "You found Items \n<link=\"take_wooden_staff\"><color=red>Take staff</color></link> \n<link=\"take_some_healing\"><color=red>Take potions</color></link> \n<link=\"take_reward\"><color=red>Take Items</color></link> \n<link=\"forest\"><color=red>Continue</color></link>",
+      "text": "You found Items \n<link=\"town1\"><color=red>Take staff</color></link> \n<link=\"town2\"><color=red>Take potions</color></link> \n<link=\"town3\"><color=red>Take Items</color></link> \n<link=\"forest\"><color=red>Continue</color></link>",
       "links": [
-        { "linkID": "take_wooden_staff", "type": "4" },
-        { "linkID": "take_some_healing", "type": "4" },
-        { "linkID": "take_reward", "type": "4" },
-        { "linkID": "forest", "type": "0" }
+        { "linkID":"town1", "nextLinkID": "town", "type": "4", "objectID":"take_wooden_staff" },
+        { "linkID":"town2", "nextLinkID": "town", "type": "4", "objectID":"take_some_healing" },
+        { "linkID":"town3", "nextLinkID": "start_adventure", "type": "4", "objectID":"take_reward" },
+        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
       ],
-      "nextLinkOnVictory": "forest",
       "mapId": "main_world",
       "mapPosition": { "x": 5, "y": 4 }
     }
