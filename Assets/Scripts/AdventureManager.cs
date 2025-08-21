@@ -92,6 +92,24 @@ public class AdventureManager : MonoBehaviour
             return;
         }
 
+        // Check condition logic
+        if (!string.IsNullOrEmpty(data.conditionId))
+        {
+            int currentConditionValue = GetConditionValue(data.conditionId);
+            if (currentConditionValue >= data.conditionRequiredValue && !string.IsNullOrEmpty(data.conditionAdventureLink))
+            {
+                // Condition is true, redirect to different adventure
+                ShowTextById(data.conditionAdventureLink);
+                return;
+            }
+        }
+
+        // Add value to condition if specified
+        if (!string.IsNullOrEmpty(data.addValueConditionId))
+        {
+            AddValueToCondition(data.addValueConditionId, data.addValue);
+        }
+
         adventureTMP.text = data.text;
         //playerStats.SaveToDatabase();
         DatabaseManager.Instance.SaveAdventureProgress(currentAdventureTextData.id);
@@ -211,5 +229,23 @@ public class AdventureManager : MonoBehaviour
         }
         
         Debug.Log($"Added items from group '{groupId}' to inventory");
+    }
+    
+    // Condition system methods
+    public int GetConditionValue(string conditionId)
+    {
+        return DatabaseManager.Instance.GetConditionValue(conditionId);
+    }
+    
+    public void AddValueToCondition(string conditionId, int valueToAdd)
+    {
+        DatabaseManager.Instance.AddValueToCondition(conditionId, valueToAdd);
+        Debug.Log($"Condition '{conditionId}' added value: {valueToAdd}");
+    }
+    
+    public void SetConditionValue(string conditionId, int value)
+    {
+        DatabaseManager.Instance.SetConditionValue(conditionId, value);
+        Debug.Log($"Condition '{conditionId}' set to value: {value}");
     }
 }

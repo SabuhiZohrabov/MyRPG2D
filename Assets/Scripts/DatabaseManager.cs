@@ -61,6 +61,7 @@ public class DatabaseManager
                 _db.CreateTable<PlayerStatsModel>();
                 _db.CreateTable<InventoryItemModel>();
                 _db.CreateTable<AdventureProgressModel>();
+                _db.CreateTable<ConditionModel>();
 
                 _isInitialized = true;
             }
@@ -377,6 +378,132 @@ public class DatabaseManager
         }
     }
 
+    // -----------------------
+    // Condition operations
+    // -----------------------
+
+    #region conditions
+    public ConditionModel GetCondition(string conditionId)
+    {
+        if (_db == null) return null;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                return _db.Table<ConditionModel>()
+                          .FirstOrDefault(c => c.ConditionId == conditionId);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] GetCondition failed: {e.Message}");
+                return null;
+            }
+        }
+    }
+
+    public int GetConditionValue(string conditionId)
+    {
+        var condition = GetCondition(conditionId);
+        return condition?.Value ?? 0;
+    }
+
+    public void SetConditionValue(string conditionId, int value)
+    {
+        if (_db == null) return;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                _db.BeginTransaction();
+                try
+                {
+                    var existing = GetCondition(conditionId);
+                    if (existing != null)
+                    {
+                        existing.Value = value;
+                        _db.Update(existing);
+                    }
+                    else
+                    {
+                        var newCondition = new ConditionModel(conditionId, value);
+                        _db.Insert(newCondition);
+                    }
+                    _db.Commit();
+                }
+                catch
+                {
+                    _db.Rollback();
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] SetConditionValue failed: {e.Message}");
+            }
+        }
+    }
+
+    public void AddValueToCondition(string conditionId, int valueToAdd)
+    {
+        if (_db == null) return;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                _db.BeginTransaction();
+                try
+                {
+                    var existing = GetCondition(conditionId);
+                    if (existing != null)
+                    {
+                        existing.Value += valueToAdd;
+                        _db.Update(existing);
+                    }
+                    else
+                    {
+                        var newCondition = new ConditionModel(conditionId, valueToAdd);
+                        _db.Insert(newCondition);
+                    }
+                    _db.Commit();
+                }
+                catch
+                {
+                    _db.Rollback();
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] AddValueToCondition failed: {e.Message}");
+            }
+        }
+    }
+
+    public List<ConditionModel> GetAllConditions()
+    {
+        if (_db == null) return new List<ConditionModel>();
+
+        lock (_lockObject)
+        {
+            try
+            {
+                return _db.Table<ConditionModel>().ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] GetAllConditions failed: {e.Message}");
+                return new List<ConditionModel>();
+            }
+        }
+    }
+    #endregion
+
+    // -----------------------
+    // General operations
+    // -----------------------
     public void ResetGame()
     {
         try

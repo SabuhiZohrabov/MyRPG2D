@@ -2,12 +2,18 @@
   "texts": [
     {
       "id": "start_adventure",
-      "text": "Game Begins\nYou see a forest\n<link=\"forest\"><color=red>Enter</color></link>",
+      "text": "Game Begins\nYou see a forest\n<link=\"forest\"><color=red>Enter</color></link>\n<link=\"test_condition_adventure\"><color=yellow>Test Condition System</color></link>",
       "links": [
-        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
+        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
+        { "linkID":"test_condition_adventure", "nextLinkID": "test_condition_adventure", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
-      "mapPosition": { "x": 1, "y": 1 }
+      "mapPosition": { "x": 1, "y": 1 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "",
+      "addValue": 0
     },
     {
       "id": "forest",
@@ -18,7 +24,12 @@
         { "linkID":"mountain", "nextLinkID": "mountain", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
-      "mapPosition": { "x": 2, "y": 1 }
+      "mapPosition": { "x": 2, "y": 1 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "",
+      "addValue": 0
     },
     {
       "id": "mountain",
@@ -28,7 +39,12 @@
         { "linkID":"town", "nextLinkID": "town", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
-      "mapPosition": { "x": 5, "y": 4 }
+      "mapPosition": { "x": 5, "y": 4 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "",
+      "addValue": 0
     },
     {
       "id": "town",
@@ -40,7 +56,54 @@
         { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
-      "mapPosition": { "x": 5, "y": 4 }
+      "mapPosition": { "x": 5, "y": 4 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "",
+      "addValue": 0
+    },
+    {
+      "id": "test_condition_adventure",
+      "text": "Test Adventure - This will add 1 to 'kills' condition \n<link=\"next_test\"><color=red>Continue</color></link>",
+      "links": [
+        { "linkID":"next_test", "nextLinkID": "conditional_adventure", "type": "0", "objectID":"" }
+      ],
+      "mapId": "main_world",
+      "mapPosition": { "x": 3, "y": 3 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "kills",
+      "addValue": 1
+    },
+    {
+      "id": "conditional_adventure",
+      "text": "This adventure checks if 'kills' >= 3. If yes, goes to special_reward, if no shows this text \n<link=\"test_again\"><color=red>Test again</color></link>",
+      "links": [
+        { "linkID":"test_again", "nextLinkID": "test_condition_adventure", "type": "0", "objectID":"" }
+      ],
+      "mapId": "main_world",
+      "mapPosition": { "x": 4, "y": 3 },
+      "conditionId": "kills",
+      "conditionRequiredValue": 3,
+      "trueAdventureLink": "special_reward",
+      "addValueConditionId": "",
+      "addValue": 0
+    },
+    {
+      "id": "special_reward",
+      "text": "Congratulations! You met the condition and got the special reward! \n<link=\"start_adventure\"><color=red>Go back to start</color></link>",
+      "links": [
+        { "linkID":"start_adventure", "nextLinkID": "start_adventure", "type": "0", "objectID":"" }
+      ],
+      "mapId": "main_world",
+      "mapPosition": { "x": 6, "y": 3 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "",
+      "addValue": 0
     }
   ]
 }

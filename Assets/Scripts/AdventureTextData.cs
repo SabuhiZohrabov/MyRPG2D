@@ -30,4 +30,11 @@ public class AdventureTextData
     //map
     public string mapId;
     public Vector2Int mapPosition;
+    
+    // Condition system parameters
+    public string conditionId;              // condition ID to check
+    public int conditionRequiredValue;      // required value for condition to be true
+    public string conditionAdventureLink;        // adventure link to go to if condition is true
+    public string addValueConditionId;      // condition ID to add value to
+    public int addValue;                    // value to add to the condition
 }
