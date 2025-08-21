@@ -33,10 +33,12 @@
     },
     {
       "id": "mountain",
-      "text": "You escaped \n<link=\"forest\"><color=red>Get back</color></link> \n<link=\"town\"><color=red>Continue</color></link>",
+      "text": "You escaped \n<link=\"forest\"><color=red>Get back</color></link> \n<link=\"town\"><color=red>Continue</color></link>\n<link=\"add_comrade\"><color=red>Add Comrade</color></link>\n<link=\"remove_comrade\"><color=red>Remove Comrade</color></link>",
       "links": [
         { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
-        { "linkID":"town", "nextLinkID": "town", "type": "0", "objectID":"" }
+        { "linkID":"town", "nextLinkID": "town", "type": "0", "objectID":"" },
+        { "linkID":"add_comrade", "nextLinkID": "mountain", "type": "5", "objectID":"bombaboy" },
+        { "linkID":"remove_comrade", "nextLinkID": "mountain", "type": "6", "objectID":"bombaboy" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 5, "y": 4 },
