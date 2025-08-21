@@ -69,7 +69,7 @@ public class FighterData
             if (isPlayer && characterStats != null)
                 return 10 + characterStats.Strength.Value;
             else if (isComrade && comradeData != null)
-                return 10 + comradeData.strength;
+                return 10;
             else if (enemySO != null)
                 return 10;
             else
