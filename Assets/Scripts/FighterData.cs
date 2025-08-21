@@ -4,9 +4,11 @@ using UnityEngine;
 public class FighterData
 {
     // References
-    public EnemySO enemySO;             // Enemy üçün EnemySO
+    public EnemySO enemySO;             // Enemy for EnemySO
     public bool isPlayer;               // Is this fighter the player?
-    public CharacterStats characterStats; // Player üçün stats
+    public bool isComrade;              // Is this fighter a comrade?
+    public ComradeData comradeData;     // Comrade for ComradeData
+    public CharacterStats characterStats; // Player for stats
 
     // Dynamic runtime values
     public int currentHP;
@@ -21,6 +23,8 @@ public class FighterData
         {
             if (isPlayer && characterStats != null)
                 return "Player";
+            else if (isComrade && comradeData != null)
+                return comradeData.displayName;
             else if (enemySO != null)
                 return enemySO.displayName;
             else
@@ -34,6 +38,8 @@ public class FighterData
         {
             if (isPlayer && characterStats != null)
                 return characterStats.Endurance.Value * 5 + 100;
+            else if (isComrade && comradeData != null)
+                return comradeData.maxHP;
             else if (enemySO != null)
                 return enemySO.maxHP;
             else
@@ -47,6 +53,8 @@ public class FighterData
         {
             if (isPlayer && characterStats != null)
                 return 50 + characterStats.Intelligence.Value * 5;
+            else if (isComrade && comradeData != null)
+                return comradeData.maxMP;
             else if (enemySO != null)
                 return enemySO.maxMP;
             else
@@ -60,6 +68,8 @@ public class FighterData
         {
             if (isPlayer && characterStats != null)
                 return 10 + characterStats.Strength.Value;
+            else if (isComrade && comradeData != null)
+                return 10 + comradeData.strength;
             else if (enemySO != null)
                 return 10;
             else
@@ -74,6 +84,8 @@ public class FighterData
     {
         enemySO = enemy;
         isPlayer = false;
+        isComrade = false;
+        comradeData = null;
         characterStats = null;
         currentHP = enemySO != null ? enemySO.maxHP : 100;
         currentMP = enemySO != null ? enemySO.maxMP : 50;
@@ -85,7 +97,22 @@ public class FighterData
     {
         enemySO = null;
         isPlayer = true;
+        isComrade = false;
+        comradeData = null;
         characterStats = stats;
+        currentHP = maxHP;
+        currentMP = maxMP;
+        isAlive = true;
+    }
+
+    // Comrade constructor
+    public FighterData(ComradeData comrade)
+    {
+        enemySO = null;
+        isPlayer = false;
+        isComrade = true;
+        comradeData = comrade;
+        characterStats = null;
         currentHP = maxHP;
         currentMP = maxMP;
         isAlive = true;

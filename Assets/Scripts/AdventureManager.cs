@@ -167,6 +167,12 @@ public class AdventureManager : MonoBehaviour
             case AdventureTextType.Item:
                 AddItemGroupToInventory(objectID);
                 break;
+            case AdventureTextType.AddComrade:
+                AddComradeToParty(objectID);
+                break;
+            case AdventureTextType.RemoveComrade:
+                RemoveComradeFromParty(objectID);
+                break;
         }
     }
 
@@ -247,5 +253,30 @@ public class AdventureManager : MonoBehaviour
     {
         DatabaseManager.Instance.SetConditionValue(conditionId, value);
         Debug.Log($"Condition '{conditionId}' set to value: {value}");
+    }
+    
+    // Comrade management methods
+    private void AddComradeToParty(string comradeId)
+    {
+        if (ComradeManager.Instance != null)
+        {
+            ComradeManager.Instance.AddComrade(comradeId);
+        }
+        else
+        {
+            Debug.LogError("ComradeManager instance is null!");
+        }
+    }
+    
+    private void RemoveComradeFromParty(string comradeId)
+    {
+        if (ComradeManager.Instance != null)
+        {
+            ComradeManager.Instance.RemoveComrade(comradeId);
+        }
+        else
+        {
+            Debug.LogError("ComradeManager instance is null!");
+        }
     }
 }

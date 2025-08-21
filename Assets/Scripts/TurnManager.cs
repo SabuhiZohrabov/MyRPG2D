@@ -59,7 +59,9 @@ public class TurnManager : MonoBehaviour
             // Set fighter name based on type
             string fighterName;
             if (model.isPlayer && model.characterStats != null)
-                fighterName = "Test";
+                fighterName = "Player";
+            else if (model.isComrade && model.comradeData != null)
+                fighterName = model.comradeData.displayName;
             else if (model.enemySO != null)
                 fighterName = model.enemySO.displayName;
             else
@@ -102,9 +104,18 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
-        // fill fighterDataList with player and new enemies
+        // fill fighterDataList with player, comrades and new enemies
         fighterDataList.Clear();
         fighterDataList.Add(player.data);
+        
+        // Add active comrades to battle
+        if (ComradeManager.Instance != null)
+        {
+            List<FighterData> activeComrades = ComradeManager.Instance.GetActiveComradesForBattle();
+            fighterDataList.AddRange(activeComrades);
+            Debug.Log($"Added {activeComrades.Count} comrades to battle");
+        }
+        
         fighterDataList.AddRange(newEnemies);
 
         // Recreate UI (fighters and models)
@@ -168,6 +179,12 @@ public class TurnManager : MonoBehaviour
         {
             SkillManager.Instance.ReduceCooldowns();
         }
+        else if (model.isComrade)
+        {
+            // Comrades can use basic attack automatically
+            // For now, comrades will skip their turn or use basic attack
+            // You can implement AI logic here later
+        }
         ActivateFighter(currentIndex);
     }
 
@@ -198,7 +215,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < fighterDataList.Count; i++)
         {
             var model = fighterDataList[i];
-            if (model.isPlayer && model.isAlive)
+            if ((model.isPlayer || model.isComrade) && model.isAlive)
                 return true;
         }
         return false;
@@ -209,7 +226,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < fighterDataList.Count; i++)
         {
             var model = fighterDataList[i];
-            if (!model.isPlayer && model.isAlive)
+            if (!model.isPlayer && !model.isComrade && model.isAlive)
                 return true;
         }
         return false;
@@ -247,7 +264,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < fighterDataList.Count; i++)
         {
             var fighter = fighterDataList[i];
-            if (!fighter.isPlayer && !fighter.isAlive && fighter.enemySO != null)
+            if (!fighter.isPlayer && !fighter.isComrade && !fighter.isAlive && fighter.enemySO != null)
             {
                 resultList.Add(fighter);
             }
