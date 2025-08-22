@@ -57,15 +57,9 @@ public class TurnManager : MonoBehaviour
             GameObject fighter = Instantiate(fighterPrefab, fighterContainer);
 
             // Set fighter name based on type
-            string fighterName;
-            if (model.isPlayer && model.characterStats != null)
+            string fighterName = "Unknown";
+            if (model != null)
                 fighterName = "Player";
-            else if (model.isComrade && model.comradeData != null)
-                fighterName = model.comradeData.displayName;
-            else if (model.enemySO != null)
-                fighterName = model.enemySO.displayName;
-            else
-                fighterName = "Unknown";
 
             fighter.name = fighterName;
 
@@ -215,7 +209,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < fighterDataList.Count; i++)
         {
             var model = fighterDataList[i];
-            if ((model.isPlayer || model.isComrade) && model.isAlive)
+            if (model.isPlayer && model.isAlive)
                 return true;
         }
         return false;
@@ -226,7 +220,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < fighterDataList.Count; i++)
         {
             var model = fighterDataList[i];
-            if (!model.isPlayer && !model.isComrade && model.isAlive)
+            if (model.isEnemy && model.isAlive)
                 return true;
         }
         return false;
@@ -264,7 +258,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < fighterDataList.Count; i++)
         {
             var fighter = fighterDataList[i];
-            if (!fighter.isPlayer && !fighter.isComrade && !fighter.isAlive && fighter.enemySO != null)
+            if (fighter.isEnemy && !fighter.isAlive)
             {
                 resultList.Add(fighter);
             }
@@ -285,10 +279,11 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < defeatedEnemiesCache.Count; i++)
         {
             var enemy = defeatedEnemiesCache[i];
-            if (enemy.enemySO.lootTable == null) continue;
-            earnedXP += enemy.enemySO.expReward;
+            var enemySO = enemy.fighter as EnemySO;
+            if (enemySO == null || enemySO.lootTable == null) continue;
+            earnedXP += enemySO.expReward;
 
-            var lootTable = enemy.enemySO.lootTable;
+            var lootTable = enemySO.lootTable;
             for (int j = 0; j < lootTable.Count; j++)
             {
                 var entry = lootTable[j];
@@ -319,9 +314,9 @@ public class TurnManager : MonoBehaviour
         }
 
         // XP
-        if (player != null && player.characterStats != null)
+        if (player != null && player.fighter is CharacterStats characterStats)
         {
-            player.characterStats.GainXP(earnedXP);
+            characterStats.GainXP(earnedXP);
             Debug.Log($"Player gained {earnedXP} XP!");
 
             UIManager.Instance.ShowWonGame("You Win!", earnedXP, lootSummary);

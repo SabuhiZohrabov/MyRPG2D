@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewEnemy", menuName = "Combat/Enemy")]
-public class EnemySO : ScriptableObject
+public class EnemySO : ScriptableObject, IFighter
 {
     public string enemyId;
     public string displayName;
@@ -22,4 +22,10 @@ public class EnemySO : ScriptableObject
         public int maxAmount = 1;
     }
     public List<SimpleLoot> lootTable = new List<SimpleLoot>();
+    
+    // IFighter interface implementation
+    public string DisplayName => displayName;
+    public Sprite Icon => icon;
+    public int MaxHP => maxHP;
+    public int MaxMP => maxMP;
 }

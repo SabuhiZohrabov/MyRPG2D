@@ -3,12 +3,13 @@ using UnityEngine;
 [System.Serializable]
 public class FighterData
 {
-    // References
-    public EnemySO enemySO;             // Enemy for EnemySO
-    public bool isPlayer;               // Is this fighter the player?
-    public bool isComrade;              // Is this fighter a comrade?
-    public ComradeData comradeData;     // Comrade for ComradeData
-    public CharacterStats characterStats; // Player for stats
+    // Interface reference
+    public IFighter fighter;
+    
+    // Type identification
+    public bool isPlayer;
+    public bool isComrade;
+    public bool isEnemy;
 
     // Dynamic runtime values
     public int currentHP;
@@ -21,14 +22,7 @@ public class FighterData
     {
         get
         {
-            if (isPlayer && characterStats != null)
-                return characterStats.DisplayName;
-            else if (isComrade && comradeData != null)
-                return comradeData.displayName;
-            else if (enemySO != null)
-                return enemySO.displayName;
-            else
-                return "Unknown";
+            return fighter?.DisplayName ?? "Unknown";
         }
     }
 
@@ -36,14 +30,7 @@ public class FighterData
     {
         get
         {
-            if (isPlayer && characterStats != null)
-                return characterStats.Endurance.Value * 5 + 100;
-            else if (isComrade && comradeData != null)
-                return comradeData.maxHP;
-            else if (enemySO != null)
-                return enemySO.maxHP;
-            else
-                return 100;
+            return fighter?.MaxHP ?? 100;
         }
     }
 
@@ -51,14 +38,7 @@ public class FighterData
     {
         get
         {
-            if (isPlayer && characterStats != null)
-                return 50 + characterStats.Intelligence.Value * 5;
-            else if (isComrade && comradeData != null)
-                return comradeData.maxMP;
-            else if (enemySO != null)
-                return enemySO.maxMP;
-            else
-                return 50;
+            return fighter?.MaxMP ?? 50;
         }
     }
 
@@ -67,39 +47,36 @@ public class FighterData
     // Enemy constructor
     public FighterData(EnemySO enemy)
     {
-        enemySO = enemy;
+        fighter = enemy;
         isPlayer = false;
         isComrade = false;
-        comradeData = null;
-        characterStats = null;
-        currentHP = enemySO != null ? enemySO.maxHP : 100;
-        currentMP = enemySO != null ? enemySO.maxMP : 50;
+        isEnemy = true;
+        currentHP = enemy?.MaxHP ?? 100;
+        currentMP = enemy?.MaxMP ?? 50;
         isAlive = true;
     }
 
     // Player constructor
     public FighterData(CharacterStats stats)
     {
-        enemySO = null;
+        fighter = stats;
         isPlayer = true;
         isComrade = false;
-        comradeData = null;
-        characterStats = stats;
-        currentHP = stats.maxHP;
-        currentMP = stats.maxMP;
+        isEnemy = false;
+        currentHP = stats?.MaxHP ?? 100;
+        currentMP = stats?.MaxMP ?? 50;
         isAlive = true;
     }
 
     // Comrade constructor
     public FighterData(ComradeData comrade)
     {
-        enemySO = null;
+        fighter = comrade;
         isPlayer = false;
         isComrade = true;
-        comradeData = comrade;
-        characterStats = null;
-        currentHP = comrade.maxHP;
-        currentMP = comrade.maxMP;
+        isEnemy = false;
+        currentHP = comrade?.MaxHP ?? 100;
+        currentMP = comrade?.MaxMP ?? 50;
         isAlive = true;
     }
 

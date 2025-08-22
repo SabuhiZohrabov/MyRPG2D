@@ -9,7 +9,7 @@ public enum AttributeUpgradeType
     ManualAndAuto
 }
 [System.Serializable]
-public class CharacterStats : MonoBehaviour
+public class CharacterStats : MonoBehaviour, IFighter
 {
     public Attribute Strength = new Attribute(0);
     public Attribute Dexterity = new Attribute(0);
@@ -58,6 +58,9 @@ public class CharacterStats : MonoBehaviour
             return displayName;
         }
     }
+    
+    // IFighter interface implementation
+    public Sprite Icon => icon;
 
     private Dictionary<string, AttributeUpgradeType> attributeUpgradeRules = new Dictionary<string, AttributeUpgradeType>
 {
