@@ -62,21 +62,6 @@ public class FighterData
         }
     }
 
-    public int damage
-    {
-        get
-        {
-            if (isPlayer && characterStats != null)
-                return 10 + characterStats.Strength.Value;
-            else if (isComrade && comradeData != null)
-                return 10;
-            else if (enemySO != null)
-                return 10;
-            else
-                return 10;
-        }
-    }
-
     // --- Constructors ---
 
     // Enemy constructor
