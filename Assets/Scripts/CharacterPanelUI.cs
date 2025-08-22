@@ -20,9 +20,9 @@ public class CharacterPanelUI : MonoBehaviour
         // Show avatar and name
         if (avatarImage != null && characterStats != null)
         {
-            if (characterStats.AvatarSprite != null)
+            if (characterStats.icon != null)
             {
-                avatarImage.sprite = characterStats.AvatarSprite;
+                avatarImage.sprite = characterStats.icon;
                 avatarImage.color = Color.white;
                 avatarImage.preserveAspect = true; // Maintain aspect ratio
             }

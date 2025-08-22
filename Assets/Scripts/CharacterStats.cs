@@ -25,8 +25,8 @@ public class CharacterStats : MonoBehaviour
     public int maxMP = 1000;
     public string CurrentAdventureId = "";
 
-    public string PlayerName = "Sabush";
-    public Sprite AvatarSprite;
+    public string displayName = "Sabush";
+    public Sprite icon;
 
     private int databaseId = 0;
 
@@ -55,7 +55,7 @@ public class CharacterStats : MonoBehaviour
     {
         get
         {
-            return PlayerName;
+            return displayName;
         }
     }
 

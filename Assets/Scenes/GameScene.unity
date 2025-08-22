@@ -3901,8 +3901,8 @@ MonoBehaviour:
   maxHP: 1000
   maxMP: 1000
   CurrentAdventureId: 
-  PlayerName: Sabush
-  AvatarSprite: {fileID: 972965634, guid: f72b0562a94efad49ae92ca348932eab, type: 3}
+  displayName: Sabush
+  icon: {fileID: 972965634, guid: f72b0562a94efad49ae92ca348932eab, type: 3}
 --- !u!1 &732765108
 GameObject:
   m_ObjectHideFlags: 0

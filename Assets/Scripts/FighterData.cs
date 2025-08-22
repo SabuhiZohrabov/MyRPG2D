@@ -22,7 +22,7 @@ public class FighterData
         get
         {
             if (isPlayer && characterStats != null)
-                return characterStats.PlayerName;
+                return characterStats.DisplayName;
             else if (isComrade && comradeData != null)
                 return comradeData.displayName;
             else if (enemySO != null)
