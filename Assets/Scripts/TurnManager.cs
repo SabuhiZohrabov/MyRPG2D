@@ -32,13 +32,6 @@ public class TurnManager : MonoBehaviour
         Instance = this;
     }
 
-    void Start()
-    {
-        //SpawnFighters(); // Dynamically create fighter UI elements
-        //if (fighterUIList.Count > 0)
-        //    ActivateFighter(currentIndex); // Highlight the first fighter
-    }
-
     public FighterData GetCurrentFighterModel()
     {
         if (currentIndex >= 0 && currentIndex < fighterDataList.Count)
@@ -101,7 +94,7 @@ public class TurnManager : MonoBehaviour
         // fill fighterDataList with player, comrades and new enemies
         fighterDataList.Clear();
         fighterDataList.Add(player);
-        
+        cachedPlayer = player;
         // Add active comrades to battle
         if (ComradeManager.Instance != null)
         {
@@ -234,23 +227,6 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private FighterData GetPlayerFighter()
-    {
-        if (cachedPlayer != null && cachedPlayer.isPlayer)
-            return cachedPlayer;
-
-        for (int i = 0; i < fighterDataList.Count; i++)
-        {
-            var fighter = fighterDataList[i];
-            if (fighter.isPlayer)
-            {
-                cachedPlayer = fighter;
-                return fighter;
-            }
-        }
-        return null;
-    }
-
     private void GetDefeatedEnemies(List<FighterData> resultList)
     {
         resultList.Clear();
@@ -269,7 +245,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("Victory!");
 
-        FighterData player = GetPlayerFighter();
+        FighterData player = cachedPlayer;
         GetDefeatedEnemies(defeatedEnemiesCache);
 
         int earnedXP = 0;
