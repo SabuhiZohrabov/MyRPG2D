@@ -3851,7 +3851,6 @@ GameObject:
   m_Component:
   - component: {fileID: 730654754}
   - component: {fileID: 730654756}
-  - component: {fileID: 730654759}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3904,27 +3903,6 @@ MonoBehaviour:
   CurrentAdventureId: 
   PlayerName: Sabush
   AvatarSprite: {fileID: 972965634, guid: f72b0562a94efad49ae92ca348932eab, type: 3}
---- !u!114 &730654759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 730654753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94194aa65ac5e848ba737953758ca58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data:
-    enemySO: {fileID: 0}
-    isPlayer: 1
-    isComrade: 0
-    comradeData: {fileID: 0}
-    characterStats: {fileID: 730654756}
-    currentHP: 1000
-    currentMP: 1000
-    isAlive: 1
 --- !u!1 &732765108
 GameObject:
   m_ObjectHideFlags: 0

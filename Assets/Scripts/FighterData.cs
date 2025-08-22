@@ -22,7 +22,7 @@ public class FighterData
         get
         {
             if (isPlayer && characterStats != null)
-                return "Player";
+                return characterStats.PlayerName;
             else if (isComrade && comradeData != null)
                 return comradeData.displayName;
             else if (enemySO != null)
@@ -93,15 +93,15 @@ public class FighterData
     }
 
     // Player constructor
-    public FighterData(string playerName, CharacterStats stats)
+    public FighterData(CharacterStats stats)
     {
         enemySO = null;
         isPlayer = true;
         isComrade = false;
         comradeData = null;
         characterStats = stats;
-        currentHP = maxHP;
-        currentMP = maxMP;
+        currentHP = stats.maxHP;
+        currentMP = stats.maxMP;
         isAlive = true;
     }
 
@@ -113,8 +113,8 @@ public class FighterData
         isComrade = true;
         comradeData = comrade;
         characterStats = null;
-        currentHP = maxHP;
-        currentMP = maxMP;
+        currentHP = comrade.maxHP;
+        currentMP = comrade.maxMP;
         isAlive = true;
     }
 

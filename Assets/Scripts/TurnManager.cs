@@ -97,16 +97,16 @@ public class TurnManager : MonoBehaviour
 
     public void SpawnDynamicEnemies(List<FighterData> newEnemies)
     {
-        var player = GameObject.FindWithTag("Player").GetComponent<FighterModel>();
-        if (player == null)
+        var playerstat = GameObject.FindWithTag("Player").GetComponent<CharacterStats>();
+        if (playerstat == null)
         {
             Debug.LogError("Player FighterModel not found!");
             return;
         }
-
+        var player = new FighterData(playerstat);
         // fill fighterDataList with player, comrades and new enemies
         fighterDataList.Clear();
-        fighterDataList.Add(player.data);
+        fighterDataList.Add(player);
         
         // Add active comrades to battle
         if (ComradeManager.Instance != null)

@@ -92,7 +92,6 @@
     <Compile Include="Assets\Scripts\ItemSO.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\ConditionModel.cs" />
-    <Compile Include="Assets\Scripts\FighterModel.cs" />
     <Compile Include="Assets\Scripts\AdventureManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\EnemyGroupData.cs" />
