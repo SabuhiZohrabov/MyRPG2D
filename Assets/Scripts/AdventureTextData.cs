@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 public enum AdventureTextType
 {
-    Narration=0,
-    Dialog=1,
-    Battle=2,
-    Quest=3,
-    Item=4,
-    AddComrade=5,
-    RemoveComrade=6
+    Narration = 0,
+    Dialog = 1,
+    Battle = 2,
+    Quest = 3,
+    Item = 4,
+    AddComrade = 5,
+    RemoveComrade = 6,
+    AddSkill = 7,
+    RemoveSkill = 8
 }
 
 [Serializable]
@@ -32,7 +34,7 @@ public class AdventureTextData
     //map
     public string mapId;
     public Vector2Int mapPosition;
-    
+
     // Condition system parameters
     public string conditionId;              // condition ID to check
     public int conditionRequiredValue;      // required value for condition to be true
