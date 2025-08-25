@@ -27,6 +27,9 @@ public class CharacterStats : MonoBehaviour, IFighter
 
     public string displayName = "Sabush";
     public Sprite icon;
+    
+    [Header("Player Skills")]
+    public List<SkillModel> playerSkills = new List<SkillModel>();
 
     private int databaseId = 0;
 
@@ -62,14 +65,12 @@ public class CharacterStats : MonoBehaviour, IFighter
     // IFighter interface implementation
     public Sprite Icon => icon;
     
-    // Skills - delegate to SkillManager for player skills
+    // Skills - return player's own skill list
     public List<SkillModel> AvailableSkills 
     { 
         get 
         { 
-            if (SkillManager.Instance != null)
-                return SkillManager.Instance.availableSkills;
-            return new List<SkillModel>();
+            return playerSkills ?? new List<SkillModel>();
         } 
     }
 

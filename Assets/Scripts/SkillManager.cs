@@ -12,24 +12,26 @@ public class SkillManager : MonoBehaviour
     public Transform skillContainer;
     public ScrollRect scrollRect;
 
-    [Header("Skill Data")]
-    public List<SkillModel> availableSkills = new List<SkillModel>();
-
     private SkillModel selectedSkill;
     private bool isTargetSelectionActive = false;
+
+    [SerializeField]
+    private CharacterStats playerStats;
 
     void Awake()
     {
         Instance = this;
     }
     void Start()
-    {
+    {        
         PopulateSkills();
     }
 
     void PopulateSkills()
     {
-        List<SkillModel> filteredSkills = availableSkills.FindAll(s => s.isLearned && !s.isPassive);
+        if (playerStats == null) return;
+        
+        List<SkillModel> filteredSkills = playerStats.AvailableSkills.FindAll(s => s.isLearned && !s.isPassive);
         foreach (SkillModel skill in filteredSkills)
         {
             GameObject buttonObj = Instantiate(skillButtonPrefab, skillContainer);
@@ -150,7 +152,9 @@ public class SkillManager : MonoBehaviour
 
     public void ReduceCooldowns()
     {
-        foreach (SkillModel skill in availableSkills)
+        if (playerStats == null) return;
+        
+        foreach (SkillModel skill in playerStats.AvailableSkills)
         {
             if (skill.currentCooldown > 0)
                 skill.currentCooldown--;
@@ -161,7 +165,11 @@ public class SkillManager : MonoBehaviour
 
     public void RefreshSkillButtons()
     {
-        for (int i = 0; i < skillContainer.childCount; i++)
+        if (playerStats == null) return;
+        
+        List<SkillModel> availableSkills = playerStats.AvailableSkills.FindAll(s => s.isLearned && !s.isPassive);
+        
+        for (int i = 0; i < skillContainer.childCount && i < availableSkills.Count; i++)
         {
             Transform buttonObj = skillContainer.GetChild(i);
             SkillModel skill = availableSkills[i];
