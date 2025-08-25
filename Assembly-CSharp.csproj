@@ -98,6 +98,7 @@
     <Compile Include="Assets\Scripts\EnemySO.cs" />
     <Compile Include="Assets\Scripts\SkillManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
+    <Compile Include="Assets\Scripts\SkillDatabase.cs" />
     <Compile Include="Assets\Scripts\InventoryItemModel.cs" />
     <Compile Include="Assets\Scripts\SkillModel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

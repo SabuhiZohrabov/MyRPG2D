@@ -173,6 +173,12 @@ public class AdventureManager : MonoBehaviour
             case AdventureTextType.RemoveComrade:
                 RemoveComradeFromParty(objectID);
                 break;
+            case AdventureTextType.AddSkill:
+                AddSkillToPlayer(objectID);
+                break;
+            case AdventureTextType.RemoveSkill:
+                RemoveSkillFromPlayer(objectID);
+                break;
         }
     }
 
@@ -277,6 +283,39 @@ public class AdventureManager : MonoBehaviour
         else
         {
             Debug.LogError("ComradeManager instance is null!");
+        }
+    }
+    
+    // Skill management methods
+    private void AddSkillToPlayer(string skillId)
+    {
+        if (playerStats != null)
+        {
+            bool success = playerStats.AddSkill(skillId);
+            if (success)
+            {
+                Debug.Log($"Successfully added skill '{skillId}' to player");
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerStats reference is null!");
+        }
+    }
+    
+    private void RemoveSkillFromPlayer(string skillId)
+    {
+        if (playerStats != null)
+        {
+            bool success = playerStats.RemoveSkill(skillId);
+            if (success)
+            {
+                Debug.Log($"Successfully removed skill '{skillId}' from player");
+            }
+        }
+        else
+        {
+            Debug.LogError("PlayerStats reference is null!");
         }
     }
 }

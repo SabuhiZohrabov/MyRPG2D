@@ -30,6 +30,9 @@ public class CharacterStats : MonoBehaviour, IFighter
     
     [Header("Player Skills")]
     public List<SkillModel> playerSkills = new List<SkillModel>();
+    
+    [Header("Skill Database")]
+    public SkillDatabase skillDatabase;
 
     private int databaseId = 0;
 
@@ -163,6 +166,72 @@ public class CharacterStats : MonoBehaviour, IFighter
         }
         SaveToDatabase();
     }
+    // Skill management methods
+    public bool AddSkill(string skillId)
+    {
+        if (skillDatabase == null)
+        {
+            Debug.LogError("SkillDatabase is not assigned!");
+            return false;
+        }
+        
+        // Check if skill already exists in player skills
+        if (HasSkill(skillId))
+        {
+            Debug.LogWarning($"Player already has skill: {skillId}");
+            return false;
+        }
+        
+        // Get skill from database
+        SkillModel skillToAdd = skillDatabase.GetSkillById(skillId);
+        if (skillToAdd == null)
+        {
+            Debug.LogWarning($"Skill with ID {skillId} not found in database!");
+            return false;
+        }
+        
+        // Create a copy of the skill and add to player skills
+        SkillModel playerSkill = new SkillModel(
+            skillToAdd.name,
+            skillToAdd.power,
+            skillToAdd.targetType,
+            skillToAdd.effectType,
+            skillToAdd.cooldown,
+            skillToAdd.currentCooldown,
+            skillToAdd.manaCost,
+            skillToAdd.icon,
+            skillToAdd.description
+        );
+        playerSkill.id = skillToAdd.id;
+        playerSkill.isPassive = skillToAdd.isPassive;
+        playerSkill.isLearned = skillToAdd.isLearned;
+        
+        playerSkills.Add(playerSkill);
+        SaveToDatabase();
+        Debug.Log($"Added skill: {skillToAdd.name} to player");
+        return true;
+    }
+    
+    public bool RemoveSkill(string skillId)
+    {
+        SkillModel skillToRemove = playerSkills.Find(skill => skill.id == skillId);
+        if (skillToRemove == null)
+        {
+            Debug.LogWarning($"Player doesn't have skill with ID: {skillId}");
+            return false;
+        }
+        
+        playerSkills.Remove(skillToRemove);
+        SaveToDatabase();
+        Debug.Log($"Removed skill: {skillToRemove.name} from player");
+        return true;
+    }
+    
+    public bool HasSkill(string skillId)
+    {
+        return playerSkills.Find(skill => skill.id == skillId) != null;
+    }
+
     public void SaveToDatabase()
     {
         PlayerStatsModel data = new PlayerStatsModel
