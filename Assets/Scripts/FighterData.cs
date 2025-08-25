@@ -109,4 +109,44 @@ public class FighterData
         if (currentMP < 0)
             currentMP = 0;
     }
+
+    // --- Skill Methods ---
+    
+    // Get available skills from the underlying fighter
+    public List<SkillModel> GetAvailableSkills()
+    {
+        return fighter?.AvailableSkills ?? new List<SkillModel>();
+    }
+    
+    // Get usable skills (learned, not on cooldown, enough mana)
+    public List<SkillModel> GetUsableSkills()
+    {
+        List<SkillModel> usableSkills = new List<SkillModel>();
+        foreach (SkillModel skill in GetAvailableSkills())
+        {
+            if (skill.isLearned && !skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost))
+            {
+                usableSkills.Add(skill);
+            }
+        }
+        return usableSkills;
+    }
+    
+    // Use a random skill from available skills (for AI)
+    public SkillModel GetRandomUsableSkill()
+    {
+        List<SkillModel> usableSkills = GetUsableSkills();
+        if (usableSkills.Count > 0)
+        {
+            return usableSkills[UnityEngine.Random.Range(0, usableSkills.Count)];
+        }
+        return null;
+    }
+    
+    // Check if this fighter can use a specific skill
+    public bool CanUseSkill(SkillModel skill)
+    {
+        if (skill == null) return false;
+        return skill.isLearned && !skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost);
+    }
 }

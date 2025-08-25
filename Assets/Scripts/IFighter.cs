@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public interface IFighter
 {
@@ -9,4 +10,7 @@ public interface IFighter
     // Combat stats
     int MaxHP { get; }
     int MaxMP { get; }
+    
+    // Skills available to this fighter
+    List<SkillModel> AvailableSkills { get; }
 }

@@ -11,6 +11,8 @@ public class EnemySO : ScriptableObject, IFighter
     public int maxMP;
     public int expReward = 10;
     
+    [Header("Skills")]
+    public List<SkillModel> availableSkills = new List<SkillModel>();
 
     // Simple loot system
     [System.Serializable]
@@ -28,4 +30,5 @@ public class EnemySO : ScriptableObject, IFighter
     public Sprite Icon => icon;
     public int MaxHP => maxHP;
     public int MaxMP => maxMP;
+    public List<SkillModel> AvailableSkills => availableSkills;
 }

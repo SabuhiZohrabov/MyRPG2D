@@ -61,6 +61,17 @@ public class CharacterStats : MonoBehaviour, IFighter
     
     // IFighter interface implementation
     public Sprite Icon => icon;
+    
+    // Skills - delegate to SkillManager for player skills
+    public List<SkillModel> AvailableSkills 
+    { 
+        get 
+        { 
+            if (SkillManager.Instance != null)
+                return SkillManager.Instance.availableSkills;
+            return new List<SkillModel>();
+        } 
+    }
 
     private Dictionary<string, AttributeUpgradeType> attributeUpgradeRules = new Dictionary<string, AttributeUpgradeType>
 {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "NewComrade", menuName = "Combat/Comrade")]
 public class ComradeData : ScriptableObject, IFighter
@@ -12,9 +13,13 @@ public class ComradeData : ScriptableObject, IFighter
     public int maxHP;
     public int maxMP;
     
+    [Header("Skills")]
+    public List<SkillModel> availableSkills = new List<SkillModel>();
+    
     // IFighter interface implementation
     public string DisplayName => displayName;
     public Sprite Icon => icon;
     public int MaxHP => maxHP;
     public int MaxMP => maxMP;
+    public List<SkillModel> AvailableSkills => availableSkills;
 }
