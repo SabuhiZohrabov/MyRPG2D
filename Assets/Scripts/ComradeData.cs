@@ -14,12 +14,31 @@ public class ComradeData : ScriptableObject, IFighter
     public int maxMP;
     
     [Header("Skills")]
-    public List<SkillModel> availableSkills = new List<SkillModel>();
+    public List<string> availableSkills = new List<string>();
+    
+    [Header("Skill Database")]
+    public SkillDatabase skillDatabase;
     
     // IFighter interface implementation
     public string DisplayName => displayName;
     public Sprite Icon => icon;
     public int MaxHP => maxHP;
     public int MaxMP => maxMP;
-    public List<SkillModel> AvailableSkills => availableSkills;
+    public List<SkillModel> AvailableSkills 
+    { 
+        get 
+        { 
+            List<SkillModel> skills = new List<SkillModel>();
+            if (skillDatabase != null && availableSkills != null)
+            {
+                foreach (string skillId in availableSkills)
+                {
+                    SkillModel skill = skillDatabase.GetSkillById(skillId);
+                    if (skill != null)
+                        skills.Add(skill);
+                }
+            }
+            return skills;
+        } 
+    }
 }

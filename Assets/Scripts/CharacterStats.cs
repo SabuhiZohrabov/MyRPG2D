@@ -29,7 +29,7 @@ public class CharacterStats : MonoBehaviour, IFighter
     public Sprite icon;
     
     [Header("Player Skills")]
-    public List<SkillModel> playerSkills = new List<SkillModel>();
+    public List<string> playerSkills = new List<string>();
     
     [Header("Skill Database")]
     public SkillDatabase skillDatabase;
@@ -68,12 +68,22 @@ public class CharacterStats : MonoBehaviour, IFighter
     // IFighter interface implementation
     public Sprite Icon => icon;
     
-    // Skills - return player's own skill list
+    // Skills - get skill models from database using string IDs
     public List<SkillModel> AvailableSkills 
     { 
         get 
         { 
-            return playerSkills ?? new List<SkillModel>();
+            List<SkillModel> skills = new List<SkillModel>();
+            if (skillDatabase != null && playerSkills != null)
+            {
+                foreach (string skillId in playerSkills)
+                {
+                    SkillModel skill = skillDatabase.GetSkillById(skillId);
+                    if (skill != null)
+                        skills.Add(skill);
+                }
+            }
+            return skills;
         } 
     }
 
@@ -182,7 +192,7 @@ public class CharacterStats : MonoBehaviour, IFighter
             return false;
         }
         
-        // Get skill from database
+        // Check if skill exists in database
         SkillModel skillToAdd = skillDatabase.GetSkillById(skillId);
         if (skillToAdd == null)
         {
@@ -190,23 +200,8 @@ public class CharacterStats : MonoBehaviour, IFighter
             return false;
         }
         
-        // Create a copy of the skill and add to player skills
-        SkillModel playerSkill = new SkillModel(
-            skillToAdd.name,
-            skillToAdd.power,
-            skillToAdd.targetType,
-            skillToAdd.effectType,
-            skillToAdd.cooldown,
-            skillToAdd.currentCooldown,
-            skillToAdd.manaCost,
-            skillToAdd.icon,
-            skillToAdd.description
-        );
-        playerSkill.id = skillToAdd.id;
-        playerSkill.isPassive = skillToAdd.isPassive;
-        playerSkill.isLearned = skillToAdd.isLearned;
-        
-        playerSkills.Add(playerSkill);
+        // Add skill ID to player skills
+        playerSkills.Add(skillId);
         SaveToDatabase();
         Debug.Log($"Added skill: {skillToAdd.name} to player");
         return true;
@@ -214,22 +209,24 @@ public class CharacterStats : MonoBehaviour, IFighter
     
     public bool RemoveSkill(string skillId)
     {
-        SkillModel skillToRemove = playerSkills.Find(skill => skill.id == skillId);
-        if (skillToRemove == null)
+        if (!playerSkills.Contains(skillId))
         {
             Debug.LogWarning($"Player doesn't have skill with ID: {skillId}");
             return false;
         }
         
-        playerSkills.Remove(skillToRemove);
+        SkillModel skillToRemove = skillDatabase?.GetSkillById(skillId);
+        string skillName = skillToRemove?.name ?? skillId;
+        
+        playerSkills.Remove(skillId);
         SaveToDatabase();
-        Debug.Log($"Removed skill: {skillToRemove.name} from player");
+        Debug.Log($"Removed skill: {skillName} from player");
         return true;
     }
     
     public bool HasSkill(string skillId)
     {
-        return playerSkills.Find(skill => skill.id == skillId) != null;
+        return playerSkills.Contains(skillId);
     }
 
     public void SaveToDatabase()

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa7447da636b80429ad9195f2dc1cef, type: 3}
+  m_Name: SkillDatabase
+  m_EditorClassIdentifier: 
+  allSkills:
+  - id: fireball
+    name: Fire Ball
+    isPassive: 0
+    isLearned: 1
+    power: 100
+    targetType: 0
+    effectType: 0
+    cooldown: 5
+    currentCooldown: 0
+    manaCost: 10
+    icon: {fileID: 5353841184698615464, guid: 76ce69b4e38b7cd4084c1adb80d971d9, type: 3}
+    description: 
+  - id: thunder
+    name: Thunder
+    isPassive: 0
+    isLearned: 1
+    power: 50
+    targetType: 3
+    effectType: 0
+    cooldown: 5
+    currentCooldown: 0
+    manaCost: 10
+    icon: {fileID: 9078623318578753597, guid: 4b2f9f70927c12e49857d2c49e1706cc, type: 3}
+    description: 
+  - id: heal
+    name: Heal
+    isPassive: 0
+    isLearned: 1
+    power: 50
+    targetType: 2
+    effectType: 1
+    cooldown: 5
+    currentCooldown: 0
+    manaCost: 10
+    icon: {fileID: -1049461823314036041, guid: d390ba14f5958ce4aa87780b1fed7209, type: 3}
+    description: 
+  - id: heal
+    name: Heal
+    isPassive: 0
+    isLearned: 1
+    power: 50
+    targetType: 2
+    effectType: 1
+    cooldown: 5
+    currentCooldown: 0
+    manaCost: 10
+    icon: {fileID: -1049461823314036041, guid: d390ba14f5958ce4aa87780b1fed7209, type: 3}
+    description: 

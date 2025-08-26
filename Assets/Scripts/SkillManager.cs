@@ -31,7 +31,7 @@ public class SkillManager : MonoBehaviour
     {
         if (playerStats == null) return;
         
-        List<SkillModel> filteredSkills = playerStats.AvailableSkills.FindAll(s => s.isLearned && !s.isPassive);
+        List<SkillModel> filteredSkills = playerStats.AvailableSkills.FindAll(s => !s.isPassive);
         foreach (SkillModel skill in filteredSkills)
         {
             GameObject buttonObj = Instantiate(skillButtonPrefab, skillContainer);
@@ -167,7 +167,7 @@ public class SkillManager : MonoBehaviour
     {
         if (playerStats == null) return;
         
-        List<SkillModel> availableSkills = playerStats.AvailableSkills.FindAll(s => s.isLearned && !s.isPassive);
+        List<SkillModel> availableSkills = playerStats.AvailableSkills.FindAll(s => !s.isPassive);
         
         for (int i = 0; i < skillContainer.childCount && i < availableSkills.Count; i++)
         {

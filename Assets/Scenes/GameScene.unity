@@ -1121,7 +1121,7 @@ MonoBehaviour:
   skillButtonPrefab: {fileID: 6878086721165110173, guid: 921d4ee5dba24b74ba9a7ffc520b2050, type: 3}
   skillContainer: {fileID: 1762338377}
   scrollRect: {fileID: 1568390955}
-  playerStats: {fileID: 0}
+  playerStats: {fileID: 730654756}
 --- !u!1 &296479731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3807,7 +3807,10 @@ MonoBehaviour:
   CurrentAdventureId: 
   displayName: Sabush
   icon: {fileID: 972965634, guid: f72b0562a94efad49ae92ca348932eab, type: 3}
-  playerSkills: []
+  playerSkills:
+  - fireball
+  - thunder
+  skillDatabase: {fileID: 11400000, guid: 97e199dd2d747db4693822a29fce70ee, type: 2}
 --- !u!1 &732765108
 GameObject:
   m_ObjectHideFlags: 0
