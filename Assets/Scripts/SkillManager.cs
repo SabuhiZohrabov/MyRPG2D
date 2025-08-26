@@ -99,13 +99,36 @@ public class SkillManager : MonoBehaviour
         switch (selectedSkill.effectType)
         {
             case SkillEffectType.Damage:
-                if (targetModel.isAlive)
+                if (selectedSkill.target is SkillTarget.Enemy)
                 {
-                    targetModel.TakeDamage(selectedSkill.power);
-                    CombatLog.Instance.AddLog($"<color=yellow>{selectedSkill.name}</color> hit <color=red>{targetModel.displayName}</color> for <b>{selectedSkill.power}</b> damage.");
-                    if (!targetModel.isAlive)
+                    if (targetModel.isAlive)
                     {
-                        CombatLog.Instance.AddLog($"<color=red>{targetModel.displayName}</color> was <b>defeated</b>!");
+                        targetModel.TakeDamage(selectedSkill.power);
+                        CombatLog.Instance.AddLog($"<color=yellow>{selectedSkill.name}</color> hit <color=red>{targetModel.displayName}</color> for <b>{selectedSkill.power}</b> damage.");
+                        if (!targetModel.isAlive)
+                        {
+                            CombatLog.Instance.AddLog($"<color=red>{targetModel.displayName}</color> was <b>defeated</b>!");
+                        }
+                    } 
+                }
+                else
+                {
+                    CombatLog.Instance.AddLog($"<color=orange>{selectedSkill.name}</color> hit all enemies!");
+
+                    for (int i = 0; i < TurnManager.Instance.fighterDataList.Count; i++)
+                    {
+                        var m = TurnManager.Instance.fighterDataList[i];
+                        if (!m.isPlayer && m.isAlive)
+                        {
+                            m.TakeDamage(selectedSkill.power);
+                            CombatLog.Instance.AddLog($" - <color=red>{m.displayName}</color> took <b>{selectedSkill.power}</b> damage.");
+
+                            // UI refresh
+                            var go = TurnManager.Instance.fighterUIList[i];
+                            var ui = go.GetComponent<FighterUI>();
+                            if (ui != null)
+                                ui.Refresh();
+                        }
                     }
                 }
                 break;
@@ -113,26 +136,6 @@ public class SkillManager : MonoBehaviour
             case SkillEffectType.Heal:
                 targetModel.Heal(selectedSkill.power);
                 CombatLog.Instance.AddLog($"<color=green>{selectedSkill.name}</color> healed <color=#00FFFF>{targetModel.displayName}</color> for <b>{selectedSkill.power}</b> HP.");
-                break;
-
-            case SkillEffectType.AreaDamage:
-                CombatLog.Instance.AddLog($"<color=orange>{selectedSkill.name}</color> hit all enemies!");
-
-                for (int i = 0; i < TurnManager.Instance.fighterDataList.Count; i++)
-                {
-                    var m = TurnManager.Instance.fighterDataList[i];
-                    if (!m.isPlayer && m.isAlive)
-                    {
-                        m.TakeDamage(selectedSkill.power);
-                        CombatLog.Instance.AddLog($" - <color=red>{m.displayName}</color> took <b>{selectedSkill.power}</b> damage.");
-
-                        // UI refresh
-                        var go = TurnManager.Instance.fighterUIList[i];
-                        var ui = go.GetComponent<FighterUI>();
-                        if (ui != null)
-                            ui.Refresh();
-                    }
-                }
                 break;
         }
 
