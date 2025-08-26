@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa7447da636b80429ad9195f2dc1cef, type: 3}
+  m_Name: NPCSkillDatabase 1
+  m_EditorClassIdentifier: 
+  allSkills:
+  - id: swordattack
+    name: Sword Attack
+    isPassive: 0
+    power: 50
+    target: 0
+    effectType: 0
+    cooldown: 0
+    manaCost: 10
+    icon: {fileID: 0}
+    description: 
+  - id: knifestab
+    name: Knife Stab
+    isPassive: 0
+    power: 30
+    target: 0
+    effectType: 0
+    cooldown: 0
+    manaCost: 10
+    icon: {fileID: 0}
+    description: 
+  - id: wolfbite
+    name: Bite
+    isPassive: 0
+    power: 30
+    target: 0
+    effectType: 0
+    cooldown: 0
+    manaCost: 10
+    icon: {fileID: 0}
+    description: 
+  - id: allyheal
+    name: Heal
+    isPassive: 0
+    power: 50
+    target: 3
+    effectType: 1
+    cooldown: 0
+    manaCost: 10
+    icon: {fileID: 0}
+    description: 
+  - id: rabbitbite
+    name: Bite
+    isPassive: 0
+    power: 5
+    target: 0
+    effectType: 0
+    cooldown: 0
+    manaCost: 10
+    icon: {fileID: 0}
+    description: 

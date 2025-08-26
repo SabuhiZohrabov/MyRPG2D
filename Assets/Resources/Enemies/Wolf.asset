@@ -18,4 +18,7 @@ MonoBehaviour:
   maxHP: 100
   maxMP: 0
   expReward: 10
+  availableSkills:
+  - wolfbite
+  skillDatabase: {fileID: 11400000, guid: 320f739c48680a848b42d05c843b94d9, type: 2}
   lootTable: []

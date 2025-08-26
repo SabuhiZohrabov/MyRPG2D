@@ -166,11 +166,15 @@ public class TurnManager : MonoBehaviour
         {
             SkillManager.Instance.ReduceCooldowns();
         }
-        else if (model.isComrade)
+        else
         {
-            // Comrades can use basic attack automatically
-            // For now, comrades will skip their turn or use basic attack
-            // You can implement AI logic here later
+            // Execute automatic skill for comrade
+            if (NPCSkillController.Instance != null)
+            {
+                NPCSkillController.Instance.ExecuteNPCTurn(model);
+            }
+            // Automatically move to next turn after AI action
+            Invoke(nameof(NextTurn), 1.5f); // Delay for visual feedback
         }
         ActivateFighter(currentIndex);
     }

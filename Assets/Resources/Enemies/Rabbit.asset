@@ -18,6 +18,9 @@ MonoBehaviour:
   maxHP: 100
   maxMP: 0
   expReward: 10
+  availableSkills:
+  - rabbitbite
+  skillDatabase: {fileID: 11400000, guid: 320f739c48680a848b42d05c843b94d9, type: 2}
   lootTable:
   - item: {fileID: 11400000, guid: 2120cce2355a4884dabe00dd1a04bb3d, type: 2}
     dropChance: 0.5

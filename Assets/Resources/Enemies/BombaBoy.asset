@@ -17,3 +17,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   maxHP: 1000
   maxMP: 0
+  availableSkills:
+  - allyheal
+  skillDatabase: {fileID: 11400000, guid: 320f739c48680a848b42d05c843b94d9, type: 2}
