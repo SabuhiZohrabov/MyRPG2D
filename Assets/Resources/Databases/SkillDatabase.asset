@@ -19,8 +19,7 @@ MonoBehaviour:
     power: 100
     target: 0
     effectType: 0
-    cooldown: 0
-    currentCooldown: 0
+    cooldown: 5
     manaCost: 10
     icon: {fileID: 5353841184698615464, guid: 76ce69b4e38b7cd4084c1adb80d971d9, type: 3}
     description: 
@@ -31,7 +30,6 @@ MonoBehaviour:
     target: 4
     effectType: 0
     cooldown: 0
-    currentCooldown: 0
     manaCost: 10
     icon: {fileID: 9078623318578753597, guid: 4b2f9f70927c12e49857d2c49e1706cc, type: 3}
     description: 
@@ -42,7 +40,6 @@ MonoBehaviour:
     target: 1
     effectType: 1
     cooldown: 5
-    currentCooldown: 0
     manaCost: 10
     icon: {fileID: -1049461823314036041, guid: d390ba14f5958ce4aa87780b1fed7209, type: 3}
     description: 
@@ -53,7 +50,6 @@ MonoBehaviour:
     target: 0
     effectType: 0
     cooldown: 5
-    currentCooldown: 0
     manaCost: 10
     icon: {fileID: -1049461823314036041, guid: d390ba14f5958ce4aa87780b1fed7209, type: 3}
     description: 

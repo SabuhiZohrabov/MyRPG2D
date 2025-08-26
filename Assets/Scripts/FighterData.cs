@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class FighterData
@@ -16,6 +17,9 @@ public class FighterData
     public int currentHP;
     public int currentMP;
     public bool isAlive = true;
+    
+    // Skill cooldown tracking - key: skill id, value: current cooldown
+    private Dictionary<string, int> skillCooldowns = new Dictionary<string, int>();
 
     // --- Universal properties (always use these instead of direct fields!) ---
 
@@ -125,7 +129,7 @@ public class FighterData
         List<SkillModel> usableSkills = new List<SkillModel>();
         foreach (SkillModel skill in GetAvailableSkills())
         {
-            if (!skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost))
+            if (!skill.isPassive && IsSkillAvailable(skill) && HasEnoughMana(skill.manaCost))
             {
                 usableSkills.Add(skill);
             }
@@ -148,6 +152,42 @@ public class FighterData
     public bool CanUseSkill(SkillModel skill)
     {
         if (skill == null) return false;
-        return !skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost);
+        return !skill.isPassive && IsSkillAvailable(skill) && HasEnoughMana(skill.manaCost);
+    }
+    
+    // --- Skill Cooldown Management ---
+    
+    // Check if a skill is available (not on cooldown)
+    public bool IsSkillAvailable(SkillModel skill)
+    {
+        if (skill == null || string.IsNullOrEmpty(skill.id)) return false;
+        return GetSkillCooldown(skill.id) <= 0;
+    }
+    
+    // Get current cooldown for a skill
+    public int GetSkillCooldown(string skillId)
+    {
+        if (string.IsNullOrEmpty(skillId)) return 0;
+        return skillCooldowns.ContainsKey(skillId) ? skillCooldowns[skillId] : 0;
+    }
+    
+    // Set skill on cooldown
+    public void SetSkillCooldown(SkillModel skill)
+    {
+        if (skill == null || string.IsNullOrEmpty(skill.id)) return;
+        skillCooldowns[skill.id] = skill.cooldown;
+    }
+    
+    // Reduce all skill cooldowns by 1 (called at end of turn)
+    public void ReduceSkillCooldowns()
+    {
+        var keys = skillCooldowns.Keys.ToList();
+        foreach (string skillId in keys)
+        {
+            if (skillCooldowns[skillId] > 0)
+            {
+                skillCooldowns[skillId]--;
+            }
+        }
     }
 }

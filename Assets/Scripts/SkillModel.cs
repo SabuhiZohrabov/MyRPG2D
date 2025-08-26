@@ -25,7 +25,6 @@ public class SkillModel
     public SkillTarget target;
     public SkillEffectType effectType;
     public int cooldown = 0;        // static cooldown duration
-    public int currentCooldown = 0;      // runtime cooldown counter
     public int manaCost = 0;
     public Sprite icon;
     [TextArea]
@@ -36,7 +35,6 @@ public class SkillModel
         SkillTarget target,
         SkillEffectType effectType,
         int cooldown = 0,
-        int currentCooldown = 0,
         int manaCost = 0,
         Sprite icon = null,
         string description = "")
@@ -46,13 +44,8 @@ public class SkillModel
         this.target = target;
         this.effectType = effectType;
         this.cooldown = cooldown;
-        this.currentCooldown = currentCooldown;
         this.manaCost = manaCost;
         this.icon = icon;
         this.description = description;
-    }
-    public bool IsAvailable()
-    {
-        return currentCooldown <= 0;
     }
 }

@@ -63,7 +63,7 @@ public class SkillManager : MonoBehaviour
     {
         FighterData activeFighter = TurnManager.Instance.GetCurrentFighterModel();
 
-        if (!skill.IsAvailable())
+        if (!activeFighter.IsSkillAvailable(skill))
         {
             CombatLog.Instance.AddLog($"{skill.name} is on cooldown.");
             return;
@@ -149,18 +149,16 @@ public class SkillManager : MonoBehaviour
         //mana
         activeFighter.UseMana(selectedSkill.manaCost);
         //cooldown
-        selectedSkill.currentCooldown = selectedSkill.cooldown;
+        activeFighter.SetSkillCooldown(selectedSkill);
         RefreshSkillButtons();
     }
 
     public void ReduceCooldowns()
     {
-        if (playerStats == null) return;
-        
-        foreach (SkillModel skill in playerStats.AvailableSkills)
+        FighterData currentFighter = TurnManager.Instance.GetCurrentFighterModel();
+        if (currentFighter != null)
         {
-            if (skill.currentCooldown > 0)
-                skill.currentCooldown--;
+            currentFighter.ReduceSkillCooldowns();
         }
 
         RefreshSkillButtons();  
@@ -180,17 +178,19 @@ public class SkillManager : MonoBehaviour
             TextMeshProUGUI cooldownText = buttonObj.Find("CooldownText")?.GetComponent<TextMeshProUGUI>();
             Button btn = buttonObj.GetComponent<Button>();
 
-            if (cooldownText != null)
+            FighterData playerFighter = TurnManager.Instance.GetCurrentFighterModel();
+            
+            if (cooldownText != null && playerFighter != null)
             {
-                if (skill.IsAvailable())
+                if (playerFighter.IsSkillAvailable(skill))
                     cooldownText.text = "";
                 else
-                    cooldownText.text = $"CD: {skill.currentCooldown}";
+                    cooldownText.text = $"CD: {playerFighter.GetSkillCooldown(skill.id)}";
             }
 
-            if (btn != null)
+            if (btn != null && playerFighter != null)
             {
-                btn.interactable = skill.IsAvailable();
+                btn.interactable = playerFighter.IsSkillAvailable(skill);
             }
         }
         scrollRect.horizontalNormalizedPosition = 0f;
