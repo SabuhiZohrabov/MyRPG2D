@@ -21,7 +21,6 @@ public class SkillModel
     public string id; // Unique identifier for the skill
     public string name;
     public bool isPassive = false; // If true, this skill is always active and does not require activation
-    public bool isLearned = true; // If true, this skill is available for use; if false, it is not learned yet
     public int power;
     public SkillTarget targetType;
     public SkillEffectType effectType;

@@ -19,7 +19,7 @@ public class SkillsPanelUI : MonoBehaviour
             Destroy(child.gameObject);
         if (skillRowPrefab == null || skillsContainer == null || SkillManager.Instance == null) return;
 
-        foreach (var skill in player.AvailableSkills.FindAll(s => s.isLearned))
+        foreach (var skill in player.AvailableSkills)
         {
             GameObject obj = Instantiate(skillRowPrefab, skillsContainer);
             var row = obj.GetComponent<SkillRowUI>();

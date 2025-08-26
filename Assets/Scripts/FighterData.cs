@@ -125,7 +125,7 @@ public class FighterData
         List<SkillModel> usableSkills = new List<SkillModel>();
         foreach (SkillModel skill in GetAvailableSkills())
         {
-            if (skill.isLearned && !skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost))
+            if (!skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost))
             {
                 usableSkills.Add(skill);
             }
@@ -148,6 +148,6 @@ public class FighterData
     public bool CanUseSkill(SkillModel skill)
     {
         if (skill == null) return false;
-        return skill.isLearned && !skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost);
+        return !skill.isPassive && skill.IsAvailable() && HasEnoughMana(skill.manaCost);
     }
 }
