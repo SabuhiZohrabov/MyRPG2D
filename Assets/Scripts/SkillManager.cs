@@ -118,7 +118,7 @@ public class SkillManager : MonoBehaviour
                     for (int i = 0; i < TurnManager.Instance.fighterDataList.Count; i++)
                     {
                         var m = TurnManager.Instance.fighterDataList[i];
-                        if (!m.isPlayer && m.isAlive)
+                        if (m.isEnemy && m.isAlive)
                         {
                             m.TakeDamage(selectedSkill.power);
                             CombatLog.Instance.AddLog($" - <color=red>{m.displayName}</color> took <b>{selectedSkill.power}</b> damage.");
