@@ -59,10 +59,10 @@ public class NPCSkillController : MonoBehaviour
             return healingSkills[Random.Range(0, healingSkills.Count)];
         }
 
-        // If ally health is low, comrades should prioritize healing allies
-        if (npcFighter.isComrade && healingSkills.Count > 0)
+        // If ally health is low, allied NPCs should prioritize healing allies
+        if (npcFighter.fighter.GetFactionType() == FactionType.Allied && healingSkills.Count > 0)
         {
-            FighterData lowHealthAlly = FindLowHealthAlly();
+            FighterData lowHealthAlly = FindLowHealthAlly(npcFighter);
             if (lowHealthAlly != null)
             {
                 return healingSkills[Random.Range(0, healingSkills.Count)];
@@ -80,13 +80,14 @@ public class NPCSkillController : MonoBehaviour
     }
 
     // Find ally with low health for healing priority
-    private FighterData FindLowHealthAlly()
+    private FighterData FindLowHealthAlly(FighterData npcFighter)
     {
         List<FighterData> allies = new List<FighterData>();
+        FactionType allyFaction = npcFighter.fighter.GetAllyFaction();
         
         foreach (FighterData fighter in TurnManager.Instance.fighterDataList)
         {
-            if (fighter.isAlive && (fighter.isPlayer || fighter.isComrade))
+            if (fighter.isAlive && fighter.fighter.GetFactionType() == allyFaction)
             {
                 float healthPercentage = (float)fighter.currentHP / fighter.maxHP;
                 if (healthPercentage < 0.5f) // Below 50% health
@@ -103,40 +104,22 @@ public class NPCSkillController : MonoBehaviour
     private FighterData SelectTarget(FighterData npcFighter, SkillModel skill)
     {
         List<FighterData> potentialTargets = new List<FighterData>();
+        FactionType enemyFaction = npcFighter.fighter.GetEnemyFaction();
+        FactionType allyFaction = npcFighter.fighter.GetAllyFaction();
 
         switch (skill.target)
         {
             case SkillTarget.Enemy:
-                // Select enemy targets based on NPC type
-                if (npcFighter.isEnemy)
-                {
-                    // Enemies target player and comrades
-                    potentialTargets = TurnManager.Instance.fighterDataList
-                        .Where(f => f.isAlive && (f.isPlayer || f.isComrade)).ToList();
-                }
-                else if (npcFighter.isComrade)
-                {
-                    // Comrades target enemies
-                    potentialTargets = TurnManager.Instance.fighterDataList
-                        .Where(f => f.isAlive && f.isEnemy).ToList();
-                }
+                // Select enemy targets based on faction
+                potentialTargets = TurnManager.Instance.fighterDataList
+                    .Where(f => f.isAlive && f.fighter.GetFactionType() == enemyFaction).ToList();
                 break;
 
             case SkillTarget.Ally:
             case SkillTarget.AllySelf:
-                // Select ally targets based on NPC type
-                if (npcFighter.isEnemy)
-                {
-                    // Enemies target other enemies and themselves
-                    potentialTargets = TurnManager.Instance.fighterDataList
-                        .Where(f => f.isAlive && f.isEnemy).ToList();
-                }
-                else if (npcFighter.isComrade)
-                {
-                    // Comrades target player, other comrades, and themselves
-                    potentialTargets = TurnManager.Instance.fighterDataList
-                        .Where(f => f.isAlive && (f.isPlayer || f.isComrade)).ToList();
-                }
+                // Select ally targets based on faction
+                potentialTargets = TurnManager.Instance.fighterDataList
+                    .Where(f => f.isAlive && f.fighter.GetFactionType() == allyFaction).ToList();
                 break;
 
             case SkillTarget.Self:
@@ -217,19 +200,11 @@ public class NPCSkillController : MonoBehaviour
     private void ExecuteAoEDamage(FighterData npcFighter, SkillModel skill)
     {
         List<FighterData> targets = new List<FighterData>();
+        FactionType enemyFaction = npcFighter.fighter.GetEnemyFaction();
         
-        if (npcFighter.isEnemy)
-        {
-            // Enemies target all player-side fighters
-            targets = TurnManager.Instance.fighterDataList
-                .Where(f => f.isAlive && (f.isPlayer || f.isComrade)).ToList();
-        }
-        else if (npcFighter.isComrade)
-        {
-            // Comrades target all enemies
-            targets = TurnManager.Instance.fighterDataList
-                .Where(f => f.isAlive && f.isEnemy).ToList();
-        }
+        // Target all enemies based on faction
+        targets = TurnManager.Instance.fighterDataList
+            .Where(f => f.isAlive && f.fighter.GetFactionType() == enemyFaction).ToList();
 
         CombatLog.Instance.AddLog($"<color=orange>{npcFighter.displayName}</color> used <color=yellow>{skill.name}</color> hitting all enemies!");
 
@@ -244,19 +219,11 @@ public class NPCSkillController : MonoBehaviour
     private void ExecuteAoEHeal(FighterData npcFighter, SkillModel skill)
     {
         List<FighterData> targets = new List<FighterData>();
+        FactionType allyFaction = npcFighter.fighter.GetAllyFaction();
         
-        if (npcFighter.isEnemy)
-        {
-            // Enemies heal all enemies
-            targets = TurnManager.Instance.fighterDataList
-                .Where(f => f.isAlive && f.isEnemy).ToList();
-        }
-        else if (npcFighter.isComrade)
-        {
-            // Comrades heal all player-side fighters
-            targets = TurnManager.Instance.fighterDataList
-                .Where(f => f.isAlive && (f.isPlayer || f.isComrade)).ToList();
-        }
+        // Target all allies based on faction
+        targets = TurnManager.Instance.fighterDataList
+            .Where(f => f.isAlive && f.fighter.GetFactionType() == allyFaction).ToList();
 
         CombatLog.Instance.AddLog($"<color=orange>{npcFighter.displayName}</color> used <color=green>{skill.name}</color> healing all allies!");
 

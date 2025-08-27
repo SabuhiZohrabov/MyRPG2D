@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+// Faction types for targeting system
+
 [System.Serializable]
 public class FighterData
 {
@@ -84,6 +86,27 @@ public class FighterData
         currentMP = comrade?.MaxMP ?? 50;
         isAlive = true;
     }
+
+    //// --- Faction system for targeting ---
+
+    //// Get this fighter's faction type
+    //public virtual FactionType GetFactionType()
+    //{
+    //    if (isEnemy) return FactionType.Enemy;
+    //    return FactionType.Allied; // Player + Comrade
+    //}
+
+    //// Get enemy faction to target for damage skills
+    //public virtual FactionType GetEnemyFaction()
+    //{
+    //    return GetFactionType() == FactionType.Allied ? FactionType.Enemy : FactionType.Allied;
+    //}
+
+    //// Get ally faction to target for heal skills  
+    //public virtual FactionType GetAllyFaction()
+    //{
+    //    return GetFactionType();
+    //}
 
     // --- Universal methods ---
 

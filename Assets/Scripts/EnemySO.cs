@@ -50,4 +50,20 @@ public class EnemySO : ScriptableObject, IFighter
             return skills;
         } 
     }
+
+    // Faction system methods for targeting
+    public FactionType GetFactionType()
+    {
+        return FactionType.Enemy;
+    }
+
+    public FactionType GetEnemyFaction()
+    {
+        return FactionType.Allied;
+    }
+
+    public FactionType GetAllyFaction()
+    {
+        return FactionType.Enemy;
+    }
 }

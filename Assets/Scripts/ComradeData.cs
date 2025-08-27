@@ -41,4 +41,20 @@ public class ComradeData : ScriptableObject, IFighter
             return skills;
         } 
     }
+
+    // Faction system methods for targeting
+    public FactionType GetFactionType()
+    {
+        return FactionType.Allied;
+    }
+
+    public FactionType GetEnemyFaction()
+    {
+        return FactionType.Enemy;
+    }
+
+    public FactionType GetAllyFaction()
+    {
+        return FactionType.Allied;
+    }
 }

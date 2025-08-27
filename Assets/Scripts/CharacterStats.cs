@@ -87,6 +87,22 @@ public class CharacterStats : MonoBehaviour, IFighter
         } 
     }
 
+    // Faction system methods for targeting
+    public FactionType GetFactionType()
+    {
+        return FactionType.Allied;
+    }
+
+    public FactionType GetEnemyFaction()
+    {
+        return FactionType.Enemy;
+    }
+
+    public FactionType GetAllyFaction()
+    {
+        return FactionType.Allied;
+    }
+
     private Dictionary<string, AttributeUpgradeType> attributeUpgradeRules = new Dictionary<string, AttributeUpgradeType>
 {
     { "Strength", AttributeUpgradeType.Manual },
