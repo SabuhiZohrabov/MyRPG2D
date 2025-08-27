@@ -150,9 +150,14 @@ public class SkillManager : MonoBehaviour
         activeFighter.UseMana(selectedSkill.manaCost);
         //cooldown
         activeFighter.SetSkillCooldown(selectedSkill);
+
+        // check victory
+        var turnManager = TurnManager.Instance;
+        if (turnManager != null && !turnManager.IsEnemyTeamAlive() && turnManager.IsPlayerTeamAlive())
+            turnManager.OnVictory();
+
+        // Refresh skill buttons (cooldowns)
         RefreshSkillButtons();
-        if(TurnManager.Instance != null && !TurnManager.Instance.IsEnemyTeamAlive() && TurnManager.Instance.IsPlayerTeamAlive())
-            TurnManager.Instance.OnVictory();
     }
 
     public void RefreshSkillButtons()
