@@ -151,17 +151,8 @@ public class SkillManager : MonoBehaviour
         //cooldown
         activeFighter.SetSkillCooldown(selectedSkill);
         RefreshSkillButtons();
-    }
-
-    public void ReduceCooldowns()
-    {
-        FighterData currentFighter = TurnManager.Instance.GetCurrentFighterModel();
-        if (currentFighter != null)
-        {
-            currentFighter.ReduceSkillCooldowns();
-        }
-
-        RefreshSkillButtons();  
+        if(TurnManager.Instance != null && !TurnManager.Instance.IsEnemyTeamAlive() && TurnManager.Instance.IsPlayerTeamAlive())
+            TurnManager.Instance.OnVictory();
     }
 
     public void RefreshSkillButtons()

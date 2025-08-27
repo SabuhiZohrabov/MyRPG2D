@@ -127,13 +127,6 @@ public class TurnManager : MonoBehaviour
             return;
         }
 
-        if (!IsEnemyTeamAlive())
-        {
-            CombatLog.Instance.AddLog("<color=green>You are victorious!</color>");
-            skillPanel.SetActive(false);
-            OnVictory();
-            return;
-        }
 
         if (fighterUIList.Count == 0) return;
 
@@ -164,7 +157,8 @@ public class TurnManager : MonoBehaviour
 
         if (model.isPlayer)
         {
-            SkillManager.Instance.ReduceCooldowns();
+            model.ReduceSkillCooldowns();
+            SkillManager.Instance.RefreshSkillButtons();
         }
         else
         {
@@ -245,7 +239,7 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    private void OnVictory()
+    public void OnVictory()
     {
         Debug.Log("Victory!");
 
