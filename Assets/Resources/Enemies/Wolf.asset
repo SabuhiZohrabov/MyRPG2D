@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Wolf
   icon: {fileID: 0}
   maxHP: 100
-  maxMP: 0
+  maxMP: 100
   expReward: 10
   availableSkills:
   - wolfbite
