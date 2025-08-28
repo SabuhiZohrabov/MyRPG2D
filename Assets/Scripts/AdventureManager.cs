@@ -38,21 +38,7 @@ public class AdventureManager : MonoBehaviour
         if (!Application.isPlaying) return;
 
         string startAdventureId = DatabaseManager.Instance.GetAdventureProgress().CurrentAdventureId;
-        // Initial load without triggering map movement
-        AdventureTextData data = textDatabase.Find(t => t.id == startAdventureId);
-        currentAdventureTextData = data;
-        
-        if (data != null)
-        {
-            string targetMapId = data.mapId;
-            Vector2Int targetPosition = data.mapPosition;
-            adventureTMP.text = data.text;
-
-            if (PlayerMapVisualizer.Instance != null)
-            {
-                PlayerMapVisualizer.Instance.ShowPlayerAt(targetMapId, targetPosition);
-            }
-        }
+        LoadAdventure(startAdventureId, true);
     }
 
     public void OnEnemyLinkClicked(string linkID)
@@ -83,7 +69,11 @@ public class AdventureManager : MonoBehaviour
     public void ShowTextById(string id)
     {
         if (!Application.isPlaying) return;
+        LoadAdventure(id, false);
+    }
 
+    private void LoadAdventure(string id, bool isInitialLoad)
+    {
         AdventureTextData data = textDatabase.Find(t => t.id == id);
         currentAdventureTextData = data; // Store the current text data for later use
         if (data == null)
@@ -99,7 +89,7 @@ public class AdventureManager : MonoBehaviour
             if (currentConditionValue >= data.conditionRequiredValue && !string.IsNullOrEmpty(data.conditionAdventureLink))
             {
                 // Condition is true, redirect to different adventure
-                ShowTextById(data.conditionAdventureLink);
+                LoadAdventure(data.conditionAdventureLink, isInitialLoad);
                 return;
             }
         }
@@ -127,6 +117,15 @@ public class AdventureManager : MonoBehaviour
         }
         
         adventureTMP.text = displayText;
+        
+        // Show player on map only during initial load
+        if (isInitialLoad && PlayerMapVisualizer.Instance != null)
+        {
+            string targetMapId = data.mapId;
+            Vector2Int targetPosition = data.mapPosition;
+            PlayerMapVisualizer.Instance.ShowPlayerAt(targetMapId, targetPosition);
+        }
+
         //playerStats.SaveToDatabase();
         DatabaseManager.Instance.SaveAdventureProgress(currentAdventureTextData.id);
 
