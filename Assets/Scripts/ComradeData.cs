@@ -19,6 +19,9 @@ public class ComradeData : ScriptableObject, IFighter
     [Header("Skill Database")]
     public SkillDatabase skillDatabase;
     
+    [Header("NPC Class")]
+    public NPCClass npcClass;
+    
     // IFighter interface implementation
     public string DisplayName => displayName;
     public Sprite Icon => icon;

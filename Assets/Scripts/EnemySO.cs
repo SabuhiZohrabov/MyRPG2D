@@ -16,6 +16,9 @@ public class EnemySO : ScriptableObject, IFighter
     
     [Header("Skill Database")]
     public SkillDatabase skillDatabase;
+    
+    [Header("NPC Class")]
+    public NPCClass npcClass;
 
     // Simple loot system
     [System.Serializable]

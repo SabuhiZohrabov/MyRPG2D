@@ -45,8 +45,41 @@ public class NPCSkillController : MonoBehaviour
         }
     }
 
-    // AI skill selection logic
+    // AI skill selection logic with class system integration
     private SkillModel SelectBestSkill(FighterData npcFighter, List<SkillModel> usableSkills)
+    {
+        // Get NPC class from fighter data
+        NPCClass npcClass = GetNPCClass(npcFighter);
+        
+        // If NPC has a specific class, use class-based skill selection
+        if (npcClass != null)
+        {
+            return npcClass.SelectSkill(npcFighter, usableSkills);
+        }
+
+        // Fallback to original logic if no class is assigned
+        return SelectBestSkillDefault(npcFighter, usableSkills);
+    }
+
+    // Get NPC class from fighter data
+    private NPCClass GetNPCClass(FighterData npcFighter)
+    {
+        // Check if it's an enemy
+        if (npcFighter.fighter is EnemySO enemySO)
+        {
+            return enemySO.npcClass;
+        }
+        // Check if it's a comrade
+        else if (npcFighter.fighter is ComradeData comradeData)
+        {
+            return comradeData.npcClass;
+        }
+        
+        return null;
+    }
+
+    // Original skill selection logic as fallback
+    private SkillModel SelectBestSkillDefault(FighterData npcFighter, List<SkillModel> usableSkills)
     {
         // Priority system for skill selection
         List<SkillModel> healingSkills = usableSkills.Where(s => s.effectType == SkillEffectType.Heal).ToList();
@@ -100,7 +133,7 @@ public class NPCSkillController : MonoBehaviour
         return allies.Count > 0 ? allies.OrderBy(f => f.currentHP).First() : null;
     }
 
-    // Select appropriate target based on skill type and NPC alignment
+    // Select appropriate target based on skill type and NPC alignment with class system integration
     private FighterData SelectTarget(FighterData npcFighter, SkillModel skill)
     {
         List<FighterData> potentialTargets = new List<FighterData>();
@@ -136,6 +169,20 @@ public class NPCSkillController : MonoBehaviour
         if (potentialTargets.Count == 0)
             return null;
 
+        // Check if NPC has a specific class for advanced targeting
+        NPCClass npcClass = GetNPCClass(npcFighter);
+        if (npcClass != null)
+        {
+            return npcClass.SelectTarget(npcFighter, skill, potentialTargets);
+        }
+
+        // Fallback to default targeting logic
+        return SelectTargetDefault(skill, potentialTargets);
+    }
+
+    // Default target selection logic
+    private FighterData SelectTargetDefault(SkillModel skill, List<FighterData> potentialTargets)
+    {
         // Smart target selection
         if (skill.effectType == SkillEffectType.Heal)
         {
@@ -191,6 +238,13 @@ public class NPCSkillController : MonoBehaviour
         // Apply costs and cooldowns
         npcFighter.UseMana(skill.manaCost);
         npcFighter.SetSkillCooldown(skill);
+
+        // Trigger class-specific behavior if available
+        NPCClass npcClass = GetNPCClass(npcFighter);
+        if (npcClass != null)
+        {
+            npcClass.OnSkillUsed(npcFighter, skill, target);
+        }
 
         // Refresh UI
         RefreshCombatUI();
