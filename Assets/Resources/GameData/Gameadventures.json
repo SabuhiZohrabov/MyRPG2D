@@ -2,10 +2,10 @@
   "texts": [
     {
       "id": "start_adventure",
-      "text": "Game Begins\nYou see a forest\n<link=\"forest\"><color=red>Enter</color></link>\n<link=\"test_condition_adventure\"><color=yellow>Test Condition System</color></link>",
+      "text": "Game Begins\nYou see a forest",
       "links": [
-        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
-        { "linkID":"test_condition_adventure", "nextLinkID": "test_condition_adventure", "type": "0", "objectID":"" }
+        { "linkID":"forest", "linkText":"Enter the mysterious forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
+        { "linkID":"test_condition_adventure", "linkText":"Test the condition system", "nextLinkID": "test_condition_adventure", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 1, "y": 1 },
@@ -17,11 +17,11 @@
     },
     {
       "id": "forest",
-      "text": "You see a animals \n<link=\"forest1\"><color=red>Attack Forest animal</color></link>\n<link=\"forest2\"><color=red>Attack Rabbits</color></link>\n<link=\"mountain\"><color=blue>Run</color></link>",
+      "text": "You see a animals",
       "links": [
-        { "linkID":"forest1", "nextLinkID": "start_adventure", "type": "2", "objectID":"forest_animal" },
-        { "linkID":"forest2", "nextLinkID": "forest", "type": "2", "objectID":"forest_rabbits" },
-        { "linkID":"mountain", "nextLinkID": "mountain", "type": "0", "objectID":"" }
+        { "linkID":"forest1", "linkText":"<color=red>Attack the dangerous forest animals</color>", "nextLinkID": "start_adventure", "type": "2", "objectID":"forest_animal" },
+        { "linkID":"forest2", "linkText":"Hunt some rabbits for food", "nextLinkID": "forest", "type": "2", "objectID":"forest_rabbits" },
+        { "linkID":"mountain", "linkText":"<color=blue>Flee towards the mountains</color>", "nextLinkID": "mountain", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 2, "y": 1 },
@@ -33,12 +33,12 @@
     },
     {
       "id": "mountain",
-      "text": "You escaped \n<link=\"forest\"><color=red>Get back</color></link> \n<link=\"town\"><color=red>Continue</color></link>\n<link=\"add_comrade\"><color=red>Add Comrade</color></link>\n<link=\"remove_comrade\"><color=red>Remove Comrade</color></link>",
+      "text": "You escaped",
       "links": [
-        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
-        { "linkID":"town", "nextLinkID": "town", "type": "0", "objectID":"" },
-        { "linkID":"add_comrade", "nextLinkID": "mountain", "type": "5", "objectID":"bombaboy" },
-        { "linkID":"remove_comrade", "nextLinkID": "mountain", "type": "6", "objectID":"bombaboy" }
+        { "linkID":"forest", "linkText":"Return to the forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
+        { "linkID":"town", "linkText":"Head to the nearby town", "nextLinkID": "town", "type": "0", "objectID":"" },
+        { "linkID":"add_comrade", "linkText":"Recruit Bombaboy as companion", "nextLinkID": "mountain", "type": "5", "objectID":"bombaboy" },
+        { "linkID":"remove_comrade", "linkText":"Send Bombaboy away", "nextLinkID": "mountain", "type": "6", "objectID":"bombaboy" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 5, "y": 4 },
@@ -50,12 +50,12 @@
     },
     {
       "id": "town",
-      "text": "You found Items \n<link=\"town1\"><color=red>Take staff</color></link> \n<link=\"town2\"><color=red>Take potions</color></link> \n<link=\"town3\"><color=red>Take Items</color></link> \n<link=\"forest\"><color=red>Continue</color></link>",
+      "text": "You found Items",
       "links": [
-        { "linkID":"town1", "nextLinkID": "town", "type": "4", "objectID":"take_wooden_staff" },
-        { "linkID":"town2", "nextLinkID": "town", "type": "4", "objectID":"take_some_healing" },
-        { "linkID":"town3", "nextLinkID": "start_adventure", "type": "4", "objectID":"take_reward" },
-        { "linkID":"forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
+        { "linkID":"town1", "linkText":"Take the wooden staff", "nextLinkID": "town", "type": "4", "objectID":"take_wooden_staff" },
+        { "linkID":"town2", "linkText":"Collect healing potions", "nextLinkID": "town", "type": "4", "objectID":"take_some_healing" },
+        { "linkID":"town3", "linkText":"Claim special rewards", "nextLinkID": "start_adventure", "type": "4", "objectID":"take_reward" },
+        { "linkID":"forest", "linkText":"Continue journey to forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 5, "y": 4 },
@@ -67,9 +67,9 @@
     },
     {
       "id": "test_condition_adventure",
-      "text": "Test Adventure - This will add 1 to 'kills' condition \n<link=\"next_test\"><color=red>Continue</color></link>",
+      "text": "Test Adventure - This will add 1 to 'kills' condition",
       "links": [
-        { "linkID":"next_test", "nextLinkID": "conditional_adventure", "type": "0", "objectID":"" }
+        { "linkID":"next_test", "linkText":"Proceed to conditional test", "nextLinkID": "conditional_adventure", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 3, "y": 3 },
@@ -81,9 +81,9 @@
     },
     {
       "id": "conditional_adventure",
-      "text": "This adventure checks if 'kills' >= 3. If yes, goes to special_reward, if no shows this text \n<link=\"test_again\"><color=red>Test again</color></link>",
+      "text": "This adventure checks if 'kills' >= 3. If yes, goes to special_reward, if no shows this text",
       "links": [
-        { "linkID":"test_again", "nextLinkID": "test_condition_adventure", "type": "0", "objectID":"" }
+        { "linkID":"test_again", "linkText":"Try the condition test again", "nextLinkID": "test_condition_adventure", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 4, "y": 3 },
@@ -95,9 +95,9 @@
     },
     {
       "id": "special_reward",
-      "text": "Congratulations! You met the condition and got the special reward! \n<link=\"start_adventure\"><color=red>Go back to start</color></link>",
+      "text": "Congratulations! You met the condition and got the special reward!",
       "links": [
-        { "linkID":"start_adventure", "nextLinkID": "start_adventure", "type": "0", "objectID":"" }
+        { "linkID":"start_adventure", "linkText":"Return to the beginning", "nextLinkID": "start_adventure", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 6, "y": 3 },

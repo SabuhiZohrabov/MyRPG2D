@@ -18,6 +18,7 @@ public enum AdventureTextType
 public class AdventureLink
 {
     public string linkID;                   // e.g. "goblin", "npc", "cave"
+    public string linkText;                   // e.g. "Continue", "Take sword", "Talk to the girl"
     public string nextLinkID;                   // e.g. "goblin", "npc", "cave"
     public AdventureTextType type;          // e.g. Battle, Dialog, Narration
     public string objectID;                 // e.g. "item", "enemy", "quest" etc

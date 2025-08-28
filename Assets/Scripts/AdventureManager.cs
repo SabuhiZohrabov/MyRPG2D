@@ -110,7 +110,23 @@ public class AdventureManager : MonoBehaviour
             AddValueToCondition(data.addValueConditionId, data.addValue);
         }
 
-        adventureTMP.text = data.text;
+        // Display main adventure text
+        string displayText = data.text;
+        
+        // Add link texts below main text if they exist
+        if (data.links != null && data.links.Count > 0)
+        {
+            displayText += "\n\n"; // Add some spacing
+            foreach (AdventureLink link in data.links)
+            {
+                if (!string.IsNullOrEmpty(link.linkText))
+                {
+                    displayText += "<link=\"" + link.linkID + "\">" + link.linkText + "</link>\n";
+                }
+            }
+        }
+        
+        adventureTMP.text = displayText;
         //playerStats.SaveToDatabase();
         DatabaseManager.Instance.SaveAdventureProgress(currentAdventureTextData.id);
 
