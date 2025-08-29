@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [CreateAssetMenu(fileName = "AEnemyClass", menuName = "Combat/NPC Classes/AEnemy")]
-public class AEnemyClass : NPCClass
+public class NPCClassAEnemy : NPCClass
 {
     [Header("AEnemy Class Settings")]
     public float aggressiveHealthThreshold = 0.5f;

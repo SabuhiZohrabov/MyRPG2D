@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [CreateAssetMenu(fileName = "BasicNPCClass", menuName = "Combat/NPC Classes/Basic")]
-public class BasicNPCClass : NPCClass
+public class NPCClassBasic : NPCClass
 {
     [Header("Basic Class Settings")]
     public float lowHealthThreshold = 0.3f;
