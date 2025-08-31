@@ -17,7 +17,7 @@ public class SkillsPanelUI : MonoBehaviour
 
         foreach (Transform child in skillsContainer)
             Destroy(child.gameObject);
-        if (skillRowPrefab == null || skillsContainer == null || SkillManager.Instance == null) return;
+        if (skillRowPrefab == null || skillsContainer == null || player == null) return;
 
         foreach (var skill in player.AvailableSkills)
         {

@@ -51,5 +51,5 @@ MonoBehaviour:
     effectType: 0
     cooldown: 5
     manaCost: 10
-    icon: {fileID: -1049461823314036041, guid: d390ba14f5958ce4aa87780b1fed7209, type: 3}
+    icon: {fileID: 2838799601886759051, guid: 43c7a50fcde6d374fbbf1f16fbc16035, type: 3}
     description: 

@@ -61,6 +61,7 @@ public class AdventureManager : MonoBehaviour
 
         TurnManager.Instance.SpawnDynamicEnemies(fighterDataList);
         TurnManager.Instance.currentAdventureText = currentAdventureTextData;
+        SkillManager.Instance.PopulateSkills();
 
         adventurePanel.SetActive(false);
         combatPanel.SetActive(true);

@@ -22,12 +22,12 @@ public class SkillManager : MonoBehaviour
     {
         Instance = this;
     }
-    void Start()
-    {        
-        PopulateSkills();
-    }
+    //void Start()
+    //{        
+    //    PopulateSkills();
+    //}
 
-    void PopulateSkills()
+    public void PopulateSkills()
     {
         if (playerStats == null) return;
         
