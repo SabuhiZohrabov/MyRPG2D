@@ -59,6 +59,7 @@ public class DatabaseManager
 
                 // create tables
                 _db.CreateTable<PlayerStatsModel>();
+                _db.CreateTable<PlayerSkillModel>();
                 _db.CreateTable<InventoryItemModel>();
                 _db.CreateTable<AdventureProgressModel>();
                 _db.CreateTable<ConditionModel>();
@@ -187,7 +188,10 @@ public class DatabaseManager
         stats.Endurance.Value = saved.Endurance;
         stats.CurrentAdventureId = saved.CurrentAdventureId;
         stats.DatabaseId = saved.Id;
-        stats.playerSkills = new List<string>(saved.playerSkills);
+        
+        // Load player skills from separate PlayerSkill table
+        var skillModels = DatabaseManager.Instance.GetPlayerSkills(saved.Id);
+        stats.playerSkills = skillModels.Select(s => s.SkillName).ToList();
     }
 
     public void SaveToDatabase(CharacterStats stats)
@@ -203,11 +207,127 @@ public class DatabaseManager
             Dexterity = stats.Dexterity.Value,
             Intelligence = stats.Intelligence.Value,
             Endurance = stats.Endurance.Value,
-            CurrentAdventureId = stats.CurrentAdventureId ?? "start_adventure",
-            playerSkills = new List<string>(stats.playerSkills)
+            CurrentAdventureId = stats.CurrentAdventureId ?? "start_adventure"
         };
 
         DatabaseManager.Instance.SavePlayerStats(data);
+        
+        // Save player skills to separate PlayerSkill table
+        DatabaseManager.Instance.SavePlayerSkills(data.Id, stats.playerSkills);
+    }
+    #endregion
+
+    // -----------------------
+    // PlayerSkill operations
+    // -----------------------
+
+    #region playerskills
+    public List<PlayerSkillModel> GetPlayerSkills(int playerId)
+    {
+        if (_db == null) return new List<PlayerSkillModel>();
+
+        lock (_lockObject)
+        {
+            try
+            {
+                return _db.Table<PlayerSkillModel>()
+                          .Where(s => s.PlayerId == playerId)
+                          .ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] GetPlayerSkills failed: {e.Message}");
+                return new List<PlayerSkillModel>();
+            }
+        }
+    }
+
+    public void SavePlayerSkills(int playerId, List<string> skills)
+    {
+        if (_db == null) return;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                _db.BeginTransaction();
+                try
+                {
+                    // Delete existing skills for this player
+                    var existingSkills = GetPlayerSkills(playerId);
+                    foreach (var skill in existingSkills)
+                    {
+                        _db.Delete(skill);
+                    }
+
+                    // Insert new skills
+                    foreach (var skillName in skills)
+                    {
+                        var skillModel = new PlayerSkillModel(playerId, skillName);
+                        _db.Insert(skillModel);
+                    }
+
+                    _db.Commit();
+                }
+                catch
+                {
+                    _db.Rollback();
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] SavePlayerSkills failed: {e.Message}");
+            }
+        }
+    }
+
+    public void AddPlayerSkill(int playerId, string skillName)
+    {
+        if (_db == null) return;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                // Check if skill already exists
+                var existingSkill = _db.Table<PlayerSkillModel>()
+                                      .FirstOrDefault(s => s.PlayerId == playerId && s.SkillName == skillName);
+
+                if (existingSkill == null)
+                {
+                    var skillModel = new PlayerSkillModel(playerId, skillName);
+                    _db.Insert(skillModel);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] AddPlayerSkill failed: {e.Message}");
+            }
+        }
+    }
+
+    public void RemovePlayerSkill(int playerId, string skillName)
+    {
+        if (_db == null) return;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                var skillToRemove = _db.Table<PlayerSkillModel>()
+                                      .FirstOrDefault(s => s.PlayerId == playerId && s.SkillName == skillName);
+
+                if (skillToRemove != null)
+                {
+                    _db.Delete(skillToRemove);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] RemovePlayerSkill failed: {e.Message}");
+            }
+        }
     }
     #endregion
 

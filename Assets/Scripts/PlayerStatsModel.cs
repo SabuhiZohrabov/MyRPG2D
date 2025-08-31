@@ -17,8 +17,6 @@ public class PlayerStatsModel
     public int Endurance { get; set; }
     public string CurrentAdventureId { get; set; }
 
-    public List<string> playerSkills = new List<string>();
-
     public PlayerStatsModel()
     {
         // Default starting values
@@ -31,6 +29,5 @@ public class PlayerStatsModel
         Intelligence = 5;
         Endurance = 5;
         CurrentAdventureId = "start_adventure";
-        playerSkills = new List<string>();
     }
 }

@@ -127,6 +127,7 @@
     <Compile Include="Assets\Scripts\MapData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\ItemSlotUI.cs" />
+    <Compile Include="Assets\Scripts\PlayerSkillModel.cs" />
     <Compile Include="Assets\Scripts\MapCameraController.cs" />
     <Compile Include="Assets\Scripts\MainMenuController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
