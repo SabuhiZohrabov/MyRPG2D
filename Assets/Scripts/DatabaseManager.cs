@@ -33,6 +33,63 @@ public class DatabaseManager
         return StoryManager.SelectedStoryId + "Gamedata.db";
     }
 
+    // Generic transaction wrapper methods for better code organization
+    private T ExecuteWithTransaction<T>(Func<T> operation, T defaultValue)
+    {
+        if (_db == null) return defaultValue;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                _db.BeginTransaction();
+                try
+                {
+                    T result = operation();
+                    _db.Commit();
+                    return result;
+                }
+                catch
+                {
+                    _db.Rollback();
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] Transaction failed: {e.Message}");
+                return defaultValue;
+            }
+        }
+    }
+
+    private void ExecuteWithTransaction(Action operation, string operationName)
+    {
+        if (_db == null) return;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                _db.BeginTransaction();
+                try
+                {
+                    operation();
+                    _db.Commit();
+                }
+                catch
+                {
+                    _db.Rollback();
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] {operationName} failed: {e.Message}");
+            }
+        }
+    }
+
     private DatabaseManager()
     {
         InitializeDatabase();
@@ -119,60 +176,21 @@ public class DatabaseManager
 
     public void SavePlayerStats(PlayerStatsModel stats)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
-            {
-                _db.BeginTransaction();
-                try
-                {
-                    if (stats.Id == 0)
-                        _db.Insert(stats);
-                    else
-                        _db.Update(stats);
-
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SQLite] SavePlayerStats failed: {e.Message}");
-            }
-        }
+            if (stats.Id == 0)
+                _db.Insert(stats);
+            else
+                _db.Update(stats);
+        }, "SavePlayerStats");
     }
 
     public void DeleteAllData()
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
-            {
-                _db.BeginTransaction();
-                try
-                {
-                    _db.DeleteAll<PlayerStatsModel>();
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SQLite] DeleteAllData failed: {e.Message}");
-            }
-        }
+            _db.DeleteAll<PlayerStatsModel>();
+        }, "DeleteAllData");
     }
 
     public static void LoadStatsToCharacter(CharacterStats stats)
@@ -244,42 +262,22 @@ public class DatabaseManager
 
     public void SavePlayerSkills(int playerId, List<string> skills)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
+            // Delete existing skills for this player
+            var existingSkills = GetPlayerSkills(playerId);
+            foreach (var skill in existingSkills)
             {
-                _db.BeginTransaction();
-                try
-                {
-                    // Delete existing skills for this player
-                    var existingSkills = GetPlayerSkills(playerId);
-                    foreach (var skill in existingSkills)
-                    {
-                        _db.Delete(skill);
-                    }
-
-                    // Insert new skills
-                    foreach (var skillName in skills)
-                    {
-                        var skillModel = new PlayerSkillModel(playerId, skillName);
-                        _db.Insert(skillModel);
-                    }
-
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
+                _db.Delete(skill);
             }
-            catch (Exception e)
+
+            // Insert new skills
+            foreach (var skillName in skills)
             {
-                Debug.LogError($"[SQLite] SavePlayerSkills failed: {e.Message}");
+                var skillModel = new PlayerSkillModel(playerId, skillName);
+                _db.Insert(skillModel);
             }
-        }
+        }, "SavePlayerSkills");
     }
 
     public void AddPlayerSkill(int playerId, string skillName)
@@ -357,87 +355,30 @@ public class DatabaseManager
 
     public void InsertInventoryItem(InventoryItemModel item)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
-            {
-                _db.BeginTransaction();
-                try
-                {
-                    _db.Insert(item);
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SQLite] InsertInventoryItem failed: {e.Message}");
-            }
-        }
+            _db.Insert(item);
+        }, "InsertInventoryItem");
     }
 
     public void UpdateInventoryItem(InventoryItemModel item)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
-            {
-                _db.BeginTransaction();
-                try
-                {
-                    _db.Update(item);
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SQLite] UpdateInventoryItem failed: {e.Message}");
-            }
-        }
+            _db.Update(item);
+        }, "UpdateInventoryItem");
     }
 
     public void DeleteInventoryItem(string itemId)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
+            var existing = GetInventoryItem(itemId);
+            if (existing != null)
             {
-                _db.BeginTransaction();
-                try
-                {
-                    var existing = GetInventoryItem(itemId);
-                    if (existing != null)
-                    {
-                        _db.Delete(existing);
-                    }
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
+                _db.Delete(existing);
             }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SQLite] DeleteInventoryItem failed: {e.Message}");
-            }
-        }
+        }, "DeleteInventoryItem");
     }
 
     public List<InventoryItemModel> GetAllInventoryItems()
@@ -492,31 +433,12 @@ public class DatabaseManager
 
     public void SaveAdventureProgress(string currentAdventureId)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
-            {
-                _db.BeginTransaction();
-                try
-                {
-                    var progress = GetAdventureProgress();
-                    progress.CurrentAdventureId = currentAdventureId;
-                    _db.InsertOrReplace(progress);
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"[SQLite] SaveAdventureProgress failed: {e.Message}");
-            }
-        }
+            var progress = GetAdventureProgress();
+            progress.CurrentAdventureId = currentAdventureId;
+            _db.InsertOrReplace(progress);
+        }, "SaveAdventureProgress");
     }
 
     // -----------------------
@@ -551,76 +473,38 @@ public class DatabaseManager
 
     public void SetConditionValue(string conditionId, int value)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
+            var existing = GetCondition(conditionId);
+            if (existing != null)
             {
-                _db.BeginTransaction();
-                try
-                {
-                    var existing = GetCondition(conditionId);
-                    if (existing != null)
-                    {
-                        existing.Value = value;
-                        _db.Update(existing);
-                    }
-                    else
-                    {
-                        var newCondition = new ConditionModel(conditionId, value);
-                        _db.Insert(newCondition);
-                    }
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
+                existing.Value = value;
+                _db.Update(existing);
             }
-            catch (Exception e)
+            else
             {
-                Debug.LogError($"[SQLite] SetConditionValue failed: {e.Message}");
+                var newCondition = new ConditionModel(conditionId, value);
+                _db.Insert(newCondition);
             }
-        }
+        }, "SetConditionValue");
     }
 
     public void AddValueToCondition(string conditionId, int valueToAdd)
     {
-        if (_db == null) return;
-
-        lock (_lockObject)
+        ExecuteWithTransaction(() =>
         {
-            try
+            var existing = GetCondition(conditionId);
+            if (existing != null)
             {
-                _db.BeginTransaction();
-                try
-                {
-                    var existing = GetCondition(conditionId);
-                    if (existing != null)
-                    {
-                        existing.Value += valueToAdd;
-                        _db.Update(existing);
-                    }
-                    else
-                    {
-                        var newCondition = new ConditionModel(conditionId, valueToAdd);
-                        _db.Insert(newCondition);
-                    }
-                    _db.Commit();
-                }
-                catch
-                {
-                    _db.Rollback();
-                    throw;
-                }
+                existing.Value += valueToAdd;
+                _db.Update(existing);
             }
-            catch (Exception e)
+            else
             {
-                Debug.LogError($"[SQLite] AddValueToCondition failed: {e.Message}");
+                var newCondition = new ConditionModel(conditionId, valueToAdd);
+                _db.Insert(newCondition);
             }
-        }
+        }, "AddValueToCondition");
     }
 
     public List<ConditionModel> GetAllConditions()
