@@ -70,8 +70,10 @@
       "links": [
         { "linkID":"library1", "linkText":"Learn heal skill", "nextLinkID": "library", "type": "7", "objectID":"heal" },
         { "linkID":"library2", "linkText":"Learn sword attack skill", "nextLinkID": "library", "type": "7", "objectID":"swordattack" },
-        { "linkID":"library3", "linkText":"Forget heal skill", "nextLinkID": "library", "type": "8", "objectID":"heal" },
-        { "linkID":"library4", "linkText":"Forget sword attack skill", "nextLinkID": "library", "type": "8", "objectID":"swordattack" },
+        { "linkID":"library3", "linkText":"Learn thunder skill", "nextLinkID": "library", "type": "7", "objectID":"thunder" },
+        { "linkID":"library4", "linkText":"Forget heal skill", "nextLinkID": "library", "type": "8", "objectID":"heal" },
+        { "linkID":"library5", "linkText":"Forget thunder skill", "nextLinkID": "library", "type": "8", "objectID":"thunder" },
+        { "linkID":"library6", "linkText":"Forget sword attack skill", "nextLinkID": "library", "type": "8", "objectID":"swordattack" },
         { "linkID":"town", "linkText":"Return to town center", "nextLinkID": "town", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",

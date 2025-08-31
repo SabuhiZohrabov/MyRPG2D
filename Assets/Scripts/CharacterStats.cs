@@ -36,10 +36,6 @@ public class CharacterStats : MonoBehaviour, IFighter
 
     private int databaseId = 0;
 
-    public void SetDatabaseId(int id)
-    {
-        databaseId = id;
-    }
 
     public int MaxHP
     {
@@ -86,6 +82,7 @@ public class CharacterStats : MonoBehaviour, IFighter
             return skills;
         } 
     }
+    public int DatabaseId { get => databaseId; set => databaseId = value; }
 
     // Faction system methods for targeting
     public FactionType GetFactionType()
@@ -247,21 +244,7 @@ public class CharacterStats : MonoBehaviour, IFighter
 
     public void SaveToDatabase()
     {
-        PlayerStatsModel data = new PlayerStatsModel
-        {
-            Id = databaseId,
-            Level = this.Level,
-            CurrentXP = this.CurrentXP,
-            XPToNextLevel = this.XPToNextLevel,
-            AvailableAttributePoints = this.AvailableAttributePoints,
-            Strength = this.Strength.Value,
-            Dexterity = this.Dexterity.Value,
-            Intelligence = this.Intelligence.Value,
-            Endurance = this.Endurance.Value,
-            CurrentAdventureId = this.CurrentAdventureId ?? "start_adventure"
-        };
-
-        DatabaseManager.Instance.SavePlayerStats(data);
+        DatabaseManager.Instance.SaveToDatabase(this);
     }
 
 }

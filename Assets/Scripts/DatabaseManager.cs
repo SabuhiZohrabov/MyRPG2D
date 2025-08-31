@@ -186,7 +186,28 @@ public class DatabaseManager
         stats.Intelligence.Value = saved.Intelligence;
         stats.Endurance.Value = saved.Endurance;
         stats.CurrentAdventureId = saved.CurrentAdventureId;
-        stats.SetDatabaseId(saved.Id);
+        stats.DatabaseId = saved.Id;
+        stats.playerSkills = new List<string>(saved.playerSkills);
+    }
+
+    public void SaveToDatabase(CharacterStats stats)
+    {
+        PlayerStatsModel data = new PlayerStatsModel
+        {
+            Id = stats.DatabaseId,
+            Level = stats.Level,
+            CurrentXP = stats.CurrentXP,
+            XPToNextLevel = stats.XPToNextLevel,
+            AvailableAttributePoints = stats.AvailableAttributePoints,
+            Strength = stats.Strength.Value,
+            Dexterity = stats.Dexterity.Value,
+            Intelligence = stats.Intelligence.Value,
+            Endurance = stats.Endurance.Value,
+            CurrentAdventureId = stats.CurrentAdventureId ?? "start_adventure",
+            playerSkills = new List<string>(stats.playerSkills)
+        };
+
+        DatabaseManager.Instance.SavePlayerStats(data);
     }
     #endregion
 
