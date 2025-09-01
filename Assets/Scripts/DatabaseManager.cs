@@ -120,6 +120,7 @@ public class DatabaseManager
                 _db.CreateTable<InventoryItemModel>();
                 _db.CreateTable<AdventureProgressModel>();
                 _db.CreateTable<ConditionModel>();
+                _db.CreateTable<ComradeDataModel>();
 
                 _isInitialized = true;
             }
@@ -523,6 +524,111 @@ public class DatabaseManager
                 return new List<ConditionModel>();
             }
         }
+    }
+    #endregion
+
+    // -----------------------
+    // Active Comrades operations
+    // -----------------------
+
+    #region activecomrades
+    public List<ComradeDataModel> GetActiveComrades()
+    {
+        if (_db == null) return new List<ComradeDataModel>();
+
+        lock (_lockObject)
+        {
+            try
+            {
+                return _db.Table<ComradeDataModel>().ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] GetActiveComrades failed: {e.Message}");
+                return new List<ComradeDataModel>();
+            }
+        }
+    }
+
+    public List<string> GetActiveComradeIds()
+    {
+        if (_db == null) return new List<string>();
+
+        lock (_lockObject)
+        {
+            try
+            {
+                return _db.Table<ComradeDataModel>()
+                          .Select(c => c.ComradeId)
+                          .ToList();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] GetActiveComradeIds failed: {e.Message}");
+                return new List<string>();
+            }
+        }
+    }
+
+    public void SaveActiveComrades(List<string> comradeIds)
+    {
+        ExecuteWithTransaction(() =>
+        {
+            // Delete all existing active comrades
+            _db.DeleteAll<ComradeDataModel>();
+
+            // Insert new active comrades
+            foreach (string comradeId in comradeIds)
+            {
+                if (!string.IsNullOrEmpty(comradeId))
+                {
+                    var activeComrade = new ComradeDataModel(comradeId);
+                    _db.Insert(activeComrade);
+                }
+            }
+        }, "SaveActiveComrades");
+    }
+
+    public void AddActiveComrade(string comradeId)
+    {
+        if (string.IsNullOrEmpty(comradeId)) return;
+
+        ExecuteWithTransaction(() =>
+        {
+            // Check if comrade is already active
+            var existing = _db.Table<ComradeDataModel>()
+                              .FirstOrDefault(c => c.ComradeId == comradeId);
+
+            if (existing == null)
+            {
+                var activeComrade = new ComradeDataModel(comradeId);
+                _db.Insert(activeComrade);
+            }
+        }, "AddActiveComrade");
+    }
+
+    public void RemoveActiveComrade(string comradeId)
+    {
+        if (string.IsNullOrEmpty(comradeId)) return;
+
+        ExecuteWithTransaction(() =>
+        {
+            var existing = _db.Table<ComradeDataModel>()
+                              .FirstOrDefault(c => c.ComradeId == comradeId);
+
+            if (existing != null)
+            {
+                _db.Delete(existing);
+            }
+        }, "RemoveActiveComrade");
+    }
+
+    public void ClearActiveComrades()
+    {
+        ExecuteWithTransaction(() =>
+        {
+            _db.DeleteAll<ComradeDataModel>();
+        }, "ClearActiveComrades");
     }
     #endregion
 

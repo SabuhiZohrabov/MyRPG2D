@@ -23,6 +23,12 @@ public class ComradeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void Start()
+    {
+        // Load active comrades from database on start
+        LoadActiveComradesFromDatabase();
+    }
     
     // Add comrade to active list
     public void AddComrade(string comradeId)
@@ -43,6 +49,7 @@ public class ComradeManager : MonoBehaviour
         if (!activeComradeIds.Contains(comradeId))
         {
             activeComradeIds.Add(comradeId);
+            DatabaseManager.Instance.AddActiveComrade(comradeId);
             Debug.Log($"ComradeManager: Added comrade '{comradeData.displayName}' to active list");
         }
         else
@@ -64,6 +71,7 @@ public class ComradeManager : MonoBehaviour
         if (comradeData != null && activeComradeIds.Contains(comradeId))
         {
             activeComradeIds.Remove(comradeId);
+            DatabaseManager.Instance.RemoveActiveComrade(comradeId);
             Debug.Log($"ComradeManager: Removed comrade '{comradeData.displayName}' from active list");
         }
         else
@@ -129,6 +137,41 @@ public class ComradeManager : MonoBehaviour
     public void ClearAllComrades()
     {
         activeComradeIds.Clear();
+        DatabaseManager.Instance.ClearActiveComrades();
         Debug.Log("ComradeManager: Cleared all active comrades");
+    }
+
+    // -----------------------
+    // Database Integration
+    // -----------------------
+
+    // Load active comrades from database
+    public void LoadActiveComradesFromDatabase()
+    {
+        try
+        {
+            List<string> savedComradeIds = DatabaseManager.Instance.GetActiveComradeIds();
+            activeComradeIds = new List<string>(savedComradeIds);
+            Debug.Log($"ComradeManager: Loaded {activeComradeIds.Count} active comrades from database");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"ComradeManager: Failed to load active comrades from database: {e.Message}");
+            activeComradeIds = new List<string>();
+        }
+    }
+
+    // Save active comrades to database
+    public void SaveActiveComradesToDatabase()
+    {
+        try
+        {
+            DatabaseManager.Instance.SaveActiveComrades(activeComradeIds);
+            Debug.Log($"ComradeManager: Saved {activeComradeIds.Count} active comrades to database");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"ComradeManager: Failed to save active comrades to database: {e.Message}");
+        }
     }
 }
