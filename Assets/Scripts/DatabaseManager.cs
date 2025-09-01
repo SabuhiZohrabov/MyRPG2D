@@ -262,8 +262,22 @@ public class DatabaseManager
 
     public void SavePlayerSkills(int playerId, List<string> skills)
     {
-        // Use the more efficient bulk version
-        SavePlayerSkillsBulk(playerId, skills);
+        ExecuteWithTransaction(() =>
+        {
+            // Delete existing skills for this player
+            var existingSkills = GetPlayerSkills(playerId);
+            foreach (var skill in existingSkills)
+            {
+                _db.Delete(skill);
+            }
+
+            // Insert new skills
+            foreach (var skillName in skills)
+            {
+                var skillModel = new PlayerSkillModel(playerId, skillName);
+                _db.Insert(skillModel);
+            }
+        }, "SavePlayerSkills");
     }
 
     public void AddPlayerSkill(int playerId, string skillName)
@@ -312,30 +326,6 @@ public class DatabaseManager
                 Debug.LogError($"[SQLite] RemovePlayerSkill failed: {e.Message}");
             }
         }
-    }
-
-    // Bulk operations for better performance
-    public void SavePlayerSkillsBulk(int playerId, List<string> skills)
-    {
-        ExecuteWithTransaction(() =>
-        {
-            // Use single DELETE query instead of loop
-            _db.Execute("DELETE FROM PlayerSkillModel WHERE PlayerId = ?", playerId);
-            
-            // Use bulk insert
-            if (skills != null && skills.Count > 0)
-            {
-                _db.InsertAll(skills.Select(skillName => new PlayerSkillModel(playerId, skillName)));
-            }
-        }, "SavePlayerSkillsBulk");
-    }
-
-    public void DeleteAllPlayerSkills(int playerId)
-    {
-        ExecuteWithTransaction(() =>
-        {
-            _db.Execute("DELETE FROM PlayerSkillModel WHERE PlayerId = ?", playerId);
-        }, "DeleteAllPlayerSkills");
     }
     #endregion
 
@@ -407,38 +397,6 @@ public class DatabaseManager
                 return new List<InventoryItemModel>();
             }
         }
-    }
-
-    // Bulk inventory operations for better performance
-    public void InsertInventoryItemsBulk(List<InventoryItemModel> items)
-    {
-        if (items == null || items.Count == 0) return;
-        
-        ExecuteWithTransaction(() =>
-        {
-            _db.InsertAll(items);
-        }, "InsertInventoryItemsBulk");
-    }
-
-    public void UpdateInventoryItemsBulk(List<InventoryItemModel> items)
-    {
-        if (items == null || items.Count == 0) return;
-        
-        ExecuteWithTransaction(() =>
-        {
-            _db.UpdateAll(items);
-        }, "UpdateInventoryItemsBulk");
-    }
-
-    public void DeleteInventoryItemsBulk(List<string> itemIds)
-    {
-        if (itemIds == null || itemIds.Count == 0) return;
-        
-        ExecuteWithTransaction(() =>
-        {
-            string placeholders = string.Join(",", itemIds.Select(_ => "?"));
-            _db.Execute($"DELETE FROM InventoryItemModel WHERE ItemId IN ({placeholders})", itemIds.ToArray());
-        }, "DeleteInventoryItemsBulk");
     }
     #endregion
 
@@ -565,31 +523,6 @@ public class DatabaseManager
                 return new List<ConditionModel>();
             }
         }
-    }
-
-    // Bulk condition operations for better performance
-    public void SetConditionsBulk(Dictionary<string, int> conditions)
-    {
-        if (conditions == null || conditions.Count == 0) return;
-
-        ExecuteWithTransaction(() =>
-        {
-            foreach (var condition in conditions)
-            {
-                _db.InsertOrReplace(new ConditionModel(condition.Key, condition.Value));
-            }
-        }, "SetConditionsBulk");
-    }
-
-    public void DeleteConditionsBulk(List<string> conditionIds)
-    {
-        if (conditionIds == null || conditionIds.Count == 0) return;
-
-        ExecuteWithTransaction(() =>
-        {
-            string placeholders = string.Join(",", conditionIds.Select(_ => "?"));
-            _db.Execute($"DELETE FROM ConditionModel WHERE ConditionId IN ({placeholders})", conditionIds.ToArray());
-        }, "DeleteConditionsBulk");
     }
     #endregion
 
