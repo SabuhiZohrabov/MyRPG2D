@@ -654,3 +654,4 @@ MonoBehaviour:
   iconImage: {fileID: 2713385219030228925}
   nameText: {fileID: 4059462506503161051}
   amountText: {fileID: 1197149342466465705}
+  isEquipedBG: {fileID: 8960188917704681327}
