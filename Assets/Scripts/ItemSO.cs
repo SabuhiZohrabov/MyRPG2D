@@ -8,6 +8,21 @@ public enum ItemType
     Misc
 }
 
+public enum EquipmentType
+{
+    Weapon,
+    Armor,
+    Helm,
+    Boots,
+    Gloves,
+    Belt,
+    Ring,
+    Necklace,
+    Shield,
+    Accessory,
+    None
+}
+
 [CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/Item")]
 public class ItemSO : ScriptableObject
 {
@@ -21,4 +36,7 @@ public class ItemSO : ScriptableObject
     [Header("Item Settings")]
     public ItemType type;
     public int maxStack = 1;
+    
+    [Header("Equipment Settings")]
+    public EquipmentType equipmentType;
 }
