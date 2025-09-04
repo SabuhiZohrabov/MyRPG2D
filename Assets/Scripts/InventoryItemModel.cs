@@ -10,4 +10,6 @@ public class InventoryItemModel
     public string ItemId { get; set; }
 
     public int Amount { get; set; }
+    
+    public bool IsEquipped { get; set; } = false;
 }

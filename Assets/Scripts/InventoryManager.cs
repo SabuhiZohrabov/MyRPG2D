@@ -80,4 +80,50 @@ public class InventoryManager
     {
         return DatabaseManager.Instance.GetAllInventoryItems();
     }
+
+    public bool EquipItem(string itemId)
+    {
+        var item = DatabaseManager.Instance.GetInventoryItem(itemId);
+        if (item == null)
+        {
+            Debug.LogWarning($"Cannot equip item. Item not found in inventory: {itemId}");
+            return false;
+        }
+
+        if (item.IsEquipped)
+        {
+            Debug.LogWarning($"Item is already equipped: {itemId}");
+            return false;
+        }
+
+        DatabaseManager.Instance.SetItemEquippedStatus(itemId, true);
+        Debug.Log($"Item equipped: {itemId}");
+        return true;
+    }
+
+    public bool UnequipItem(string itemId)
+    {
+        var item = DatabaseManager.Instance.GetInventoryItem(itemId);
+        if (item == null)
+        {
+            Debug.LogWarning($"Cannot unequip item. Item not found in inventory: {itemId}");
+            return false;
+        }
+
+        if (!item.IsEquipped)
+        {
+            Debug.LogWarning($"Item is not equipped: {itemId}");
+            return false;
+        }
+
+        DatabaseManager.Instance.SetItemEquippedStatus(itemId, false);
+        Debug.Log($"Item unequipped: {itemId}");
+        return true;
+    }
+
+    public bool IsItemEquipped(string itemId)
+    {
+        var item = DatabaseManager.Instance.GetInventoryItem(itemId);
+        return item != null && item.IsEquipped;
+    }
 }

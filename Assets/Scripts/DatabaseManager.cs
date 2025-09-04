@@ -399,6 +399,19 @@ public class DatabaseManager
             }
         }
     }
+
+    public void SetItemEquippedStatus(string itemId, bool isEquipped)
+    {
+        ExecuteWithTransaction(() =>
+        {
+            var item = GetInventoryItem(itemId);
+            if (item != null)
+            {
+                item.IsEquipped = isEquipped;
+                _db.Update(item);
+            }
+        }, "SetItemEquippedStatus");
+    }
     #endregion
 
     // -----------------------
