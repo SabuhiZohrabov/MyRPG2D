@@ -10,7 +10,7 @@ public class ItemSlotUI : MonoBehaviour
     public TMP_Text amountText;
     public Image isEquipedBG;
 
-    private ItemSO currentItem;
+    private InventoryItemModel currentItem;
     private Button button;
 
     /// <summary>
@@ -47,15 +47,15 @@ public class ItemSlotUI : MonoBehaviour
         }
     }
 
-    public void Setup(ItemSO item, int amount, bool isEquiped)
+    public void Setup(ItemSO item, InventoryItemModel inventoryItem)
     {
         if (!Application.isPlaying) return;
         
-        currentItem = item;
+        currentItem = inventoryItem;
         iconImage.sprite = item.icon;
         nameText.text = item.displayName;
-        amountText.text = amount.ToString();
-        isEquipedBG.gameObject.SetActive(isEquiped);
+        amountText.text = inventoryItem.Amount.ToString();
+        isEquipedBG.gameObject.SetActive(inventoryItem.IsEquipped);
     }
 
 
@@ -67,15 +67,15 @@ public class ItemSlotUI : MonoBehaviour
         if (currentItem == null) return;
 
         bool success = false;
-        bool wasEquipped = InventoryManager.Instance.IsItemEquipped(currentItem.itemId);
+        bool wasEquipped = InventoryManager.Instance.IsItemEquipped(currentItem.Id);
 
         if (wasEquipped)
         {
-            success = InventoryManager.Instance.UnequipItem(currentItem.itemId);
+            success = InventoryManager.Instance.UnequipItem(currentItem.Id);
         }
         else
         {
-            success = InventoryManager.Instance.EquipItem(currentItem.itemId);
+            success = InventoryManager.Instance.EquipItem(currentItem.Id);
         }
 
         if (success)

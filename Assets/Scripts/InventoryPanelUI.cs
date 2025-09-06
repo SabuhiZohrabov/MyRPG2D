@@ -33,7 +33,7 @@ public class InventoryPanelUI : MonoBehaviour
             if (itemSO == null) continue;
 
             GameObject slot = Instantiate(itemSlotPrefab, itemContainer);
-            slot.GetComponent<ItemSlotUI>().Setup(itemSO, model.Amount, model.IsEquipped);
+            slot.GetComponent<ItemSlotUI>().Setup(itemSO, model);
         }
     }
 }

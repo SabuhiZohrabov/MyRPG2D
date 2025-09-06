@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Read(/C:\\Unity\\MyRPG2D\\MyRPG2D\\Assets\\Scripts/**)",
+      "Read(/C:\\Unity\\MyRPG2D\\MyRPG2D\\Assets\\Scripts/**)",
+      "Read(/C:\\Unity\\MyRPG2D\\MyRPG2D\\Assets\\Scripts/**)"
     ],
     "deny": [],
     "ask": []

@@ -353,6 +353,24 @@ public class DatabaseManager
             }
         }
     }
+    public InventoryItemModel GetInventoryItemByID(int Id)
+    {
+        if (_db == null) return null;
+
+        lock (_lockObject)
+        {
+            try
+            {
+                return _db.Table<InventoryItemModel>()
+                          .FirstOrDefault(i => i.Id == Id);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SQLite] GetInventoryItem failed: {e.Message}");
+                return null;
+            }
+        }
+    }
 
     public void InsertInventoryItem(InventoryItemModel item)
     {
@@ -370,11 +388,11 @@ public class DatabaseManager
         }, "UpdateInventoryItem");
     }
 
-    public void DeleteInventoryItem(string itemId)
+    public void DeleteInventoryItem(int Id)
     {
         ExecuteWithTransaction(() =>
         {
-            var existing = GetInventoryItem(itemId);
+            var existing = GetInventoryItemByID(Id);
             if (existing != null)
             {
                 _db.Delete(existing);
@@ -400,11 +418,10 @@ public class DatabaseManager
         }
     }
 
-    public void SetItemEquippedStatus(string itemId, bool isEquipped)
+    public void SetItemEquippedStatus(InventoryItemModel item, bool isEquipped)
     {
         ExecuteWithTransaction(() =>
         {
-            var item = GetInventoryItem(itemId);
             if (item != null)
             {
                 item.IsEquipped = isEquipped;
