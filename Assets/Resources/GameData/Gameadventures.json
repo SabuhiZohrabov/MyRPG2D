@@ -89,6 +89,7 @@
       "text": "You found Items",
       "links": [
         { "linkID":"town1", "linkText":"Take the wooden staff", "nextLinkID": "store", "type": "4", "objectID":"take_wooden_staff" },
+        { "linkID":"town4", "linkText":"Take the golden ring", "nextLinkID": "store", "type": "4", "objectID":"take_golden_ring" },
         { "linkID":"town2", "linkText":"Collect healing potions", "nextLinkID": "store", "type": "4", "objectID":"take_some_healing" },
         { "linkID":"town3", "linkText":"Claim special rewards", "nextLinkID": "store", "type": "4", "objectID":"take_reward" },
         { "linkID":"town", "linkText":"Return to town center", "nextLinkID": "town", "type": "0", "objectID":"" }

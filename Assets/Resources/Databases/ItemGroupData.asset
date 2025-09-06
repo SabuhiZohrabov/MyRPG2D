@@ -34,3 +34,9 @@ MonoBehaviour:
     - itemId: shortsword
       minCount: 0
       maxCount: 1
+  - groupId: take_golden_ring
+    groupName: Take Golden Ring
+    items:
+    - itemId: goldenring
+      minCount: 1
+      maxCount: 1
