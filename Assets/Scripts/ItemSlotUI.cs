@@ -13,6 +13,9 @@ public class ItemSlotUI : MonoBehaviour
     private ItemSO currentItem;
     private Button button;
 
+    /// <summary>
+    /// for click detection
+    /// </summary>
     private void Awake()
     {
         // Try to get Button component first
@@ -55,6 +58,10 @@ public class ItemSlotUI : MonoBehaviour
         isEquipedBG.gameObject.SetActive(isEquiped);
     }
 
+
+    /// <summary>
+    /// for testing purpose, simply equip/unequip item on click
+    /// </summary>
     private void OnItemClicked()
     {
         if (currentItem == null) return;
