@@ -235,7 +235,7 @@ public class AdventureManager : MonoBehaviour
         
         if (itemsToAdd.Count == 0)
         {
-            Debug.LogWarning($"No items found for group ID: {groupId}");
+            Debug.LogWarning($"Group ID: {groupId} has no item");
             return;
         }
         

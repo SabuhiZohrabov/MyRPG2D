@@ -40,20 +40,40 @@ public class InventoryManager
             return;
         }
 
-        var existing = DatabaseManager.Instance.GetInventoryItem(itemId);
-        if (existing != null)
+        // Get all existing stacks of this item
+        var existingStacks = DatabaseManager.Instance.GetAllInventoryItems()
+            .Where(item => item.ItemId == itemId)
+            .OrderBy(item => item.Amount)
+            .ToList();
+
+        int remainingAmount = amount;
+
+        // First, try to fill existing stacks that have space
+        foreach (var stack in existingStacks)
         {
-            existing.Amount += amount;
-            DatabaseManager.Instance.UpdateInventoryItem(existing);
+            if (remainingAmount <= 0) break;
+
+            int availableSpace = itemSO.maxStack - stack.Amount;
+            if (availableSpace > 0)
+            {
+                int amountToAdd = Mathf.Min(remainingAmount, availableSpace);
+                stack.Amount += amountToAdd;
+                remainingAmount -= amountToAdd;
+                DatabaseManager.Instance.UpdateInventoryItem(stack);
+            }
         }
-        else
+
+        // If we still have items to add, create new stacks
+        while (remainingAmount > 0)
         {
+            int stackAmount = Mathf.Min(remainingAmount, itemSO.maxStack);
             var newItem = new InventoryItemModel
             {
                 ItemId = itemId,
-                Amount = amount
+                Amount = stackAmount
             };
             DatabaseManager.Instance.InsertInventoryItem(newItem);
+            remainingAmount -= stackAmount;
         }
     }
 
