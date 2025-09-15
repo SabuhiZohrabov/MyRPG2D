@@ -17,5 +17,5 @@ MonoBehaviour:
   description: Mini Health Potion
   icon: {fileID: -2058998270, guid: 87145ce120036bf4bb8f6a12f941cf62, type: 3}
   type: 1
-  maxStack: 20
+  maxStack: 3
   equipmentType: 10

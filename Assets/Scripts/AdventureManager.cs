@@ -63,7 +63,7 @@ public class AdventureManager : MonoBehaviour
         TurnManager.Instance.currentAdventureText = currentAdventureTextData;
         SkillManager.Instance.PopulateSkills();
 
-        adventurePanel.SetActive(false);
+        //adventurePanel.SetActive(false);
         combatPanel.SetActive(true);
     }
 
