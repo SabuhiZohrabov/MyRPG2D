@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: goldenring
   displayName: Golden Ring
   description: Golden Ring
-  icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -5304320177030786955, guid: 280bbecbd44e2154ab6ced1c0db993d6, type: 3}
   type: 0
   maxStack: 1
   equipmentType: 6

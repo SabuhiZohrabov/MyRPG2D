@@ -80,6 +80,7 @@
     <Compile Include="Assets\Scripts\AdventureTextJsonLoader.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\ItemDatabase.cs" />
+    <Compile Include="Assets\Scripts\ProfilUI.cs" />
     <Compile Include="Assets\Scripts\CharacterPanelUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\AdventureProgressModel.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Scripts\ItemSO.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Scripts\InventorySlotUI.cs" />
     <Compile Include="Assets\Scripts\ConditionModel.cs" />
     <Compile Include="Assets\Scripts\AdventureManager.cs" />
     <Compile Include="Assets\Scripts\NPCClassAEnemy.cs" />

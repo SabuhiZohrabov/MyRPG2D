@@ -5,6 +5,7 @@ public class InventoryPanelUI : MonoBehaviour
 {
     public Transform itemContainer;
     public GameObject itemSlotPrefab;
+    public GameObject ItemDescriptionPanel;
 
     private void OnEnable()
     {
@@ -33,7 +34,12 @@ public class InventoryPanelUI : MonoBehaviour
             if (itemSO == null) continue;
 
             GameObject slot = Instantiate(itemSlotPrefab, itemContainer);
-            slot.GetComponent<ItemSlotUI>().Setup(itemSO, model);
+            slot.GetComponent<InventorySlotUI>().Setup(itemSO, model);
         }
+    }
+
+    public void CloseDescriptionPanel()
+    {
+        ItemDescriptionPanel.SetActive(false);
     }
 }

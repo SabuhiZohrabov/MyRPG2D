@@ -4,38 +4,15 @@ using UnityEngine.UI;
 
 public class CharacterPanelUI : MonoBehaviour
 {
-    public Image avatarImage;
-    public TMP_Text nameText;
-    public CharacterStats characterStats;
-
     public GameObject attributesPanel;
     public GameObject inventoryPanel;
     public GameObject skillsPanel;
 
-    private void Start()
-    {
-        if (!Application.isPlaying) return;
-        ToggleAllPanels(false);
-
-        // Show avatar and name
-        if (avatarImage != null && characterStats != null)
-        {
-            if (characterStats.icon != null)
-            {
-                avatarImage.sprite = characterStats.icon;
-                avatarImage.color = Color.white;
-                avatarImage.preserveAspect = true; // Maintain aspect ratio
-            }
-            else
-            {
-                avatarImage.color = new Color(1, 1, 1, 0.2f); // Semi-transparent if no avatar
-            }
-        }
-        if (nameText != null && characterStats != null)
-        {
-            nameText.text = characterStats.DisplayName;
-        }
-    }
+    //private void Start()
+    //{
+    //    if (!Application.isPlaying) return;
+    //    ToggleAllPanels(false);
+    //}
 
     public void ToggleAttributesPanel()
     {
