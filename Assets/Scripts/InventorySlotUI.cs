@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventorySlotUI : MonoBehaviour
+public class InventorySlotUI : MonoBehaviour, IPointerClickHandler
 {
     public Image iconImage;
     public TMP_Text amountText;
@@ -14,7 +14,7 @@ public class InventorySlotUI : MonoBehaviour
     public GameObject ItemDescriptionPanel;
 
     /// <summary>
-    /// for click detection
+    /// Initialize components for click detection
     /// </summary>
     private void Awake()
     {
@@ -26,23 +26,11 @@ public class InventorySlotUI : MonoBehaviour
         }
         else
         {
-            // If no Button, add click detection to iconImage (ItemIcon)
-            if (iconImage != null)
+            // Enable raycast target on this GameObject for IPointerClickHandler
+            var image = GetComponent<Image>();
+            if (image != null)
             {
-                iconImage.raycastTarget = true;
-                
-                // Add EventTrigger for click detection
-                var eventTrigger = iconImage.gameObject.GetComponent<UnityEngine.EventSystems.EventTrigger>();
-                if (eventTrigger == null)
-                {
-                    eventTrigger = iconImage.gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
-                }
-
-                // Add click event
-                var clickEntry = new UnityEngine.EventSystems.EventTrigger.Entry();
-                clickEntry.eventID = UnityEngine.EventSystems.EventTriggerType.PointerClick;
-                clickEntry.callback.AddListener((data) => OnItemClicked());
-                eventTrigger.triggers.Add(clickEntry);
+                image.raycastTarget = true;
             }
         }
     }
@@ -83,6 +71,18 @@ public class InventorySlotUI : MonoBehaviour
         }
 
         ItemDescriptionPanel.SetActive(true);
+    }
+
+    /// <summary>
+    /// Handle pointer click events - implements IPointerClickHandler
+    /// </summary>
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // Only handle clicks if no Button component is present
+        if (button == null)
+        {
+            OnItemClicked();
+        }
     }
 
     private void OnDestroy()
