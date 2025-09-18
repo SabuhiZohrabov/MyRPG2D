@@ -31,6 +31,12 @@ public class SkillManager : MonoBehaviour
     {
         if (playerStats == null) return;
         
+        // Clear existing skill buttons before adding new ones
+        for (int i = skillContainer.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(skillContainer.GetChild(i).gameObject);
+        }
+        
         List<SkillModel> filteredSkills = playerStats.AvailableSkills.FindAll(s => !s.isPassive);
         foreach (SkillModel skill in filteredSkills)
         {
