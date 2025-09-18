@@ -16,6 +16,10 @@ public class InventoryPanelUI : MonoBehaviour
     {        
         // Subscribe to the item click event
         OnItemClickedEvent += CloseDescriptionPanel;
+        
+        // Refresh UI when panel becomes active
+        RefreshUI();
+        ItemDescriptionPanel.SetActive(false);
     }
     
     private void OnDisable()

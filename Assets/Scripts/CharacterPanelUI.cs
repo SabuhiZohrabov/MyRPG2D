@@ -8,12 +8,6 @@ public class CharacterPanelUI : MonoBehaviour
     public GameObject inventoryPanel;
     public GameObject skillsPanel;
 
-    //private void Start()
-    //{
-    //    if (!Application.isPlaying) return;
-    //    ToggleAllPanels(false);
-    //}
-
     public void ToggleAttributesPanel()
     {
         attributesPanel.SetActive(!attributesPanel.activeSelf);
@@ -27,12 +21,6 @@ public class CharacterPanelUI : MonoBehaviour
     public void ToggleInventoryPanel()
     {
         inventoryPanel.SetActive(!inventoryPanel.activeSelf);
-
-        if (inventoryPanel.activeSelf)
-        {
-            var panelScript = inventoryPanel.GetComponent<InventoryPanelUI>();
-            panelScript?.RefreshUI();
-        }
     }
     private void ToggleAllPanels(bool isOpen)
     {
