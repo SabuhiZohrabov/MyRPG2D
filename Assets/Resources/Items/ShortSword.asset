@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: shortsword
   displayName: Short Sword
-  description: a short sword
+  description: A short sword
   icon: {fileID: 2838799601886759051, guid: 43c7a50fcde6d374fbbf1f16fbc16035, type: 3}
   type: 0
   maxStack: 1
+  equipmentType: 0

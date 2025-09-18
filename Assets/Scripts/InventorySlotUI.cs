@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class InventorySlotUI : MonoBehaviour
 {
@@ -29,27 +28,15 @@ public class InventorySlotUI : MonoBehaviour
     public void OnItemClicked()
     {
         if (currentItem == null) return;
-
-        bool success = false;
-        bool wasEquipped = InventoryManager.Instance.IsItemEquipped(currentItem.Id);
-
-        if (wasEquipped)
-        {
-            success = InventoryManager.Instance.UnequipItem(currentItem.Id);
-        }
-        else
-        {
-            success = InventoryManager.Instance.EquipItem(currentItem.Id);
-        }
-
-        if (success)
-        {
-            FindFirstObjectByType<InventoryPanelUI>().RefreshUI();
-        }
-
         
         // Trigger the panel activation event
+        InventoryPanelUI.currentItem = currentItem;
         InventoryPanelUI.TriggerItemClick();
+    }
+
+    private void SetEquipItem(InventoryItemModel inventoryItem)
+    {
+
     }
 
     private void OnDestroy()

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: woodenstaff
   displayName: Wooden Staff
-  description: Wooden Staff
+  description: A wooden Staff
   icon: {fileID: -669933772033258640, guid: 4c88c2461f0c19b4eafbccd041301aca, type: 3}
   type: 0
   maxStack: 1
+  equipmentType: 0

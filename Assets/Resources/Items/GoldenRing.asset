@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: goldenring
   displayName: Golden Ring
-  description: Golden Ring
+  description: A very shiny golden ring
   icon: {fileID: -5304320177030786955, guid: 280bbecbd44e2154ab6ced1c0db993d6, type: 3}
   type: 0
   maxStack: 1
