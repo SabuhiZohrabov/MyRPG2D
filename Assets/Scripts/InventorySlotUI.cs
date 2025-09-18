@@ -11,7 +11,6 @@ public class InventorySlotUI : MonoBehaviour
 
     private InventoryItemModel currentItem;
     private Button button;
-    public GameObject ItemDescriptionPanel;
 
     public void Setup(ItemSO item, InventoryItemModel inventoryItem)
     {
@@ -48,7 +47,9 @@ public class InventorySlotUI : MonoBehaviour
             FindFirstObjectByType<InventoryPanelUI>().RefreshUI();
         }
 
-        ItemDescriptionPanel.SetActive(true);
+        
+        // Trigger the panel activation event
+        InventoryPanelUI.TriggerItemClick();
     }
 
     private void OnDestroy()

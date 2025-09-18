@@ -1,16 +1,27 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class InventoryPanelUI : MonoBehaviour
 {
     public Transform itemContainer;
     public GameObject itemSlotPrefab;
     public GameObject ItemDescriptionPanel;
+    
+    
+    // Static event for item click communication
+    public static event Action OnItemClickedEvent;
 
     private void OnEnable()
+    {        
+        // Subscribe to the item click event
+        OnItemClickedEvent += CloseDescriptionPanel;
+    }
+    
+    private void OnDisable()
     {
-        if (!Application.isPlaying) return;// Editor mode check
-        RefreshUI();
+        // Unsubscribe from the event to prevent memory leaks
+        OnItemClickedEvent -= CloseDescriptionPanel;
     }
 
     public void RefreshUI()
@@ -40,6 +51,17 @@ public class InventoryPanelUI : MonoBehaviour
 
     public void CloseDescriptionPanel()
     {
-        ItemDescriptionPanel.SetActive(false);
+        if (ItemDescriptionPanel != null)
+        {
+            ItemDescriptionPanel.SetActive(!ItemDescriptionPanel.activeSelf);
+        }
+    }
+        
+    /// <summary>
+    /// Static method to trigger the item click event
+    /// </summary>
+    public static void TriggerItemClick()
+    {
+        OnItemClickedEvent?.Invoke();
     }
 }
