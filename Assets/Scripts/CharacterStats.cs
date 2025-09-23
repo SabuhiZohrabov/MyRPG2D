@@ -24,6 +24,7 @@ public class CharacterStats : MonoBehaviour, IFighter
     public int maxHP = 1000;
     public int maxMP = 1000;
     public string CurrentAdventureId = "";
+    public int gold = 0;
 
     public string displayName = "Sabush";
     public Sprite icon;
@@ -60,6 +61,7 @@ public class CharacterStats : MonoBehaviour, IFighter
             return displayName;
         }
     }
+
     
     // IFighter interface implementation
     public Sprite Icon => icon;
@@ -240,6 +242,30 @@ public class CharacterStats : MonoBehaviour, IFighter
     public bool HasSkill(string skillId)
     {
         return playerSkills.Contains(skillId);
+    }
+
+    // Gold management methods
+    public bool AddGold(int amount)
+    {
+        if (amount <= 0) return false;
+
+        gold += amount;
+        SaveToDatabase();
+        return true;
+    }
+
+    public bool SpendGold(int amount)
+    {
+        if (amount <= 0 || !HasEnoughGold(amount)) return false;
+
+        gold -= amount;
+        SaveToDatabase();
+        return true;
+    }
+
+    public bool HasEnoughGold(int amount)
+    {
+        return gold >= amount;
     }
 
     public void SaveToDatabase()

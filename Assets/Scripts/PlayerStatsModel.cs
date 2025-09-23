@@ -16,6 +16,7 @@ public class PlayerStatsModel
     public int Intelligence { get; set; }
     public int Endurance { get; set; }
     public string CurrentAdventureId { get; set; }
+    public int Gold { get; set; }
 
     public PlayerStatsModel()
     {
@@ -29,5 +30,6 @@ public class PlayerStatsModel
         Intelligence = 5;
         Endurance = 5;
         CurrentAdventureId = "start_adventure";
+        Gold = 100;
     }
 }

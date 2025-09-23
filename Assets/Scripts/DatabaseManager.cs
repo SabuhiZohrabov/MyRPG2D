@@ -204,6 +204,7 @@ public class DatabaseManager
         stats.Intelligence.Value = saved.Intelligence;
         stats.Endurance.Value = saved.Endurance;
         stats.CurrentAdventureId = saved.CurrentAdventureId;
+        stats.gold = saved.Gold;
         stats.DatabaseId = saved.Id;
         
         // Load player skills from separate PlayerSkill table
@@ -224,7 +225,8 @@ public class DatabaseManager
             Dexterity = stats.Dexterity.Value,
             Intelligence = stats.Intelligence.Value,
             Endurance = stats.Endurance.Value,
-            CurrentAdventureId = stats.CurrentAdventureId ?? "start_adventure"
+            CurrentAdventureId = stats.CurrentAdventureId ?? "start_adventure",
+            Gold = stats.gold
         };
 
         DatabaseManager.Instance.SavePlayerStats(data);
