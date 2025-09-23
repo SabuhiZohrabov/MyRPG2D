@@ -146,9 +146,7 @@ public class DatabaseManager
     }
 #endif
 
-    // -----------------------
     // PlayerStats operations
-    // -----------------------
 
     #region player
     public PlayerStatsModel GetPlayerStats()
@@ -236,9 +234,7 @@ public class DatabaseManager
     }
     #endregion
 
-    // -----------------------
     // PlayerSkill operations
-    // -----------------------
 
     #region playerskills
     public List<PlayerSkillModel> GetPlayerSkills(int playerId)
@@ -330,9 +326,7 @@ public class DatabaseManager
     }
     #endregion
 
-    // -----------------------
     // Inventory operations
-    // -----------------------
 
     #region inventory
     public InventoryItemModel GetInventoryItem(string itemId)
@@ -431,9 +425,7 @@ public class DatabaseManager
     }
     #endregion
 
-    // -----------------------
     // Adventure operations
-    // -----------------------
 
     public AdventureProgressModel GetAdventureProgress()
     {
@@ -472,9 +464,7 @@ public class DatabaseManager
         }, "SaveAdventureProgress");
     }
 
-    // -----------------------
     // Condition operations
-    // -----------------------
 
     #region conditions
     public ConditionModel GetCondition(string conditionId)
@@ -557,9 +547,7 @@ public class DatabaseManager
     }
     #endregion
 
-    // -----------------------
     // Active Comrades operations
-    // -----------------------
 
     #region activecomrades
     public List<ComradeDataModel> GetActiveComrades()
@@ -662,9 +650,7 @@ public class DatabaseManager
     }
     #endregion
 
-    // -----------------------
     // General operations
-    // -----------------------
     public void ResetGame()
     {
         try
