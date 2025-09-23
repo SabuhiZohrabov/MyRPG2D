@@ -3,22 +3,45 @@
     {
       "shopId": "weapon_shop",
       "shopName": "Weapon Master",
-      "items": ["shortsword", "woodenstaff"]
+      "items": [
+        { "itemId": "shortsword", "price": 150 },
+        { "itemId": "woodenstaff", "price": 80 }
+      ]
     },
     {
       "shopId": "armor_shop",
       "shopName": "Armor Specialist",
-      "items": ["leather_armor", "cloth_armor", "chain_mail", "plate_armor", "basic_helmet", "iron_helmet"]
+      "items": [
+        { "itemId": "leather_armor", "price": 200 },
+        { "itemId": "cloth_armor", "price": 120 },
+        { "itemId": "chain_mail", "price": 350 },
+        { "itemId": "plate_armor", "price": 600 },
+        { "itemId": "basic_helmet", "price": 100 },
+        { "itemId": "iron_helmet", "price": 180 }
+      ]
     },
     {
       "shopId": "potion_shop",
       "shopName": "Alchemist",
-      "items": ["health_potion_small", "health_potion_medium", "health_potion_large", "mana_potion_small", "mana_potion_medium"]
+      "items": [
+        { "itemId": "health_potion_small", "price": 25 },
+        { "itemId": "health_potion_medium", "price": 50 },
+        { "itemId": "health_potion_large", "price": 100 },
+        { "itemId": "mana_potion_small", "price": 30 },
+        { "itemId": "mana_potion_medium", "price": 60 }
+      ]
     },
     {
       "shopId": "general_store",
       "shopName": "General Store",
-      "items": ["bread", "apple", "meat", "rope", "torch", "lockpick"]
+      "items": [
+        { "itemId": "bread", "price": 5 },
+        { "itemId": "apple", "price": 3 },
+        { "itemId": "meat", "price": 15 },
+        { "itemId": "rope", "price": 20 },
+        { "itemId": "torch", "price": 10 },
+        { "itemId": "lockpick", "price": 35 }
+      ]
     }
   ]
 }

@@ -69,11 +69,28 @@ public class ShopManager
         return null;
     }
 
-    // Get all item IDs from a specific shop
-    public List<string> GetShopItems(string shopId)
+    // Get all shop items with prices from a specific shop
+    public List<ShopItem> GetShopItemsWithPrices(string shopId)
     {
         var shop = GetShopById(shopId);
-        return shop?.items ?? new List<string>();
+        return shop?.items ?? new List<ShopItem>();
+    }
+
+    // Get item price from a specific shop
+    public int GetItemPrice(string shopId, string itemId)
+    {
+        var shop = GetShopById(shopId);
+        if (shop?.items == null) return -1;
+
+        foreach (var item in shop.items)
+        {
+            if (item.itemId == itemId)
+            {
+                return item.price;
+            }
+        }
+
+        return -1; // Item not found
     }
 
     // Check if item exists in any shop
@@ -81,8 +98,11 @@ public class ShopManager
     {
         foreach (var shop in shopDataList.shops)
         {
-            if (shop.items.Contains(itemId))
-                return true;
+            foreach (var item in shop.items)
+            {
+                if (item.itemId == itemId)
+                    return true;
+            }
         }
         return false;
     }
@@ -94,9 +114,13 @@ public class ShopManager
 
         foreach (var shop in shopDataList.shops)
         {
-            if (shop.items.Contains(itemId))
+            foreach (var item in shop.items)
             {
-                shopsWithItem.Add(shop);
+                if (item.itemId == itemId)
+                {
+                    shopsWithItem.Add(shop);
+                    break; // Found the item in this shop, no need to check other items
+                }
             }
         }
 
@@ -107,7 +131,14 @@ public class ShopManager
     public bool DoesShopContainItem(string shopId, string itemId)
     {
         var shop = GetShopById(shopId);
-        return shop != null && shop.items.Contains(itemId);
+        if (shop?.items == null) return false;
+
+        foreach (var item in shop.items)
+        {
+            if (item.itemId == itemId)
+                return true;
+        }
+        return false;
     }
 
     // Reload shops from JSON (useful for runtime updates)

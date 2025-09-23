@@ -50,16 +50,16 @@ public class shopBuyPanelUI : MonoBehaviour
 
         if (currentShop == null) return;
 
-        foreach (var itemID in currentShop.items)
+        foreach (var item in currentShop.items)
         {
-            if (itemID == null) continue;
+            if (item == null) continue;
 
-            ItemSO itemSO = ItemDatabase.Instance.GetItemById(itemID);
+            ItemSO itemSO = ItemDatabase.Instance.GetItemById(item.itemId);
 
             if (itemSO == null) continue;
 
             GameObject slot = Instantiate(itemSlotPrefab, itemContainer);
-            slot.GetComponent<BuyItemSlotUI>().Setup(itemSO);
+            slot.GetComponent<BuyItemSlotUI>().Setup(itemSO, item.price);
         }
     }
     public static void SetCurrentShop(string ID)
