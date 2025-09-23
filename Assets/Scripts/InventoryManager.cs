@@ -78,16 +78,17 @@ public class InventoryManager
     }
 
 
-    public void RemoveItem(int Id, int amount = 1)
+    public bool RemoveItem(int Id, int amount = 1)
     {
         var existing = DatabaseManager.Instance.GetInventoryItemByID(Id);
-        if (existing == null) return;
+        if (existing == null) return false;
 
         existing.Amount -= amount;
         if (existing.Amount <= 0)
             DatabaseManager.Instance.DeleteInventoryItem(existing.Id);
         else
             DatabaseManager.Instance.UpdateInventoryItem(existing);
+        return true;
     }
 
     public List<InventoryItemModel> GetAllItems()

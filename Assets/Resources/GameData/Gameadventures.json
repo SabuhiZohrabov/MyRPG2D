@@ -37,8 +37,8 @@
       "links": [
         { "linkID":"forest", "linkText":"Return to the forest", "nextLinkID": "forest", "type": "0", "objectID":"" },
         { "linkID":"town", "linkText":"Head to the nearby town", "nextLinkID": "town", "type": "0", "objectID":"" },
-        { "linkID":"add_comrade", "linkText":"Recruit Bombaboy as companion", "nextLinkID": "mountain", "type": "5", "objectID":"bombaboy" },
-        { "linkID":"remove_comrade", "linkText":"Send Bombaboy away", "nextLinkID": "mountain", "type": "6", "objectID":"bombaboy" }
+        { "linkID":"add_comrade", "linkText":"Recruit Assistant as companion", "nextLinkID": "mountain", "type": "5", "objectID":"assistant" },
+        { "linkID":"remove_comrade", "linkText":"Send Assistant away", "nextLinkID": "mountain", "type": "6", "objectID":"assistant" }
       ],
       "mapId": "main_world",
       "mapPosition": { "x": 5, "y": 4 },

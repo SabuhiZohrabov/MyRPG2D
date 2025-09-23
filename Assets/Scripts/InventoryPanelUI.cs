@@ -100,6 +100,15 @@ public class InventoryPanelUI : MonoBehaviour
             RefreshUI();
         }
     }
+    public void RemoveItem()
+    {
+        if (currentItem == null) return;
+        bool success = InventoryManager.Instance.RemoveItem(currentItem.Id, 1000);
+        if (success)
+        {
+            RefreshUI();
+        }
+    }
 
     /// <summary>
     /// Static method to trigger the item click event

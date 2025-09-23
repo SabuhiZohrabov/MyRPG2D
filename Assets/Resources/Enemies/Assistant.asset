@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d4f21e0501a23374eb2f541b9fd9848c, type: 3}
-  m_Name: BombaBoy
+  m_Name: Assistant
   m_EditorClassIdentifier: 
-  comradeId: bombaboy
-  displayName: Bomba Boy
+  comradeId: assistant
+  displayName: Assistant
   icon: {fileID: 0}
   maxHP: 1000
   maxMP: 0
   availableSkills:
   - allyheal
   skillDatabase: {fileID: 11400000, guid: 320f739c48680a848b42d05c843b94d9, type: 2}
+  npcClass: {fileID: 0}
