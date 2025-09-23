@@ -3,7 +3,7 @@
     {
       "shopId": "weapon_shop",
       "shopName": "Weapon Master",
-      "items": ["shortsword", "longsword", "darksword", "bigaxe", "ironaxe"]
+      "items": ["shortsword", "woodenstaff"]
     },
     {
       "shopId": "armor_shop",

@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\PlayerMapVisualizer.cs" />
     <Compile Include="Assets\Scripts\ShopManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\Scripts\BuyItemSlotUI.cs" />
     <Compile Include="Assets\Scripts\EnemyLootSO.cs" />
     <Compile Include="Assets\Scripts\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
@@ -131,7 +132,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\MapData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
-    <Compile Include="Assets\Scripts\ItemSlotUI.cs" />
     <Compile Include="Assets\Scripts\PlayerSkillModel.cs" />
     <Compile Include="Assets\Scripts\MapCameraController.cs" />
     <Compile Include="Assets\Scripts\MainMenuController.cs" />
@@ -140,6 +140,7 @@
     <Compile Include="Assets\Scripts\AttributeRowUI.cs" />
     <Compile Include="Assets\Scripts\IFighter.cs" />
     <Compile Include="Assets\Scripts\FighterUI.cs" />
+    <Compile Include="Assets\Scripts\ShopBuyPanelUI.cs" />
     <Compile Include="Assets\Scripts\CombatLog.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\Scripts\ComradeManager.cs" />

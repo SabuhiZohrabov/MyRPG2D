@@ -9,7 +9,6 @@ public class InventorySlotUI : MonoBehaviour
     public Image isEquipedBG;
 
     private InventoryItemModel currentItem;
-    private Button button;
 
     public void Setup(ItemSO item, InventoryItemModel inventoryItem)
     {
@@ -21,10 +20,6 @@ public class InventorySlotUI : MonoBehaviour
         isEquipedBG.gameObject.SetActive(inventoryItem.IsEquipped);
     }
 
-
-    /// <summary>
-    /// for testing purpose, simply equip/unequip item on click
-    /// </summary>
     public void OnItemClicked()
     {
         if (currentItem == null) return;
@@ -32,18 +27,5 @@ public class InventorySlotUI : MonoBehaviour
         // Trigger the panel activation event
         InventoryPanelUI.currentItem = currentItem;
         InventoryPanelUI.TriggerItemClick();
-    }
-
-    private void SetEquipItem(InventoryItemModel inventoryItem)
-    {
-
-    }
-
-    private void OnDestroy()
-    {
-        if (button != null)
-        {
-            button.onClick.RemoveListener(OnItemClicked);
-        }
     }
 }

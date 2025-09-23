@@ -9,6 +9,7 @@ public class AdventureManager : MonoBehaviour
     //public EnemyDatabase enemyDatabase;
     public GameObject combatPanel;
     public GameObject adventurePanel;
+    public GameObject shopBuyPanel;
     public CharacterStats playerStats;
     //public AdventureTextDatabase textDatabase;
     public TextMeshProUGUI adventureTMP;
@@ -195,6 +196,9 @@ public class AdventureManager : MonoBehaviour
             case AdventureTextType.RemoveSkill:
                 RemoveSkillFromPlayer(objectID);
                 break;
+            case AdventureTextType.BuyShop:
+                OpenBuyShop(objectID);
+                break;
         }
     }
 
@@ -334,4 +338,12 @@ public class AdventureManager : MonoBehaviour
             Debug.LogError("PlayerStats reference is null!");
         }
     }
+
+    // Shop management methods
+    private void OpenBuyShop(string shopID)
+    {
+        shopBuyPanelUI.SetCurrentShop(shopID);
+        shopBuyPanel.SetActive(true);
+    }
+
 }

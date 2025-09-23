@@ -52,8 +52,9 @@
       "id": "town",
       "text": "You are at the center of town",
       "links": [
-        { "linkID":"library", "linkText":"Enter to library", "nextLinkID": "library", "type": "0", "objectID":"" },
-        { "linkID":"store", "linkText":"Enter to store", "nextLinkID": "store", "type": "0", "objectID":"" },
+        { "linkID":"library", "linkText":"Enter to the library", "nextLinkID": "library", "type": "0", "objectID":"" },
+        { "linkID":"shop", "linkText":"Enter to the shop", "nextLinkID": "shop", "type": "0", "objectID":"" },
+        { "linkID":"storage", "linkText":"Enter to the storage", "nextLinkID": "storage", "type": "0", "objectID":"" },
         { "linkID":"forest", "linkText":"Continue journey to forest", "nextLinkID": "forest", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
@@ -85,13 +86,28 @@
       "addValue": 0
     },
     {
-      "id": "store",
+      "id": "shop",
+      "text": "What do you want to do?",
+      "links": [
+        { "linkID":"buy", "linkText":"Look at the shop", "nextLinkID": "shop", "type": "9", "objectID":"weapon_shop" },
+        { "linkID":"town", "linkText":"Return to town center", "nextLinkID": "town", "type": "0", "objectID":"" }
+      ],
+      "mapId": "main_world",
+      "mapPosition": { "x": 5, "y": 4 },
+      "conditionId": "",
+      "conditionRequiredValue": 0,
+      "trueAdventureLink": "",
+      "addValueConditionId": "",
+      "addValue": 0
+    },
+    {
+      "id": "storage",
       "text": "You found Items",
       "links": [
-        { "linkID":"town1", "linkText":"Take the wooden staff", "nextLinkID": "store", "type": "4", "objectID":"take_wooden_staff" },
-        { "linkID":"town4", "linkText":"Take the golden ring", "nextLinkID": "store", "type": "4", "objectID":"take_golden_ring" },
-        { "linkID":"town2", "linkText":"Collect healing potions", "nextLinkID": "store", "type": "4", "objectID":"take_some_healing" },
-        { "linkID":"town3", "linkText":"Claim special rewards", "nextLinkID": "store", "type": "4", "objectID":"take_reward" },
+        { "linkID":"town1", "linkText":"Take the wooden staff", "nextLinkID": "storage", "type": "4", "objectID":"take_wooden_staff" },
+        { "linkID":"town4", "linkText":"Take the golden ring", "nextLinkID": "storage", "type": "4", "objectID":"take_golden_ring" },
+        { "linkID":"town2", "linkText":"Collect healing potions", "nextLinkID": "storage", "type": "4", "objectID":"take_some_healing" },
+        { "linkID":"town3", "linkText":"Claim special rewards", "nextLinkID": "storage", "type": "4", "objectID":"take_reward" },
         { "linkID":"town", "linkText":"Return to town center", "nextLinkID": "town", "type": "0", "objectID":"" }
       ],
       "mapId": "main_world",
