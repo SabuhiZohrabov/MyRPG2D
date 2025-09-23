@@ -7,11 +7,13 @@ public enum AdventureTextType
     Dialog = 1,
     Battle = 2,
     Quest = 3,
-    Item = 4,
+    AddItem = 4,
     AddComrade = 5,
     RemoveComrade = 6,
     AddSkill = 7,
-    RemoveSkill = 8
+    RemoveSkill = 8,
+    BuyShop = 9,
+    SellShop = 10
 }
 
 [Serializable]

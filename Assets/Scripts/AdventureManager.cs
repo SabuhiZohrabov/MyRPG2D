@@ -180,7 +180,7 @@ public class AdventureManager : MonoBehaviour
             case AdventureTextType.Quest:
                 QuestManager.Instance.AcceptQuest(objectID);
                 break;                
-            case AdventureTextType.Item:
+            case AdventureTextType.AddItem:
                 AddItemGroupToInventory(objectID);
                 break;
             case AdventureTextType.AddComrade:
