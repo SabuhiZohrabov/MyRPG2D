@@ -1,0 +1,24 @@
+{
+  "shops": [
+    {
+      "shopId": "weapon_shop",
+      "shopName": "Weapon Master",
+      "items": ["shortsword", "longsword", "darksword", "bigaxe", "ironaxe"]
+    },
+    {
+      "shopId": "armor_shop",
+      "shopName": "Armor Specialist",
+      "items": ["leather_armor", "cloth_armor", "chain_mail", "plate_armor", "basic_helmet", "iron_helmet"]
+    },
+    {
+      "shopId": "potion_shop",
+      "shopName": "Alchemist",
+      "items": ["health_potion_small", "health_potion_medium", "health_potion_large", "mana_potion_small", "mana_potion_medium"]
+    },
+    {
+      "shopId": "general_store",
+      "shopName": "General Store",
+      "items": ["bread", "apple", "meat", "rope", "torch", "lockpick"]
+    }
+  ]
+}
