@@ -10,10 +10,13 @@ public class InventoryPanelUI : MonoBehaviour
     public GameObject itemSlotPrefab;
     public GameObject ItemDescriptionPanel;
 
+    public CharacterStats playerStats;
+
 
     public Image iconImage;
     public TMP_Text itemNameText;
     public TMP_Text itemDescText;
+    public TMP_Text goldAmountText;
 
     public static InventoryItemModel currentItem;
 
@@ -62,6 +65,7 @@ public class InventoryPanelUI : MonoBehaviour
             GameObject slot = Instantiate(itemSlotPrefab, itemContainer);
             slot.GetComponent<InventorySlotUI>().Setup(itemSO, model);
         }
+        goldAmountText.text = playerStats.gold.ToString();
     }
 
     public void CloseDescriptionPanel()

@@ -9,14 +9,14 @@ public class BuyItemSlotUI : MonoBehaviour
     public TMP_Text nameText;
     public TMP_Text priceText;
 
-    private ItemSO currentItem;
+    private ShopItem currentItem;
 
 
     public void Setup(ItemSO item, int price)
     {
         if (!Application.isPlaying) return;
-        
-        currentItem = item;
+
+        currentItem = new ShopItem(item.itemId, price);
         iconImage.sprite = item.icon;
         nameText.text = item.displayName;
         priceText.text = price.ToString() + " gold";
@@ -27,7 +27,7 @@ public class BuyItemSlotUI : MonoBehaviour
         if (currentItem == null) return;
 
         // Trigger the panel activation event
-        shopBuyPanelUI.currentItem = currentItem;
+        shopBuyPanelUI.currentShopItem = currentItem;
         shopBuyPanelUI.TriggerItemClick();
     }
 }

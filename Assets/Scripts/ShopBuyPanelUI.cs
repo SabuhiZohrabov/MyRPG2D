@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class shopBuyPanelUI : MonoBehaviour
 {
@@ -10,13 +11,14 @@ public class shopBuyPanelUI : MonoBehaviour
     public GameObject itemSlotPrefab;
     public GameObject ItemDescriptionPanel;
     public GameObject shopBuyPanel;
-
+    public CharacterStats playerStats;
 
     public Image iconImage;
     public TMP_Text itemNameText;
     public TMP_Text itemDescText;
 
     public static ItemSO currentItem;
+    public static ShopItem currentShopItem;
     public static ShopData currentShop;
 
     // Static event for item click communication
@@ -83,6 +85,8 @@ public class shopBuyPanelUI : MonoBehaviour
 
     public void SetItemInfos()
     {
+        if (currentShopItem == null) return;
+        currentItem = ItemDatabase.Instance.GetItemById(currentShopItem.itemId);
         if (currentItem == null) return;
         iconImage.sprite = currentItem.icon;
         itemNameText.text = currentItem.displayName;
@@ -91,7 +95,8 @@ public class shopBuyPanelUI : MonoBehaviour
 
     public void BuyItem()
     {
-
+        InventoryManager.Instance.AddItem(currentItem.itemId, 1);
+        playerStats.SpendGold(currentShopItem.price);
     }
 
     /// <summary>
