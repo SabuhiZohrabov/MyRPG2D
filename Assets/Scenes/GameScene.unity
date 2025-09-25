@@ -8006,6 +8006,7 @@ GameObject:
   - component: {fileID: 1008717032}
   - component: {fileID: 1008717034}
   - component: {fileID: 1008717033}
+  - component: {fileID: 1008717035}
   m_Layer: 5
   m_Name: ShopSellPanel
   m_TagString: Untagged
@@ -8074,6 +8075,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008717031}
   m_CullTransparentMesh: 1
+--- !u!114 &1008717035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008717031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8f72d05a00d97449fddd4f4cda5719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemContainer: {fileID: 715727764}
+  itemSlotPrefab: {fileID: 8255301974011104768, guid: 3d25e8242c8317643a5140afb3221d95, type: 3}
+  shopSellPanel: {fileID: 1008717031}
+  playerStats: {fileID: 730654756}
+  iconImage: {fileID: 0}
+  itemNameText: {fileID: 0}
+  itemDescText: {fileID: 0}
 --- !u!1 &1031937157
 GameObject:
   m_ObjectHideFlags: 0

@@ -107,6 +107,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scripts\SkillDatabase.cs" />
     <Compile Include="Assets\Scripts\InventoryItemModel.cs" />
+    <Compile Include="Assets\Scripts\SellItemSlotUI.cs" />
     <Compile Include="Assets\Scripts\NPCClassBasic.cs" />
     <Compile Include="Assets\Scripts\SkillModel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Assets\Scripts\ComradeData.cs" />
     <Compile Include="Assets\Scripts\MapManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\Scripts\ShopSellPanelUI.cs" />
     <Compile Include="Assets\Scripts\TMPLinkHandler.cs" />
     <Compile Include="Assets\Scripts\NPCSkillController.cs" />
   </ItemGroup>

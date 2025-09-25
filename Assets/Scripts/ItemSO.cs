@@ -56,6 +56,7 @@ public class ItemSO : ScriptableObject
     [TextArea]
     public string description;
     public Sprite icon;
+    public int price;                 
 
     [Header("Item Settings")]
     public ItemType type;
